@@ -8,6 +8,7 @@ import { RedisModule } from './redis/redis.module.js';
 import { IdentityModule } from './modules/identity/identity.module.js';
 import { CatalogModule } from './modules/catalog/catalog.module.js';
 import { CrmModule } from './modules/crm/crm.module.js';
+import { GroupsModule } from './modules/groups/groups.module.js';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard.js';
 import { PermissionsGuard } from './common/guards/permissions.guard.js';
 import { AppController } from './app.controller.js';
@@ -35,6 +36,7 @@ import { AppController } from './app.controller.js';
     IdentityModule,
     CatalogModule,
     CrmModule,
+    GroupsModule,
   ],
   controllers: [AppController],
   providers: [
