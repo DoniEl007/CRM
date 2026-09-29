@@ -6,6 +6,8 @@ import configuration from './config/configuration.js';
 import { envValidationSchema } from './config/env.validation.js';
 import { RedisModule } from './redis/redis.module.js';
 import { IdentityModule } from './modules/identity/identity.module.js';
+import { CatalogModule } from './modules/catalog/catalog.module.js';
+import { CrmModule } from './modules/crm/crm.module.js';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard.js';
 import { PermissionsGuard } from './common/guards/permissions.guard.js';
 import { AppController } from './app.controller.js';
@@ -31,6 +33,8 @@ import { AppController } from './app.controller.js';
     }),
     RedisModule,
     IdentityModule,
+    CatalogModule,
+    CrmModule,
   ],
   controllers: [AppController],
   providers: [
