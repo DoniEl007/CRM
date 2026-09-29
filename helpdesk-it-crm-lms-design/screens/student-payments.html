@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Payments · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .cycle-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 6px; }
+  .cycle-grid span { height: 40px; border-radius: 10px; display: grid; place-items: center; font: 700 14px/1 var(--font-mono); background: var(--bg); color: var(--ink-muted); box-shadow: inset 0 0 0 2px var(--outline); }
+  .cycle-grid span.used { background: var(--leaf-soft); color: var(--leaf-ink); box-shadow: none; }
+  .cycle-grid span.next { box-shadow: inset 0 0 0 2px var(--sky); color: var(--sky-deep); }
+  .hist .grow b { white-space: normal; }
+  .hist .amt { font-size: 16px; white-space: nowrap; }
+  @media (max-width: 640px) { .hist .lc-ic { display: none !important; } }
+  .pill.wrap { white-space: normal; height: auto; min-height: 32px; padding-top: 6px; padding-bottom: 6px; }
+  @media (max-width: 640px) { .cycle-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+</style>
+</head>
+<body data-role="student" data-page="payments" data-title="Payments" data-sub="Helpdesk IT-3 · 600 000 so‘m per 12 lessons">
+<main id="page">
+
+  <section class="grid grid-main">
+    <div class="card" style="gap:24px">
+      <div class="card-head">
+        <div class="stack-2"><span class="t-eyebrow">Current cycle</span><h2 class="t-h2">Cycle 2 · 8 of 12 lessons used</h2></div>
+        <span class="pill st-paid"><i data-lucide="circle-check" class="ic"></i>Paid</span>
+      </div>
+      <div class="stack-2">
+        <div class="row between"><span class="t-small">8 used · 4 left</span><span class="t-small muted mono">67%</span></div>
+        <div class="progress lg" role="progressbar" aria-valuenow="8" aria-valuemin="0" aria-valuemax="12" aria-label="8 of 12 lessons used"><span style="width:66.7%"></span></div>
+      </div>
+      <div class="cycle-grid" aria-label="Lessons in this cycle: 1 to 8 used, 9 is next">
+        <span class="used">1</span><span class="used">2</span><span class="used">3</span><span class="used">4</span><span class="used">5</span><span class="used">6</span><span class="used">7</span><span class="used">8</span><span class="next">9</span><span>10</span><span>11</span><span>12</span>
+      </div>
+      <div class="row">
+        <span class="pill st-paid wrap"><i data-lucide="banknote" class="ic"></i>Paid in cash on 2 Sep · 600 000 so‘m</span>
+        <span class="pill st-neutral wrap"><i data-lucide="calendar-clock" class="ic"></i>Next payment: after lesson 12 (about 14 Oct)</span>
+      </div>
+      <div class="list" style="border-top:1px solid var(--outline)">
+        <div class="list-row" style="min-height:56px"><span class="mono muted" style="width:92px;white-space:nowrap;font-size:15px">Lesson 9</span><div class="grow"><b>Wed 30 Sep · 09:00</b><span>Your next class · Room 2</span></div></div>
+        <div class="list-row" style="min-height:56px"><span class="mono muted" style="width:92px;white-space:nowrap;font-size:15px">Lesson 12</span><div class="grow"><b>About 14 Oct</b><span>Last lesson of cycle 2 — then cycle 3 payment is due</span></div></div>
+      </div>
+    </div>
+
+    <div class="stack" style="gap:20px">
+      <div class="banner info" style="align-items:flex-start">
+        <i data-lucide="banknote" class="ic" style="margin-top:2px"></i>
+        <div class="grow stack-2">
+          <b>Payments are made in cash at the front desk.</b>
+          <span class="t-small">One payment covers 12 lessons. The front desk records it, and it shows up here the same day.</span>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="t-h4">Reminders</h2>
+        <div class="list">
+          <div class="list-row"><i data-lucide="send" class="ic muted"></i><div class="grow"><b style="white-space:normal">Telegram reminder to your parent</b><span>Sent to @akmal_rakhimov when the next payment is due</span></div></div>
+          <div class="list-row"><i data-lucide="building-2" class="ic muted"></i><div class="grow"><b>Front desk</b><span>Mon–Sat, 08:30–18:00 · +998 71 200 45 67</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div class="stack-2"><h2 class="t-h3">Payment history</h2><p class="t-small muted">Helpdesk IT-3 · since August 2026</p></div></div>
+    <div class="card" style="padding-top:8px;padding-bottom:8px">
+      <div class="list hist">
+        <div class="list-row">
+          <span class="lc-ic" style="width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--sky-soft);color:var(--sky-deep)"><i data-lucide="wallet" class="ic"></i></span>
+          <div class="grow"><b>Cycle 2 · in progress</b><span>Paid in cash 2 Sep · 8 of 12 lessons used</span></div>
+          <div class="stack-2" style="align-items:flex-end;gap:4px"><b class="mono amt">600 000 so‘m</b><span class="pill st-paid"><i data-lucide="circle-check" class="ic"></i>Paid</span></div>
+        </div>
+        <div class="list-row">
+          <span class="lc-ic" style="width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--leaf-soft);color:var(--leaf-ink)"><i data-lucide="check-check" class="ic"></i></span>
+          <div class="grow"><b>Cycle 1 · completed</b><span>Paid in cash 7 Aug · 12 of 12 lessons used</span></div>
+          <div class="stack-2" style="align-items:flex-end;gap:4px"><b class="mono amt">600 000 so‘m</b><span class="pill st-paid"><i data-lucide="circle-check" class="ic"></i>Paid</span></div>
+        </div>
+        <div class="list-row">
+          <span class="lc-ic" style="width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--berry-soft);color:var(--berry-ink)"><i data-lucide="sparkles" class="ic"></i></span>
+          <div class="grow"><b>Trial lesson</b><span>Wed 5 Aug · you joined Helpdesk IT-3 after it</span></div>
+          <span class="pill st-trial"><i data-lucide="sparkles" class="ic"></i>Trial</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

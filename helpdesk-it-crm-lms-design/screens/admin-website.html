@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Website · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .web-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr); gap: var(--space-8); align-items: start; }
+  .post { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); border-radius: var(--radius-btn); border: 1px solid transparent; text-decoration: none; color: inherit; }
+  .post:hover { background: var(--surface); }
+  .post[aria-current="true"] { background: var(--sky-soft); border-color: var(--sky); }
+  .post b { font: 700 17px/24px var(--font-body); }
+  .langs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .lang-chip { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 10px; border-radius: 999px; font: 700 13px/16px var(--font-body); background: var(--leaf-soft); color: var(--leaf-ink); }
+  .lang-chip .ic { width: 14px; height: 14px; }
+  .lang-chip.missing { background: var(--surface-sunken); color: var(--ink-muted); }
+  .toolbar { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--outline); border-bottom: 0; border-radius: var(--radius-input) var(--radius-input) 0 0; background: var(--surface); }
+  .toolbar + .textarea { border-radius: 0 0 var(--radius-input) var(--radius-input); min-height: 220px; }
+  .seg-lang button { display: inline-flex; align-items: center; gap: 6px; }
+  .seg-lang .ic { width: 16px; height: 16px; }
+  @media (max-width: 1023px) {
+    .web-split { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+    .seg-lang { display: flex; width: 100%; } .seg-lang button { flex: 1; padding: 0 8px; justify-content: center; }
+    .editor-actions, .editor-actions .btn { width: 100%; }
+  }
+</style>
+</head>
+<body data-role="admin" data-page="website" data-title="Public website" data-sub="helpdeskit.uz · content in 4 languages">
+<main id="page">
+
+  <nav class="tabs-inline" aria-label="Website sections">
+    <a href="#about">About</a>
+    <a href="#news" aria-current="page">News &amp; posts</a>
+    <a href="#courses">Courses</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#teachers">Teachers</a>
+  </nav>
+
+  <section class="web-split">
+    <!-- Posts list -->
+    <div class="card" aria-labelledby="posts-h">
+      <div class="card-head"><h2 class="t-h3" id="posts-h">Posts</h2><button class="btn btn-secondary btn-md" type="button"><i data-lucide="plus" class="ic"></i>New post</button></div>
+      <div class="stack-2">
+        <a class="post" href="#" aria-current="true">
+          <b>Autumn intake: Networking Basics-2 starts 12 October</b>
+          <div class="row" style="gap:8px"><span class="pill st-due"><i data-lucide="pencil" class="ic"></i>Draft</span><span class="t-caption muted">Edited today 09:40</span></div>
+          <div class="langs"><span class="lang-chip"><i data-lucide="check" class="ic"></i>EN</span><span class="lang-chip"><i data-lucide="check" class="ic"></i>RU</span><span class="lang-chip"><i data-lucide="check" class="ic"></i>O‘Z</span><span class="lang-chip missing"><i data-lucide="minus" class="ic"></i>ЎЗ</span></div>
+        </a>
+        <a class="post" href="#">
+          <b>Open day at Helpdesk IT on 10 October</b>
+          <div class="row" style="gap:8px"><span class="pill st-paid"><i data-lucide="globe" class="ic"></i>Published</span><span class="t-caption muted">24 Sep 2026</span></div>
+          <div class="langs"><span class="lang-chip"><i data-lucide="check" class="ic"></i>EN</span><span class="lang-chip"><i data-lucide="check" class="ic"></i>RU</span><span class="lang-chip"><i data-lucide="check" class="ic"></i>O‘Z</span><span class="lang-chip"><i data-lucide="check" class="ic"></i>ЎЗ</span></div>
+        </a>
+        <a class="post" href="#">
+          <b>Helpdesk IT-2 graduates: where they work now</b>
+          <div class="row" style="gap:8px"><span class="pill st-paid"><i data-lucide="globe" class="ic"></i>Published</span><span class="t-caption muted">12 Sep 2026</span></div>
+          <div class="langs"><span class="lang-chip"><i data-lucide="check" class="ic"></i>EN</span><span class="lang-chip"><i data-lucide="check" class="ic"></i>RU</span><span class="lang-chip"><i data-lucide="check" class="ic"></i>O‘Z</span><span class="lang-chip"><i data-lucide="check" class="ic"></i>ЎЗ</span></div>
+        </a>
+        <a class="post" href="#">
+          <b>How our free trial lesson works</b>
+          <div class="row" style="gap:8px"><span class="pill st-paid"><i data-lucide="globe" class="ic"></i>Published</span><span class="t-caption muted">2 Sep 2026</span></div>
+          <div class="langs"><span class="lang-chip"><i data-lucide="check" class="ic"></i>EN</span><span class="lang-chip"><i data-lucide="check" class="ic"></i>RU</span><span class="lang-chip"><i data-lucide="check" class="ic"></i>O‘Z</span><span class="lang-chip missing"><i data-lucide="minus" class="ic"></i>ЎЗ</span></div>
+        </a>
+        <a class="post" href="#">
+          <b>New English B2 evening group</b>
+          <div class="row" style="gap:8px"><span class="pill st-due"><i data-lucide="pencil" class="ic"></i>Draft</span><span class="t-caption muted">Edited 27 Sep</span></div>
+          <div class="langs"><span class="lang-chip"><i data-lucide="check" class="ic"></i>EN</span><span class="lang-chip missing"><i data-lucide="minus" class="ic"></i>RU</span><span class="lang-chip missing"><i data-lucide="minus" class="ic"></i>O‘Z</span><span class="lang-chip missing"><i data-lucide="minus" class="ic"></i>ЎЗ</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Editor -->
+    <form class="card" aria-labelledby="edit-h" onsubmit="return false">
+      <div class="card-head">
+        <div class="stack-2"><h2 class="t-h3" id="edit-h">Edit post</h2><p class="t-small muted">Draft · not visible on the website yet</p></div>
+      </div>
+      <div class="segmented seg-lang" role="tablist" aria-label="Language">
+        <button role="tab" aria-pressed="true" aria-selected="true">EN<i data-lucide="check" class="ic" style="color:var(--leaf-ink)"></i></button>
+        <button role="tab" aria-pressed="false" aria-selected="false">RU<i data-lucide="check" class="ic" style="color:var(--leaf-ink)"></i></button>
+        <button role="tab" aria-pressed="false" aria-selected="false">O‘Z<i data-lucide="check" class="ic" style="color:var(--leaf-ink)"></i></button>
+        <button role="tab" aria-pressed="false" aria-selected="false">ЎЗ<i data-lucide="minus" class="ic"></i></button>
+      </div>
+      <div class="banner info" style="padding:12px 20px;flex-wrap:nowrap"><i data-lucide="languages" class="ic"></i><span class="t-small">Ўзбекча is still empty. Visitors who choose it will see the O‘zbekcha text.</span></div>
+      <div class="field"><label for="w-title">Title</label>
+        <input class="input" id="w-title" value="Autumn intake: Networking Basics-2 starts 12 October"></div>
+      <div class="field"><span class="label">Cover image</span>
+        <div class="dropzone" style="min-height:160px;padding:var(--space-6)"><i data-lucide="image-plus" class="ic ic-32"></i><span class="t-small"><b>Drop an image here</b> or <a href="#">browse</a></span><span class="hint">JPG or PNG · shown at 1200 × 630</span></div></div>
+      <div class="field"><label for="w-body">Body</label>
+        <div>
+          <div class="toolbar" role="toolbar" aria-label="Formatting">
+            <button class="icon-btn" type="button" aria-label="Bold"><i data-lucide="bold" class="ic ic-sm"></i></button>
+            <button class="icon-btn" type="button" aria-label="Italic"><i data-lucide="italic" class="ic ic-sm"></i></button>
+            <button class="icon-btn" type="button" aria-label="Bulleted list"><i data-lucide="list" class="ic ic-sm"></i></button>
+            <button class="icon-btn" type="button" aria-label="Insert link"><i data-lucide="link" class="ic ic-sm"></i></button>
+          </div>
+          <textarea class="textarea" id="w-body" style="border-color:var(--sky-deep);box-shadow:0 0 0 4px var(--sky-soft);background:var(--bg)">A new Networking Basics group opens on Monday, 12 October. Classes run Mon/Wed/Fri 14:00–15:30 in Room 2, with up to 10 students and teacher Akmal Tursunov.
+
+You will learn how home and office networks work: IP addresses, subnet masks, cables, Wi-Fi and simple troubleshooting.
+
+Book a free trial lesson first — leave a request on the Courses page and we will call you.</textarea>
+        </div>
+      </div>
+      <div class="row between">
+        <span class="t-caption muted">Autosaved 09:40</span>
+        <div class="row editor-actions">
+          <button class="btn btn-secondary btn-md" type="button">Save draft</button>
+          <button class="btn btn-primary btn-md" type="button"><i data-lucide="send" class="ic"></i>Publish</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+</main>
+</body>
+</html>

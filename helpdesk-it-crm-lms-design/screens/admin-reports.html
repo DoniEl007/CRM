@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reports · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .types { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-4); }
+  .types .lesson-card { text-align: left; cursor: pointer; font: inherit; }
+  .types .lesson-card.locked { cursor: not-allowed; }
+  .types .lc-title { font-size: 19px; line-height: 24px; }
+  .lock-note { display: flex; align-items: center; gap: 6px; font: 700 14px/20px var(--font-body); color: var(--ink-muted); }
+  .sel-mark { position: absolute; top: 16px; right: 16px; color: var(--sky); }
+  .range { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--space-2); }
+  .file-ic { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: var(--leaf-soft); color: var(--leaf-ink); flex: none; }
+  @media (max-width: 1023px) { .types { grid-template-columns: minmax(0, 1fr); } .types .lesson-card { flex-direction: row; align-items: center; } .types .lesson-card .lc-icon { width: 48px; height: 48px; } .params-actions .btn { width: 100%; } .range .input { padding: 14px 12px; font-size: 16px; } }
+</style>
+</head>
+<body data-role="ceo" data-page="reports" data-title="Financial reports" data-sub="Build and download Excel reports">
+<main id="page">
+
+  <section class="grid grid-main">
+    <div class="stack" style="gap:var(--space-8)">
+
+      <div class="section" aria-labelledby="type-h">
+        <div class="section-head">
+          <div class="stack-2"><h2 class="t-h3" id="type-h">1. Choose a report</h2><p class="t-small muted">Your role includes financial reports.</p></div>
+          <span class="pill st-neutral"><i data-lucide="eye" class="ic"></i>Read only</span>
+        </div>
+        <div class="types" role="radiogroup" aria-label="Report type">
+          <button class="card lesson-card active" role="radio" aria-checked="true" style="position:relative">
+            <span class="lc-icon"><i data-lucide="wallet" class="ic ic-32"></i></span>
+            <span class="stack-2"><span class="lc-title">Revenue</span><span class="t-small muted">Cash collected per group, cycle and staff member</span></span>
+            <i data-lucide="circle-check" class="ic sel-mark hide-mobile"></i>
+          </button>
+          <button class="card lesson-card" role="radio" aria-checked="false">
+            <span class="lc-icon"><i data-lucide="circle-alert" class="ic ic-32"></i></span>
+            <span class="stack-2"><span class="lc-title">Outstanding payments</span><span class="t-small muted">Students overdue, days and amounts</span></span>
+          </button>
+          <button class="card lesson-card locked" role="radio" aria-checked="false" aria-disabled="true">
+            <span class="lc-icon"><i data-lucide="user-plus" class="ic ic-32"></i></span>
+            <span class="stack-2"><span class="lc-title">Enrollment</span><span class="lock-note"><i data-lucide="lock" class="ic ic-sm"></i>Full Administrator only</span></span>
+          </button>
+          <button class="card lesson-card locked" role="radio" aria-checked="false" aria-disabled="true">
+            <span class="lc-icon"><i data-lucide="calendar-check" class="ic ic-32"></i></span>
+            <span class="stack-2"><span class="lc-title">Attendance rates</span><span class="lock-note"><i data-lucide="lock" class="ic ic-sm"></i>Full Administrator only</span></span>
+          </button>
+          <button class="card lesson-card locked" role="radio" aria-checked="false" aria-disabled="true">
+            <span class="lc-icon"><i data-lucide="trophy" class="ic ic-32"></i></span>
+            <span class="stack-2"><span class="lc-title">Teacher &amp; student performance</span><span class="lock-note"><i data-lucide="lock" class="ic ic-sm"></i>Full Administrator only</span></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="card" aria-labelledby="param-h">
+        <h2 class="t-h3" id="param-h">2. Set parameters</h2>
+        <div class="field"><span class="label">Group by period</span>
+          <div class="segmented" role="group" aria-label="Period"><button aria-pressed="false">Daily</button><button aria-pressed="false">Weekly</button><button aria-pressed="true">Monthly</button></div>
+        </div>
+        <div class="form-grid">
+          <div class="field"><label for="r-from">Date range</label>
+            <div class="range"><input class="input" id="r-from" value="01.04.2026" aria-label="From"><span class="muted">–</span><input class="input" value="30.09.2026" aria-label="To"></div>
+            <span class="hint">6 months · 6 rows per group</span></div>
+          <div class="field"><label for="r-group">Groups</label>
+            <select class="select" id="r-group"><option>All groups (6)</option><option>Helpdesk IT-3</option><option>Networking Basics-1</option><option>Python Start-2</option><option>Office &amp; Windows-1</option><option>English B1 · Morning</option><option>English A2 · Teens</option></select></div>
+        </div>
+        <div class="banner info" style="padding:12px 20px"><i data-lucide="file-spreadsheet" class="ic"></i><span class="grow t-small"><b>revenue_monthly_2026-04_2026-09.xlsx</b> · sheets: Summary, By group, By cycle, Payments</span></div>
+        <div class="row params-actions" style="justify-content:flex-end">
+          <button class="btn btn-primary btn-md" type="button"><i data-lucide="download" class="ic"></i>Generate Excel (.xlsx)</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="card" aria-labelledby="recent-h" style="align-self:start">
+      <div class="card-head"><h2 class="t-h3" id="recent-h">Recent exports</h2><span class="t-caption muted">Kept for 90 days</span></div>
+      <div class="list">
+        <div class="list-row"><span class="file-ic"><i data-lucide="file-spreadsheet" class="ic"></i></span><div class="grow"><b class="mono" style="font-size:15px;white-space:normal;overflow-wrap:anywhere">revenue_monthly_2026-09.xlsx</b><span>48 KB · Bekzod Usmonov · today 08:12</span></div><button class="icon-btn" type="button" aria-label="Download revenue_monthly_2026-09.xlsx"><i data-lucide="download" class="ic"></i></button></div>
+        <div class="list-row"><span class="file-ic"><i data-lucide="file-spreadsheet" class="ic"></i></span><div class="grow"><b class="mono" style="font-size:15px;white-space:normal;overflow-wrap:anywhere">outstanding_weekly_2026-w39.xlsx</b><span>21 KB · Bekzod Usmonov · 28 Sep</span></div><button class="icon-btn" type="button" aria-label="Download outstanding_weekly_2026-w39.xlsx"><i data-lucide="download" class="ic"></i></button></div>
+        <div class="list-row"><span class="file-ic"><i data-lucide="file-spreadsheet" class="ic"></i></span><div class="grow"><b class="mono" style="font-size:15px;white-space:normal;overflow-wrap:anywhere">revenue_daily_2026-09-25.xlsx</b><span>12 KB · Doniyor Jaloliddinov · 25 Sep</span></div><button class="icon-btn" type="button" aria-label="Download revenue_daily_2026-09-25.xlsx"><i data-lucide="download" class="ic"></i></button></div>
+        <div class="list-row"><span class="file-ic"><i data-lucide="file-spreadsheet" class="ic"></i></span><div class="grow"><b class="mono" style="font-size:15px;white-space:normal;overflow-wrap:anywhere">outstanding_monthly_2026-08.xlsx</b><span>19 KB · Bekzod Usmonov · 1 Sep</span></div><button class="icon-btn" type="button" aria-label="Download outstanding_monthly_2026-08.xlsx"><i data-lucide="download" class="ic"></i></button></div>
+        <div class="list-row"><span class="file-ic"><i data-lucide="file-spreadsheet" class="ic"></i></span><div class="grow"><b class="mono" style="font-size:15px;white-space:normal;overflow-wrap:anywhere">revenue_monthly_2026-08.xlsx</b><span>46 KB · Bekzod Usmonov · 1 Sep</span></div><button class="icon-btn" type="button" aria-label="Download revenue_monthly_2026-08.xlsx"><i data-lucide="download" class="ic"></i></button></div>
+      </div>
+    </aside>
+  </section>
+
+</main>
+</body>
+</html>

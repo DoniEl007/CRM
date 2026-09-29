@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quiz score · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .score-wrap { width: 100%; max-width: 880px; margin: 0 auto; }
+  .score-card { position: relative; overflow: hidden; }
+  .score-card > *:not(.confetti) { position: relative; }
+  .review-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); width: 100%; }
+  .review-box ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--space-2); }
+  .review-box li { display: flex; gap: var(--space-2); align-items: flex-start; font: 400 16px/24px var(--font-body); }
+  .review-box li .ic { margin-top: 2px; width: 20px; height: 20px; }
+  .new-badge { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-6); border-radius: var(--radius-card); background: var(--sun-soft); text-align: left; width: 100%; }
+  @media (max-width: 1023px) {
+    .review-grid { grid-template-columns: minmax(0, 1fr); }
+    .score-card { padding: var(--space-8) 20px; }
+    .score-card .t-score { font-size: 80px; line-height: 80px; }
+    .score-actions { flex-direction: column-reverse; align-items: stretch; width: 100%; }
+  }
+</style>
+</head>
+<body data-role="student" data-page="tasks" data-title="Quiz complete" data-sub="Network basics · Quiz 4 · finished Tue 29 Sep, 17:20">
+<main id="page">
+
+  <div class="score-wrap">
+    <section class="card score-card" aria-labelledby="score-title">
+      <div class="confetti" aria-hidden="true"><i style="left:0.0%;background:var(--sky);animation-delay:0.0s;rotate:0deg"></i><i style="left:6.0%;background:var(--sun);animation-delay:0.13s;rotate:47deg"></i><i style="left:12.0%;background:var(--leaf);animation-delay:0.26s;rotate:94deg"></i><i style="left:18.0%;background:var(--berry);animation-delay:0.39s;rotate:141deg"></i><i style="left:17.0%;background:var(--sky);animation-delay:0.52s;rotate:8deg"></i><i style="left:23.0%;background:var(--sun);animation-delay:0.65s;rotate:55deg"></i><i style="left:29.0%;background:var(--leaf);animation-delay:0.78s;rotate:102deg"></i><i style="left:28.0%;background:var(--berry);animation-delay:0.91s;rotate:149deg"></i><i style="left:34.0%;background:var(--sky);animation-delay:1.04s;rotate:16deg"></i><i style="left:40.0%;background:var(--sun);animation-delay:0.07s;rotate:63deg"></i><i style="left:46.0%;background:var(--leaf);animation-delay:0.2s;rotate:110deg"></i><i style="left:45.0%;background:var(--berry);animation-delay:0.33s;rotate:157deg"></i><i style="left:51.0%;background:var(--sky);animation-delay:0.46s;rotate:24deg"></i><i style="left:57.0%;background:var(--sun);animation-delay:0.59s;rotate:71deg"></i><i style="left:56.0%;background:var(--leaf);animation-delay:0.72s;rotate:118deg"></i><i style="left:62.0%;background:var(--berry);animation-delay:0.85s;rotate:165deg"></i><i style="left:68.0%;background:var(--sky);animation-delay:0.98s;rotate:32deg"></i><i style="left:74.0%;background:var(--sun);animation-delay:0.01s;rotate:79deg"></i><i style="left:73.0%;background:var(--leaf);animation-delay:0.14s;rotate:126deg"></i><i style="left:79.0%;background:var(--berry);animation-delay:0.27s;rotate:173deg"></i><i style="left:85.0%;background:var(--sky);animation-delay:0.4s;rotate:40deg"></i><i style="left:84.0%;background:var(--sun);animation-delay:0.53s;rotate:87deg"></i><i style="left:90.0%;background:var(--leaf);animation-delay:0.66s;rotate:134deg"></i><i style="left:96.0%;background:var(--berry);animation-delay:0.79s;rotate:1deg"></i></div>
+
+      <span class="t-eyebrow">Network basics · Quiz 4</span>
+      <h2 id="score-title" class="t-h2">Great work, Aziz — that’s your best quiz yet.</h2>
+
+      <div class="stack-2" style="align-items:center">
+        <span class="t-score" aria-label="9 out of 10 correct">9/10</span>
+        <span class="t-body muted">correct answers · 1 more than Quiz 3</span>
+      </div>
+
+      <div class="stars" role="img" aria-label="2 of 3 stars. Get 10 of 10 for the third star.">
+        <i data-lucide="star" class="ic"></i><i data-lucide="star" class="ic"></i><i data-lucide="star" class="ic off"></i>
+      </div>
+      <p class="t-small muted" style="margin-top:-12px">2 stars · a perfect 10/10 earns the third</p>
+
+      <div class="new-badge">
+        <span class="star-badge gold glow"><i data-lucide="star" class="ic ic-32"></i></span>
+        <div class="stack-2" style="gap:0">
+          <span class="t-eyebrow" style="color:#92400E">New badge</span>
+          <b class="t-h4">Network Explorer</b>
+          <span class="t-small muted">For scoring 9 or more on a network quiz.</span>
+        </div>
+      </div>
+
+      <div class="review-grid">
+        <div class="review-box ok">
+          <h3 class="t-h4 row" style="gap:8px;flex-wrap:nowrap;align-items:flex-start;color:var(--leaf-ink)"><i data-lucide="circle-check" class="ic"></i>What you got right</h3>
+          <ul>
+            <li><i data-lucide="check" class="ic" style="color:var(--leaf-ink)"></i>Hub vs. switch — you fixed it on the second try</li>
+            <li><i data-lucide="check" class="ic" style="color:var(--leaf-ink)"></i>What a router does between two networks</li>
+            <li><i data-lucide="check" class="ic" style="color:var(--leaf-ink)"></i>Reading a MAC address</li>
+            <li><i data-lucide="check" class="ic" style="color:var(--leaf-ink)"></i>All 3 cable questions</li>
+          </ul>
+        </div>
+        <div class="review-box next">
+          <h3 class="t-h4 row" style="gap:8px;flex-wrap:nowrap;align-items:flex-start;color:var(--coral-ink)"><i data-lucide="rotate-ccw" class="ic"></i>What we’ll review next time</h3>
+          <ul>
+            <li><i data-lucide="circle-dot" class="ic" style="color:var(--coral-ink)"></i><span><b>Question 7 · subnet mask.</b> 255.255.255.0 means the first three numbers name the network. We’ll practise this in Wednesday’s class.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row score-actions" style="justify-content:center">
+        <a class="btn btn-secondary btn-md" href="student-results.html"><i data-lucide="trophy" class="ic ic-sm"></i>See group rating</a>
+        <a class="btn btn-leaf" href="student-home.html">Keep going!<i data-lucide="arrow-right" class="ic"></i></a>
+      </div>
+      <p class="t-caption muted">Elena Sokolova can see your answers. Your parent gets a Telegram message that a grade was posted.</p>
+    </section>
+  </div>
+
+</main>
+</body>
+</html>

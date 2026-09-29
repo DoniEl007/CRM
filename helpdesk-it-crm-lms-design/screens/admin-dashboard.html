@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+</head>
+<body data-role="admin" data-page="dashboard" data-title="Good morning, Doniyor" data-sub="Tuesday, 29 September · 14 classes today">
+<main id="page">
+
+  <!-- KPIs -->
+  <section class="grid grid-4" aria-label="Key numbers">
+    <div class="card stat">
+      <span class="stat-label"><i data-lucide="users" class="ic ic-sm"></i>Active students</span>
+      <span class="stat-value">184 <small>/ 250</small></span>
+      <span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+24 this month</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label"><i data-lucide="wallet" class="ic ic-sm"></i>Cash collected · Sep</span>
+      <span class="stat-value">110.4 <small>mln</small></span>
+      <span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+5.7% vs Aug</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label"><i data-lucide="alert-circle" class="ic ic-sm"></i>Overdue payments</span>
+      <span class="stat-value">11 <small>students</small></span>
+      <span class="delta down"><i data-lucide="trending-up" class="ic ic-sm"></i>6.6 mln so‘m open</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label"><i data-lucide="calendar-check" class="ic ic-sm"></i>Attendance · this week</span>
+      <span class="stat-value">92%</span>
+      <span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+3 pts</span>
+    </div>
+  </section>
+
+  <section class="grid grid-main">
+    <div class="card">
+      <div class="card-head">
+        <div class="stack-2"><h2 class="t-h3">Cash collected</h2><p class="t-small muted">mln so‘m per month · 12-lesson cycles</p></div>
+        <div class="segmented" role="group" aria-label="Period"><button aria-pressed="false">Weekly</button><button aria-pressed="true">Monthly</button></div>
+      </div>
+      <div class="bars" role="img" aria-label="Cash collected: Apr 86.4, May 92.0, Jun 88.2, Jul 97.8, Aug 104.4, Sep 110.4 mln so‘m">
+        <div class="bar" style="--v:.72" data-tip="Apr · 86.4"><span class="val">86.4</span></div>
+        <div class="bar" style="--v:.767" data-tip="May · 92.0"><span class="val">92.0</span></div>
+        <div class="bar" style="--v:.735" data-tip="Jun · 88.2"><span class="val">88.2</span></div>
+        <div class="bar" style="--v:.815" data-tip="Jul · 97.8"><span class="val">97.8</span></div>
+        <div class="bar" style="--v:.87" data-tip="Aug · 104.4"><span class="val">104.4</span></div>
+        <div class="bar hi" style="--v:.92" data-tip="Sep · 110.4"><span class="val">110.4</span></div>
+      </div>
+      <div class="bar-labels"><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2 class="t-h3">Today’s classes</h2><a class="btn btn-ghost btn-md" href="admin-timetable.html">Timetable</a></div>
+      <div class="list">
+        <div class="list-row"><span class="mono muted" style="width:52px">09:00</span><div class="grow"><b>Helpdesk IT-3</b><span>E. Sokolova · Room 2 · 10/10</span></div><span class="pill st-present"><i data-lucide="check" class="ic"></i>Marked</span></div>
+        <div class="list-row"><span class="mono muted" style="width:52px">11:00</span><div class="grow"><b>English B1 · Morning</b><span>S. Aliyeva · Room 4 · 8/10</span></div><span class="pill st-present"><i data-lucide="check" class="ic"></i>Marked</span></div>
+        <div class="list-row"><span class="mono muted" style="width:52px">14:00</span><div class="grow"><b>Networking Basics-1</b><span>A. Tursunov · Room 2 · 9/10</span></div><span class="pill st-due">Not yet</span></div>
+        <div class="list-row"><span class="mono muted" style="width:52px">16:00</span><div class="grow"><b>English A2 · Teens</b><span>S. Aliyeva · Room 3 · 10/10</span></div><span class="pill st-due">Not yet</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid grid-2">
+    <div class="card">
+      <div class="card-head">
+        <div class="stack-2"><h2 class="t-h3">Enrollment</h2><p class="t-small muted">Requests that became active vs. declined</p></div>
+        <div class="legend"><span><i style="background:var(--sky-deep)"></i>Became active</span><span><i style="background:var(--berry)"></i>Declined</span></div>
+      </div>
+      <div class="chart-scroll"><svg class="chart-svg" viewBox="0 0 580 210" role="img" aria-label="Became active: Apr 18, May 22, Jun 19, Jul 27, Aug 31, Sep 24. Declined: 6, 5, 8, 7, 9, 6.">
+        <line class="grid-line" x1="40" x2="560" y1="20" y2="20"/><line class="grid-line" x1="40" x2="560" y1="60" y2="60"/><line class="grid-line" x1="40" x2="560" y1="100" y2="100"/><line class="grid-line" x1="40" x2="560" y1="140" y2="140"/><line class="grid-line" x1="40" x2="560" y1="180" y2="180"/>
+        <text class="axis-text" x="30" y="24" text-anchor="end">40</text><text class="axis-text" x="30" y="104" text-anchor="end">20</text><text class="axis-text" x="30" y="184" text-anchor="end">0</text>
+        <path class="area-a" d="M40,108 L140,92 L240,104 L340,72 L440,56 L540,84 L540,180 L40,180 Z"/>
+        <polyline class="line-a" points="40,108 140,92 240,104 340,72 440,56 540,84"/>
+        <polyline class="line-b" points="40,156 140,160 240,148 340,152 440,144 540,156"/>
+        <circle class="pt-a" cx="540" cy="84" r="5"/><circle class="pt-b" cx="540" cy="156" r="5"/>
+        <text class="lbl" x="540" y="72" text-anchor="middle">24</text><text class="lbl" x="540" y="144" text-anchor="middle">6</text>
+        <text class="axis-text" x="40" y="204" text-anchor="middle">Apr</text><text class="axis-text" x="140" y="204" text-anchor="middle">May</text><text class="axis-text" x="240" y="204" text-anchor="middle">Jun</text><text class="axis-text" x="340" y="204" text-anchor="middle">Jul</text><text class="axis-text" x="440" y="204" text-anchor="middle">Aug</text><text class="axis-text" x="540" y="204" text-anchor="middle">Sep</text>
+      </svg></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2 class="t-h3">Needs attention</h2><a class="btn btn-ghost btn-md" href="admin-payments.html">All payments</a></div>
+      <div class="list">
+        <div class="list-row"><span class="avatar sm c">SN</span><div class="grow"><b>Sardor Nazarov</b><span>Networking Basics-1 · cycle 3 due 18 Sep</span></div><span class="pill st-overdue"><i data-lucide="alert-circle" class="ic"></i>11 days</span></div>
+        <div class="list-row"><span class="avatar sm b">MA</span><div class="grow"><b>Madina Azimova</b><span>English B1 · cycle 2 due 22 Sep</span></div><span class="pill st-overdue"><i data-lucide="alert-circle" class="ic"></i>7 days</span></div>
+        <div class="list-row"><span class="avatar sm">OT</span><div class="grow"><b>Otabek Toshmatov</b><span>Helpdesk IT-3 · parent Telegram not linked</span></div><span class="pill st-due"><i data-lucide="link-2-off" class="ic"></i>Not linked</span></div>
+        <div class="list-row"><span class="avatar sm l">3</span><div class="grow"><b>3 trial lessons today</b><span>Record the outcome after class</span></div><a class="pill st-trial" href="admin-crm.html">Open CRM</a></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

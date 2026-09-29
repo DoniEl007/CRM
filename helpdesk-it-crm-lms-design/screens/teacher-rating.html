@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Group rating · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .share { display: flex; align-items: center; gap: var(--space-3); min-width: 160px; }
+  .share .progress { flex: 1; }
+  .stars .ic { width: 18px; height: 18px; vertical-align: -3px; }
+  .m-rate { align-items: flex-start; }
+  .m-rate .grow .stars { display: inline-flex; color: var(--sun); }
+  .stat .stat-value { white-space: nowrap; }
+  .chart-layout { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: center; }
+  @media (max-width: 1023px) { .chart-layout { grid-template-columns: minmax(0, 1fr); } }
+  .m-rate .grow b { white-space: normal; }
+  .m-num { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex: none; }
+  .m-num b { font: 700 20px/28px var(--font-mono); }
+  .task-keys { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; font: 400 14px/20px var(--font-body); color: var(--ink-muted); }
+  .task-keys b { color: var(--ink); margin-right: 4px; }
+</style>
+</head>
+<body data-role="teacher" data-page="rating" data-title="Group rating" data-sub="Ranked by total correct answers across all tasks">
+<main id="page">
+
+  <section class="row between">
+    <div class="segmented" role="group" aria-label="Group"><button aria-pressed="true">Helpdesk IT-3</button><button aria-pressed="false">Office &amp; Windows-1</button></div>
+    <span class="t-small muted">15 tasks · 150 questions · updated today 10:42</span>
+  </section>
+
+  <section class="grid grid-4" aria-label="Group summary">
+    <div class="card stat"><span class="stat-label"><i data-lucide="users-round" class="ic ic-sm"></i>Students</span><span class="stat-value">10 <small>/ 10</small></span></div>
+    <div class="card stat"><span class="stat-label"><i data-lucide="circle-check-big" class="ic ic-sm"></i>Average correct</span><span class="stat-value">76%</span><span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+3 pts this week</span></div>
+    <div class="card stat"><span class="stat-label"><i data-lucide="clipboard-list" class="ic ic-sm"></i>Tasks completed</span><span class="stat-value">133 <small>/ 150</small></span></div>
+    <div class="card stat"><span class="stat-label"><i data-lucide="trophy" class="ic ic-sm"></i>Top of group</span><span class="stat-value" style="font-size:24px;line-height:32px">Dilnoza K.</span><span class="t-small muted">142 correct answers</span></div>
+  </section>
+
+  <section class="card">
+      <div class="card-head"><h2 class="t-h3">Helpdesk IT-3 · ranking</h2><span class="t-small muted">Trend vs last week</span></div>
+      <div class="table-wrap hide-mobile">
+        <table class="table">
+          <thead><tr><th>#</th><th>Student</th><th class="num">Correct</th><th class="num">Tasks</th><th>Correct share</th><th>Trend</th></tr></thead>
+          <tbody>
+<tr><td><span class="rank r1">1</span></td><td><div class="person"><span class="avatar xs ">DK</span><b>Dilnoza Karimova</b> <span class="stars" title="Top 3 in group"><i data-lucide="star" class="ic ic-sm"></i></span></div></td><td class="num"><b>142</b></td><td class="num">15 / 15</td><td><div class="share"><div class="progress" role="img" aria-label="95% correct"><span style="width:95%"></span></div><span class="num t-caption muted">95%</span></div></td><td><span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+1</span></td></tr>
+<tr><td><span class="rank r2">2</span></td><td><div class="person"><span class="avatar xs ">AR</span><b>Aziz Rakhimov</b> <span class="stars" title="Top 3 in group"><i data-lucide="star" class="ic ic-sm"></i></span></div></td><td class="num"><b>138</b></td><td class="num">15 / 15</td><td><div class="share"><div class="progress" role="img" aria-label="92% correct"><span style="width:92%"></span></div><span class="num t-caption muted">92%</span></div></td><td><span class="delta down"><i data-lucide="trending-down" class="ic ic-sm"></i>−1</span></td></tr>
+<tr><td><span class="rank r3">3</span></td><td><div class="person"><span class="avatar xs l">KY</span><b>Kamola Yusupova</b> <span class="stars" title="Top 3 in group"><i data-lucide="star" class="ic ic-sm"></i></span></div></td><td class="num"><b>131</b></td><td class="num">14 / 15</td><td><div class="share"><div class="progress" role="img" aria-label="87% correct"><span style="width:87%"></span></div><span class="num t-caption muted">87%</span></div></td><td><span class="delta" style="color:var(--ink-muted)"><i data-lucide="minus" class="ic ic-sm"></i>Same</span></td></tr>
+<tr><td><span class="rank">4</span></td><td><div class="person"><span class="avatar xs b">JA</span><b>Jasur Aminov</b></div></td><td class="num"><b>124</b></td><td class="num">14 / 15</td><td><div class="share"><div class="progress" role="img" aria-label="83% correct"><span style="width:83%"></span></div><span class="num t-caption muted">83%</span></div></td><td><span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+2</span></td></tr>
+<tr><td><span class="rank">5</span></td><td><div class="person"><span class="avatar xs s">SN</span><b>Shahzoda Nurmatova</b></div></td><td class="num"><b>119</b></td><td class="num">14 / 15</td><td><div class="share"><div class="progress" role="img" aria-label="79% correct"><span style="width:79%"></span></div><span class="num t-caption muted">79%</span></div></td><td><span class="delta down"><i data-lucide="trending-down" class="ic ic-sm"></i>−1</span></td></tr>
+<tr><td><span class="rank">6</span></td><td><div class="person"><span class="avatar xs ">TK</span><b>Timur Khasanov</b></div></td><td class="num"><b>112</b></td><td class="num">13 / 15</td><td><div class="share"><div class="progress" role="img" aria-label="75% correct"><span style="width:75%"></span></div><span class="num t-caption muted">75%</span></div></td><td><span class="delta down"><i data-lucide="trending-down" class="ic ic-sm"></i>−1</span></td></tr>
+<tr><td><span class="rank">7</span></td><td><div class="person"><span class="avatar xs l">MS</span><b>Malika Saidova</b></div></td><td class="num"><b>106</b></td><td class="num">13 / 15</td><td><div class="share"><div class="progress" role="img" aria-label="71% correct"><span style="width:71%"></span></div><span class="num t-caption muted">71%</span></div></td><td><span class="delta" style="color:var(--ink-muted)"><i data-lucide="minus" class="ic ic-sm"></i>Same</span></td></tr>
+<tr><td><span class="rank">8</span></td><td><div class="person"><span class="avatar xs b">RI</span><b>Rustam Ismoilov</b></div></td><td class="num"><b>98</b></td><td class="num">12 / 15</td><td><div class="share"><div class="progress" role="img" aria-label="65% correct"><span style="width:65%"></span></div><span class="num t-caption muted">65%</span></div></td><td><span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+1</span></td></tr>
+<tr><td><span class="rank">9</span></td><td><div class="person"><span class="avatar xs s">LA</span><b>Laylo Abdullayeva</b></div></td><td class="num"><b>91</b></td><td class="num">12 / 15</td><td><div class="share"><div class="progress" role="img" aria-label="61% correct"><span style="width:61%"></span></div><span class="num t-caption muted">61%</span></div></td><td><span class="delta down"><i data-lucide="trending-down" class="ic ic-sm"></i>−1</span></td></tr>
+<tr><td><span class="rank">10</span></td><td><div class="person"><span class="avatar xs ">OT</span><b>Otabek Toshmatov</b></div></td><td class="num"><b>84</b></td><td class="num">11 / 15</td><td><div class="share"><div class="progress" role="img" aria-label="56% correct"><span style="width:56%"></span></div><span class="num t-caption muted">56%</span></div></td><td><span class="delta" style="color:var(--ink-muted)"><i data-lucide="minus" class="ic ic-sm"></i>Same</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="list hide-desktop">
+<div class="list-row m-rate"><span class="rank r1">1</span><div class="grow"><b>Dilnoza Karimova <span class="stars" title="Top 3 in group"><i data-lucide="star" class="ic ic-sm"></i></span></b><span>15 / 15 tasks · 95% correct</span><div class="progress" style="margin-top:6px"><span style="width:95%"></span></div></div><div class="m-num"><b class="num">142</b><span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+1</span></div></div>
+<div class="list-row m-rate"><span class="rank r2">2</span><div class="grow"><b>Aziz Rakhimov <span class="stars" title="Top 3 in group"><i data-lucide="star" class="ic ic-sm"></i></span></b><span>15 / 15 tasks · 92% correct</span><div class="progress" style="margin-top:6px"><span style="width:92%"></span></div></div><div class="m-num"><b class="num">138</b><span class="delta down"><i data-lucide="trending-down" class="ic ic-sm"></i>−1</span></div></div>
+<div class="list-row m-rate"><span class="rank r3">3</span><div class="grow"><b>Kamola Yusupova <span class="stars" title="Top 3 in group"><i data-lucide="star" class="ic ic-sm"></i></span></b><span>14 / 15 tasks · 87% correct</span><div class="progress" style="margin-top:6px"><span style="width:87%"></span></div></div><div class="m-num"><b class="num">131</b><span class="delta" style="color:var(--ink-muted)"><i data-lucide="minus" class="ic ic-sm"></i>Same</span></div></div>
+<div class="list-row m-rate"><span class="rank">4</span><div class="grow"><b>Jasur Aminov</b><span>14 / 15 tasks · 83% correct</span><div class="progress" style="margin-top:6px"><span style="width:83%"></span></div></div><div class="m-num"><b class="num">124</b><span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+2</span></div></div>
+<div class="list-row m-rate"><span class="rank">5</span><div class="grow"><b>Shahzoda Nurmatova</b><span>14 / 15 tasks · 79% correct</span><div class="progress" style="margin-top:6px"><span style="width:79%"></span></div></div><div class="m-num"><b class="num">119</b><span class="delta down"><i data-lucide="trending-down" class="ic ic-sm"></i>−1</span></div></div>
+<div class="list-row m-rate"><span class="rank">6</span><div class="grow"><b>Timur Khasanov</b><span>13 / 15 tasks · 75% correct</span><div class="progress" style="margin-top:6px"><span style="width:75%"></span></div></div><div class="m-num"><b class="num">112</b><span class="delta down"><i data-lucide="trending-down" class="ic ic-sm"></i>−1</span></div></div>
+<div class="list-row m-rate"><span class="rank">7</span><div class="grow"><b>Malika Saidova</b><span>13 / 15 tasks · 71% correct</span><div class="progress" style="margin-top:6px"><span style="width:71%"></span></div></div><div class="m-num"><b class="num">106</b><span class="delta" style="color:var(--ink-muted)"><i data-lucide="minus" class="ic ic-sm"></i>Same</span></div></div>
+<div class="list-row m-rate"><span class="rank">8</span><div class="grow"><b>Rustam Ismoilov</b><span>12 / 15 tasks · 65% correct</span><div class="progress" style="margin-top:6px"><span style="width:65%"></span></div></div><div class="m-num"><b class="num">98</b><span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+1</span></div></div>
+<div class="list-row m-rate"><span class="rank">9</span><div class="grow"><b>Laylo Abdullayeva</b><span>12 / 15 tasks · 61% correct</span><div class="progress" style="margin-top:6px"><span style="width:61%"></span></div></div><div class="m-num"><b class="num">91</b><span class="delta down"><i data-lucide="trending-down" class="ic ic-sm"></i>−1</span></div></div>
+<div class="list-row m-rate"><span class="rank">10</span><div class="grow"><b>Otabek Toshmatov</b><span>11 / 15 tasks · 56% correct</span><div class="progress" style="margin-top:6px"><span style="width:56%"></span></div></div><div class="m-num"><b class="num">84</b><span class="delta" style="color:var(--ink-muted)"><i data-lucide="minus" class="ic ic-sm"></i>Same</span></div></div>
+      </div>
+  </section>
+
+  <section class="card">
+      <div class="stack-2"><h2 class="t-h3">Correct answers per task</h2><p class="t-small muted">Group average, of 10 · last 6 tasks</p></div>
+      <div class="grid chart-layout"><div>
+      <div class="bars" role="img" aria-label="Group average correct answers of 10: T10 Network cables quiz 7.2; T11 OSI layers test 8.1; T12 Home network diagram 6.6; T13 IP basics quiz 8.4; T14 Hub vs switch 7.9; T15 Troubleshooting log 7.4">
+<div class="bar" style="--v:0.72" data-tip="T10 · Network cables quiz · 7.2 of 10"><span class="val">7.2</span></div>
+<div class="bar" style="--v:0.81" data-tip="T11 · OSI layers test · 8.1 of 10"><span class="val">8.1</span></div>
+<div class="bar" style="--v:0.66" data-tip="T12 · Home network diagram · 6.6 of 10"><span class="val">6.6</span></div>
+<div class="bar" style="--v:0.84" data-tip="T13 · IP basics quiz · 8.4 of 10"><span class="val">8.4</span></div>
+<div class="bar" style="--v:0.79" data-tip="T14 · Hub vs switch · 7.9 of 10"><span class="val">7.9</span></div>
+<div class="bar hi" style="--v:0.74" data-tip="T15 · Troubleshooting log · 7.4 of 10"><span class="val">7.4</span></div>
+      </div>
+      <div class="bar-labels"><span>T10</span><span>T11</span><span>T12</span><span>T13</span><span>T14</span><span>T15</span></div>
+      </div>
+      <div class="stack"><ul class="task-keys"><li><b class="mono">T10</b> Network cables quiz</li><li><b class="mono">T11</b> OSI layers test</li><li><b class="mono">T12</b> Home network diagram</li><li><b class="mono">T13</b> IP basics quiz</li><li><b class="mono">T14</b> Hub vs switch</li><li><b class="mono">T15</b> Troubleshooting log</li></ul>
+      <p class="t-small muted">T12 “Home network diagram” is the lowest — worth a quick review on Wednesday.</p></div>
+      </div>
+  </section>
+
+</main>
+</body>
+</html>

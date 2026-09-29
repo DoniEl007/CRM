@@ -18,6 +18,13 @@ export class UsersController {
     return { user: toPublicUser(user), temporaryPassword };
   }
 
+  @Post(':id/reset-password')
+  @RequirePermission('credentials.create')
+  async resetPassword(@Param('id') id: string, @CurrentUser() currentUser: AuthenticatedUser) {
+    const { user, temporaryPassword } = await this.usersService.regeneratePassword(id, currentUser.role);
+    return { user: toPublicUser(user), temporaryPassword };
+  }
+
   @Get()
   @RequirePermission('crm.manage')
   async findAll(@Query('role') role?: Role) {

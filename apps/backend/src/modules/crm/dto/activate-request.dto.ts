@@ -1,8 +1,13 @@
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsIn, IsISO8601, IsOptional, IsString, IsUUID, MinLength } from 'class-validator';
 
-// Confirms/collects the details needed to provision the new Student login
-// (TT §6.2: login is the student's public email address) at the moment a
-// request converts to an active, paying student.
+const LOCALES = ['en', 'ru', 'uz-Latn', 'uz-Cyrl'] as const;
+
+// Confirms/collects everything needed to turn a request into an active,
+// paying student in one step (TT §6.2 login-by-email, plus the design's
+// combined "New student & login" screen): the login itself, group
+// enrollment, parent Telegram linking info, date of birth, and interface
+// language. Only `email`/`firstName`/`lastName` are required — the rest can
+// still be filled in later from the student's own profile.
 export class ActivateRequestDto {
   @IsEmail()
   email!: string;
@@ -14,4 +19,22 @@ export class ActivateRequestDto {
   @IsString()
   @MinLength(1)
   lastName!: string;
+
+  // If given, enrolls the new student into this group as part of activation
+  // (capacity-checked the same way as a normal POST /groups/:id/members).
+  @IsOptional()
+  @IsUUID()
+  groupId?: string;
+
+  @IsOptional()
+  @IsString()
+  parentTelegramUsername?: string;
+
+  @IsOptional()
+  @IsISO8601()
+  dateOfBirth?: string;
+
+  @IsOptional()
+  @IsIn(LOCALES)
+  preferredLocale?: (typeof LOCALES)[number];
 }

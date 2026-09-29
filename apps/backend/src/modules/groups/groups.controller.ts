@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, ForbiddenException, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { RequirePermission } from '../../common/decorators/require-permission.decorator.js';
 import { CurrentUser, type AuthenticatedUser } from '../../common/decorators/current-user.decorator.js';
 import { RbacService } from '../identity/rbac/rbac.service.js';
@@ -6,7 +6,7 @@ import { GroupsService } from './groups.service.js';
 import { ScheduleSlotsService } from './schedule-slots.service.js';
 import { CreateGroupDto, UpdateGroupDto, AddMemberDto } from './dto/group.dto.js';
 import { CreateScheduleSlotDto } from './dto/schedule-slot.dto.js';
-import type { Group } from './entities/group.entity.js';
+import type { Group, GroupCategory } from './entities/group.entity.js';
 
 // TT §4.1: only Full Administrator manages groups & scheduling; Teacher has
 // "View own" (their assigned group(s) only); Administrative Staff, CEO, and
@@ -21,8 +21,8 @@ export class GroupsController {
 
   @Get()
   @RequirePermission('groups.manage')
-  findAll() {
-    return this.groupsService.findAll();
+  findAll(@Query('category') category?: GroupCategory) {
+    return this.groupsService.findAll(category);
   }
 
   @Get('mine')

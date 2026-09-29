@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Role } from '../../common/enums/role.enum.js';
 import { RbacService } from '../identity/rbac/rbac.service.js';
 import { UsersService, type CreatedUserResult } from '../identity/users/users.service.js';
+import { GroupsService } from '../groups/groups.service.js';
 import { Request, RequestSource, RequestStatus } from './entities/request.entity.js';
 import { CreateInquiryDto } from './dto/create-inquiry.dto.js';
 import { CreateManualRequestDto } from './dto/create-manual-request.dto.js';
@@ -17,6 +18,7 @@ export class RequestsService {
     @InjectRepository(Request) private readonly requestsRepo: Repository<Request>,
     private readonly usersService: UsersService,
     private readonly rbacService: RbacService,
+    private readonly groupsService: GroupsService,
   ) {}
 
   // Public contact-form submission (TT §3.1) — always source=WEBSITE, always NEW.
@@ -59,7 +61,7 @@ export class RequestsService {
   async findByIdOrFail(id: string): Promise<Request> {
     const request = await this.requestsRepo.findOne({
       where: { id },
-      relations: { courseInterest: true, convertedStudent: true },
+      relations: { courseInterest: true, convertedStudent: true, assignedGroup: true },
     });
     if (!request) throw new NotFoundException('Request not found');
     return request;
@@ -67,6 +69,13 @@ export class RequestsService {
 
   async scheduleTrial(id: string, dto: ScheduleTrialDto): Promise<Request> {
     const request = await this.assertOpen(id);
+    if (dto.groupId) {
+      // `findByIdOrFail` loads `assignedGroup`, so — same gotcha as
+      // `activate()`'s convertedStudent — the relation object must be
+      // reassigned too, not just the FK column, or save() nulls it back out.
+      request.assignedGroup = await this.groupsService.findByIdOrFail(dto.groupId);
+      request.assignedGroupId = dto.groupId;
+    }
     request.status = RequestStatus.TRIAL_SCHEDULED;
     request.trialLessonAt = new Date(dto.trialLessonAt);
     return this.requestsRepo.save(request);
@@ -114,6 +123,27 @@ export class RequestsService {
       },
       requestedByRole,
     );
+
+    // Matches the design's single "New student & login" step: enrollment,
+    // parent Telegram, DOB and language are all collected here rather than
+    // left for separate follow-up calls.
+    const groupIdToEnroll = dto.groupId ?? request.assignedGroupId;
+    if (groupIdToEnroll) {
+      await this.groupsService.addMember(groupIdToEnroll, user.id);
+    }
+    if (dto.parentTelegramUsername !== undefined || dto.dateOfBirth !== undefined) {
+      await this.usersService.updateStudentProfile(user.id, {
+        parentTelegramUsername: dto.parentTelegramUsername,
+        dateOfBirth: dto.dateOfBirth,
+      });
+    }
+    if (dto.preferredLocale) {
+      await this.usersService.updatePreferredLocale(user.id, dto.preferredLocale);
+      // updatePreferredLocale does a raw repository update, which doesn't
+      // touch this in-memory `user` object — reflect it here so the response
+      // matches what was actually persisted.
+      user.preferredLocale = dto.preferredLocale;
+    }
 
     request.status = RequestStatus.ACTIVE;
     // `assertOpen` loads the `convertedStudent` relation, so it's already an

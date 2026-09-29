@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, type Relation } from 'typeorm';
 import { AppBaseEntity } from '../../../common/entities/app-base.entity.js';
 import { User } from '../../identity/entities/user.entity.js';
 import { Course } from '../../catalog/entities/course.entity.js';
+import { Group } from '../../groups/entities/group.entity.js';
 
 export enum RequestSource {
   WEBSITE = 'WEBSITE',
@@ -64,4 +65,15 @@ export class Request extends AppBaseEntity {
 
   @Column({ name: 'converted_student_user_id', nullable: true })
   convertedStudentUserId?: string;
+
+  // The group this candidate is being considered for — set when scheduling
+  // the trial (design shows it on the trial record alongside the teacher and
+  // room) and used to pre-fill enrollment at activation. Not a guarantee:
+  // staff can still enroll into a different group at activation time.
+  @ManyToOne(() => Group, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'assigned_group_id' })
+  assignedGroup?: Relation<Group>;
+
+  @Column({ name: 'assigned_group_id', nullable: true })
+  assignedGroupId?: string;
 }

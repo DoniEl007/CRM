@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>News · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .site-footer .inner { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: var(--space-8); }
+  .site-footer .foot-line { display: flex; align-items: center; gap: var(--space-2); font: 400 16px/24px var(--font-body); color: var(--ink-faint); }
+  .site-footer .copy { grid-column: 1 / -1; border-top: 1px solid var(--ink-muted); padding-top: var(--space-6); font: 400 14px/20px var(--font-body); color: var(--ink-subtle); }
+  .note { display: flex; align-items: flex-start; gap: var(--space-2); }
+  .note .ic { margin-top: 2px; }
+  @media (max-width: 1023px) { .site-footer .inner { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); } .site-section .btn { padding-left: var(--space-6); padding-right: var(--space-6); } .cta .btn { flex: 1 1 100%; } }
+  .featured { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 0; padding: 0; overflow: hidden; }
+  .featured .art { position: relative; min-height: 340px; background: var(--sky-soft); overflow: hidden; }
+  .featured .art span { position: absolute; border-radius: var(--radius-card); }
+  .featured .body { padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-4); justify-content: center; }
+  .post { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: var(--space-6); padding: var(--space-6) 0; border-bottom: 1px solid var(--outline); text-decoration: none; color: inherit; }
+  .post:last-child { border-bottom: 0; }
+  .post:hover h3 { color: var(--sky-deep); }
+  .date { width: 88px; height: 88px; border-radius: var(--radius-card); background: var(--surface); border: 1px solid var(--outline); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .date b { font: 700 32px/36px var(--font-display); font-variant-numeric: tabular-nums; }
+  .date span { font: 700 14px/20px var(--font-body); color: var(--ink-muted); text-transform: uppercase; letter-spacing: .06em; }
+  @media (max-width: 1023px) {
+    .featured { grid-template-columns: minmax(0, 1fr); }
+    .featured .art { min-height: 180px; }
+    .featured .body { padding: 20px; }
+    .post { grid-template-columns: 64px minmax(0, 1fr); gap: var(--space-4); padding: 20px 0; }
+    .date { width: 64px; height: 64px; border-radius: 16px; }
+    .date b { font-size: 24px; line-height: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="site-home.html" style="padding:0"><span class="brand-mark">H</span><span class="brand-name">Helpdesk IT<small class="hide-m">Learning center · Tashkent</small></span></a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="site-home.html">Home</a>
+      <a href="site-courses.html">Courses &amp; pricing</a>
+      <a href="site-teachers.html">Teachers</a>
+      <a href="site-news.html" aria-current="page">News</a>
+    </nav>
+    <button class="lang" type="button" aria-label="Language: English. Also Русский, O‘zbekcha, Ўзбекча"><i data-lucide="languages" class="ic ic-sm"></i>EN<span style="color:var(--ink-muted);font-weight:400">· RU · O‘Z · ЎЗ</span></button>
+    <a class="btn btn-primary btn-md hide-m" href="login.html"><i data-lucide="log-in" class="ic ic-sm"></i>Log in</a>
+    <button class="icon-btn menu-btn" type="button" aria-label="Open menu"><i data-lucide="menu" class="ic"></i></button>
+  </div>
+</header>
+
+<main>
+  <section class="site-section">
+    <div class="inner stack" style="gap:var(--space-8)">
+      <div class="stack-2" style="max-width:760px">
+        <span class="t-eyebrow">News</span>
+        <h1 class="t-h1">What’s happening at Helpdesk IT</h1>
+        <p class="t-body-lg muted">New groups, student results and schedule changes.</p>
+      </div>
+
+      <article class="card featured hover">
+        <div class="art" aria-hidden="true">
+          <span style="left:12%;top:18%;width:44%;height:40%;background:var(--sky)"></span>
+          <span style="left:40%;top:44%;width:42%;height:36%;background:var(--bg);border:1px solid var(--outline)"></span>
+          <span style="left:18%;top:66%;width:56px;height:56px;border-radius:999px;background:var(--leaf)"></span>
+          <span style="right:10%;top:12%;width:72px;height:72px;border-radius:999px;background:var(--sky-bright)"></span>
+          <span style="left:50%;top:54%;width:30%;height:10px;border-radius:999px;background:var(--sky-soft)"></span>
+          <span style="left:50%;top:62%;width:20%;height:10px;border-radius:999px;background:var(--sky-soft)"></span>
+        </div>
+        <div class="body">
+          <div class="row" style="gap:var(--space-2)"><span class="pill tag-subject"><i data-lucide="sparkles" class="ic"></i>New group</span><span class="pill st-neutral">Featured</span><time class="t-caption muted mono">28 Sep 2026</time></div>
+          <h2 class="t-h2">New Networking group starts 6 October</h2>
+          <p class="t-body muted">Networking Basics-2 meets Tue/Thu/Sat from 14:00 to 15:30 in Room 2, taught by Akmal Tursunov. You’ll set up a small office network, plan subnets and fix Wi-Fi problems on real equipment. Four seats are left.</p>
+          <div class="row" style="gap:var(--space-3)"><a class="btn btn-primary btn-md" href="site-home.html#trial"><i data-lucide="calendar-plus" class="ic ic-sm"></i>Book a free trial</a><a class="btn btn-ghost btn-md" href="#">Read more<i data-lucide="arrow-right" class="ic ic-sm"></i></a></div>
+        </div>
+      </article>
+
+      <div class="grid grid-main">
+        <div class="stack-2">
+          <h2 class="t-h3">Earlier posts</h2>
+          <div>
+          <a class="post" href="#">
+            <div class="date" aria-hidden="true"><b>21</b><span>Sep</span></div>
+            <div class="stack-2">
+              <div class="row" style="gap:var(--space-2)"><span class="pill st-active"><i data-lucide="trophy" class="ic"></i>Results</span><time class="t-caption muted mono">21 Sep 2026</time></div>
+              <h3 class="t-h4">Our students passed CompTIA A+ practice</h3>
+              <p class="t-small muted">Nine of ten Helpdesk IT-2 students scored above the pass mark on the full practice exam. Here is how the group prepared.</p>
+              <span class="t-caption muted row" style="gap:6px"><i data-lucide="clock" class="ic ic-sm"></i>4 min read</span>
+            </div>
+          </a>
+          <a class="post" href="#">
+            <div class="date" aria-hidden="true"><b>14</b><span>Sep</span></div>
+            <div class="stack-2">
+              <div class="row" style="gap:var(--space-2)"><span class="pill st-neutral"><i data-lucide="calendar-days" class="ic"></i>Schedule</span><time class="t-caption muted mono">14 Sep 2026</time></div>
+              <h3 class="t-h4">Autumn schedule is ready</h3>
+              <p class="t-small muted">Morning, afternoon and evening groups for the new season, with Saturday options for school students.</p>
+              <span class="t-caption muted row" style="gap:6px"><i data-lucide="clock" class="ic ic-sm"></i>2 min read</span>
+            </div>
+          </a>
+          <a class="post" href="#">
+            <div class="date" aria-hidden="true"><b>10</b><span>Sep</span></div>
+            <div class="stack-2">
+              <div class="row" style="gap:var(--space-2)"><span class="pill tag-subject"><i data-lucide="sparkles" class="ic"></i>New group</span><time class="t-caption muted mono">10 Sep 2026</time></div>
+              <h3 class="t-h4">English B1 evening group for working adults</h3>
+              <p class="t-small muted">Starts 12 October, Mon/Wed/Fri at 18:00 with Gulnora Rashidova. Five seats left.</p>
+              <span class="t-caption muted row" style="gap:6px"><i data-lucide="clock" class="ic ic-sm"></i>2 min read</span>
+            </div>
+          </a>
+          <a class="post" href="#">
+            <div class="date" aria-hidden="true"><b>03</b><span>Sep</span></div>
+            <div class="stack-2">
+              <div class="row" style="gap:var(--space-2)"><span class="pill st-neutral"><i data-lucide="send" class="ic"></i>Center news</span><time class="t-caption muted mono">03 Sep 2026</time></div>
+              <h3 class="t-h4">Parents now get attendance updates in Telegram</h3>
+              <p class="t-small muted">Link your Telegram once at the front desk and get a message if your child misses a class or a payment is due.</p>
+              <span class="t-caption muted row" style="gap:6px"><i data-lucide="clock" class="ic ic-sm"></i>3 min read</span>
+            </div>
+          </a>
+          <a class="post" href="#">
+            <div class="date" aria-hidden="true"><b>27</b><span>Aug</span></div>
+            <div class="stack-2">
+              <div class="row" style="gap:var(--space-2)"><span class="pill st-neutral"><i data-lucide="users-round" class="ic"></i>Events</span><time class="t-caption muted mono">27 Aug 2026</time></div>
+              <h3 class="t-h4">Open day recap: 40 guests crimped their first network cable</h3>
+              <p class="t-small muted">Thank you to everyone who came. The next open day is planned for November.</p>
+              <span class="t-caption muted row" style="gap:6px"><i data-lucide="clock" class="ic ic-sm"></i>3 min read</span>
+            </div>
+          </a>
+          </div>
+        </div>
+        <aside class="stack" style="gap:var(--space-6)">
+          <div class="card soft">
+            <span style="width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--sky-soft);color:var(--sky-deep)"><i data-lucide="send" class="ic"></i></span>
+            <h2 class="t-h4">Follow us on Telegram</h2>
+            <p class="t-small muted">We post new groups and schedule changes in our channel first.</p>
+            <a class="btn btn-secondary btn-md" href="#"><i data-lucide="send" class="ic ic-sm"></i>@helpdesk_it_uz</a>
+          </div>
+          <div class="card">
+            <h2 class="t-h4">Topics</h2>
+            <div class="row" style="gap:var(--space-2)"><span class="pill tag-subject">New group · 2</span><span class="pill st-neutral">Results · 1</span><span class="pill st-neutral">Schedule · 1</span><span class="pill st-neutral">Center news · 1</span><span class="pill st-neutral">Events · 1</span></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="inner">
+    <div class="stack">
+      <a class="brand" href="site-home.html" style="padding:0;color:var(--on-sky)"><span class="brand-mark">H</span><span class="brand-name">Helpdesk IT<small style="color:var(--ink-faint)">Learning center · Tashkent</small></span></a>
+      <p class="foot-line">IT and English courses in small groups.</p>
+    </div>
+    <div class="stack-2">
+      <span class="t-eyebrow" style="color:var(--ink-faint)">Visit</span>
+      <span class="foot-line"><i data-lucide="map-pin" class="ic ic-sm"></i>Tashkent · Address will be added</span>
+      <span class="foot-line"><i data-lucide="clock" class="ic ic-sm"></i>Mon–Sat 09:00–19:00</span>
+    </div>
+    <div class="stack-2">
+      <span class="t-eyebrow" style="color:var(--ink-faint)">Contact</span>
+      <a class="foot-line" href="tel:+998901234567"><i data-lucide="phone" class="ic ic-sm"></i>+998 90 123 45 67</a>
+      <a class="foot-line" href="#"><i data-lucide="send" class="ic ic-sm"></i>Telegram @helpdesk_it_uz</a>
+    </div>
+    <div class="stack-2">
+      <span class="t-eyebrow" style="color:var(--ink-faint)">Languages</span>
+      <span class="foot-line">English · Русский · O‘zbekcha · Ўзбекча</span>
+    </div>
+    <p class="copy">© 2026 Helpdesk IT learning center. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+</script>
+</body>
+</html>

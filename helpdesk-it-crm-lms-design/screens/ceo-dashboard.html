@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Overview · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  /* Horizontal bar chart (screen-level): set --v (0–1) on .hb-bar */
+  .hbars { display: flex; flex-direction: column; gap: var(--space-3); }
+  .hb-row { position: relative; display: grid; grid-template-columns: 180px minmax(0, 1fr); align-items: center; gap: var(--space-4); min-height: 40px; }
+  .hb-label { font: 400 15px/20px var(--font-body); color: var(--ink-muted); }
+  .hb-track { display: flex; align-items: center; gap: var(--space-2); border-left: 1px solid var(--outline); min-height: 40px; }
+  .hb-bar { display: block; height: 20px; width: calc(var(--v) * 85%); min-width: 4px; background: var(--sky); border-radius: 0 4px 4px 0; }
+  .hb-val { font: 700 13px/16px var(--font-mono); color: var(--ink-muted); white-space: nowrap; }
+  .hb-row:hover::after { content: attr(data-tip); position: absolute; right: 0; top: -30px; padding: 4px 10px; border-radius: 8px; background: var(--ink); color: var(--bg); font: 700 13px/18px var(--font-body); white-space: nowrap; z-index: 2; }
+  .hb-axis { display: flex; justify-content: space-between; margin-left: 196px; width: calc((100% - 196px) * .85); font: 400 13px/16px var(--font-mono); color: var(--ink-muted); }
+  @media (min-width: 1024px) { .chart-scroll .chart-svg { min-width: 0; } }
+  .meter { display: flex; align-items: center; gap: var(--space-3); min-width: 150px; }
+  .meter .progress { flex: 1; }
+  .score-n { font: 700 18px/24px var(--font-mono); }
+  @media (max-width: 1023px) {
+    .hb-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    .hb-track { border-left: 0; min-height: 24px; }
+    .hb-axis { margin-left: 0; width: 85%; }
+  }
+</style>
+</head>
+<body data-role="ceo" data-page="ceo" data-title="Good morning, Bekzod" data-sub="Tuesday, 29 September · all groups">
+<main id="page">
+
+  <section class="section-head" aria-label="Page status">
+    <div class="row">
+      <span class="pill st-neutral"><i data-lucide="eye" class="ic"></i>Read only</span>
+      <span class="t-small muted">Data as of today 08:30</span>
+    </div>
+    <a class="btn btn-secondary btn-md" href="admin-reports.html"><i data-lucide="file-spreadsheet" class="ic"></i>Export</a>
+  </section>
+
+  <!-- KPIs -->
+  <section class="grid grid-4" aria-label="Key numbers">
+    <div class="card stat">
+      <span class="stat-label"><i data-lucide="wallet" class="ic ic-sm"></i>Revenue · Sep</span>
+      <span class="stat-value">110.4 <small>mln</small></span>
+      <span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+5.7% vs Aug</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label"><i data-lucide="circle-alert" class="ic ic-sm"></i>Outstanding</span>
+      <span class="stat-value">6.6 <small>mln</small></span>
+      <span class="delta down"><i data-lucide="users" class="ic ic-sm"></i>11 students overdue</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label"><i data-lucide="users" class="ic ic-sm"></i>Active students</span>
+      <span class="stat-value">184 <small>/ 250</small></span>
+      <span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+24 enrolled in Sep</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label"><i data-lucide="calendar-check" class="ic ic-sm"></i>Attendance rate</span>
+      <span class="stat-value">92%</span>
+      <span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+3 pts this week</span>
+    </div>
+  </section>
+
+  <section class="grid grid-2">
+    <div class="card">
+      <div class="card-head">
+        <div class="stack-2"><h2 class="t-h3">Enrollment trend</h2><p class="t-small muted">Requests that became active vs. declined</p></div>
+        <div class="legend"><span><i style="background:var(--sky-deep)"></i>Became active</span><span><i style="background:var(--berry)"></i>Declined</span></div>
+      </div>
+      <div class="chart-scroll"><svg class="chart-svg" viewBox="0 0 580 210" role="img" aria-label="Became active: Apr 18, May 22, Jun 19, Jul 27, Aug 31, Sep 24. Declined: 6, 5, 8, 7, 9, 6.">
+        <line class="grid-line" x1="40" x2="560" y1="20" y2="20"/><line class="grid-line" x1="40" x2="560" y1="60" y2="60"/><line class="grid-line" x1="40" x2="560" y1="100" y2="100"/><line class="grid-line" x1="40" x2="560" y1="140" y2="140"/><line class="grid-line" x1="40" x2="560" y1="180" y2="180"/>
+        <text class="axis-text" x="30" y="24" text-anchor="end">40</text><text class="axis-text" x="30" y="104" text-anchor="end">20</text><text class="axis-text" x="30" y="184" text-anchor="end">0</text>
+        <path class="area-a" d="M40,108 L140,92 L240,104 L340,72 L440,56 L540,84 L540,180 L40,180 Z"/>
+        <polyline class="line-a" points="40,108 140,92 240,104 340,72 440,56 540,84"/>
+        <polyline class="line-b" points="40,156 140,160 240,148 340,152 440,144 540,156"/>
+        <circle class="pt-a" cx="540" cy="84" r="5"/><circle class="pt-b" cx="540" cy="156" r="5"/>
+        <text class="lbl" x="540" y="72" text-anchor="middle">24</text><text class="lbl" x="540" y="144" text-anchor="middle">6</text>
+        <text class="axis-text" x="40" y="204" text-anchor="middle">Apr</text><text class="axis-text" x="140" y="204" text-anchor="middle">May</text><text class="axis-text" x="240" y="204" text-anchor="middle">Jun</text><text class="axis-text" x="340" y="204" text-anchor="middle">Jul</text><text class="axis-text" x="440" y="204" text-anchor="middle">Aug</text><text class="axis-text" x="540" y="204" text-anchor="middle">Sep</text>
+      </svg></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="stack-2"><h2 class="t-h3">Attendance by group</h2><p class="t-small muted">September · share of students present</p></div>
+      </div>
+      <div class="hbars" role="img" aria-label="Attendance: Helpdesk IT-3 95%, English B1 94%, Networking Basics-1 91%, Office &amp; Windows-1 90%, English A2 89%, Python Start-2 88%">
+        <div class="hb-row" data-tip="Helpdesk IT-3 · 95% present"><span class="hb-label">Helpdesk IT-3</span><span class="hb-track"><span class="hb-bar" style="--v:.95"></span><span class="hb-val">95%</span></span></div>
+        <div class="hb-row" data-tip="English B1 · 94% present"><span class="hb-label">English B1 · Morning</span><span class="hb-track"><span class="hb-bar" style="--v:.94"></span><span class="hb-val">94%</span></span></div>
+        <div class="hb-row" data-tip="Networking Basics-1 · 91% present"><span class="hb-label">Networking Basics-1</span><span class="hb-track"><span class="hb-bar" style="--v:.91"></span><span class="hb-val">91%</span></span></div>
+        <div class="hb-row" data-tip="Office &amp; Windows-1 · 90% present"><span class="hb-label">Office &amp; Windows-1</span><span class="hb-track"><span class="hb-bar" style="--v:.90"></span><span class="hb-val">90%</span></span></div>
+        <div class="hb-row" data-tip="English A2 · 89% present"><span class="hb-label">English A2 · Teens</span><span class="hb-track"><span class="hb-bar" style="--v:.89"></span><span class="hb-val">89%</span></span></div>
+        <div class="hb-row" data-tip="Python Start-2 · 88% present"><span class="hb-label">Python Start-2</span><span class="hb-track"><span class="hb-bar" style="--v:.88"></span><span class="hb-val">88%</span></span></div>
+        <div class="hb-axis" aria-hidden="true"><span>0%</span><span>50%</span><span>100%</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid grid-main" id="scores" aria-label="Performance">
+    <div class="card">
+      <div class="card-head"><div class="stack-2"><h2 class="t-h3">Teacher performance</h2><p class="t-small muted">September · average across each teacher’s groups</p></div></div>
+      <div class="table-wrap hide-mobile">
+        <table class="table">
+          <thead><tr><th>Teacher</th><th>Groups</th><th>Avg correct answers</th><th>Attendance</th></tr></thead>
+          <tbody>
+            <tr><td><div class="person"><span class="avatar xs">ES</span><span><b>Elena Sokolova</b><small>16 students</small></span></div></td><td>Helpdesk IT-3 · Office &amp; Windows-1</td><td><div class="meter"><div class="progress"><span style="width:81%"></span></div><span class="mono">81%</span></div></td><td class="mono">93%</td></tr>
+            <tr><td><div class="person"><span class="avatar xs b">SA</span><span><b>Sevara Aliyeva</b><small>18 students</small></span></div></td><td>English B1 · English A2</td><td><div class="meter"><div class="progress"><span style="width:79%"></span></div><span class="mono">79%</span></div></td><td class="mono">91%</td></tr>
+            <tr><td><div class="person"><span class="avatar xs l">AT</span><span><b>Akmal Tursunov</b><small>9 students</small></span></div></td><td>Networking Basics-1</td><td><div class="meter"><div class="progress"><span style="width:76%"></span></div><span class="mono">76%</span></div></td><td class="mono">91%</td></tr>
+            <tr><td><div class="person"><span class="avatar xs">BE</span><span><b>Bobur Ergashev</b><small>7 students</small></span></div></td><td>Python Start-2</td><td><div class="meter"><div class="progress"><span style="width:72%"></span></div><span class="mono">72%</span></div></td><td class="mono">88%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="list hide-desktop">
+        <div class="list-row"><span class="avatar sm">ES</span><div class="grow"><b>Elena Sokolova</b><span>Helpdesk IT-3 · Office &amp; Windows-1</span><span class="mono">81% correct · 93% attendance</span></div></div>
+        <div class="list-row"><span class="avatar sm b">SA</span><div class="grow"><b>Sevara Aliyeva</b><span>English B1 · English A2</span><span class="mono">79% correct · 91% attendance</span></div></div>
+        <div class="list-row"><span class="avatar sm l">AT</span><div class="grow"><b>Akmal Tursunov</b><span>Networking Basics-1</span><span class="mono">76% correct · 91% attendance</span></div></div>
+        <div class="list-row"><span class="avatar sm">BE</span><div class="grow"><b>Bobur Ergashev</b><span>Python Start-2</span><span class="mono">72% correct · 88% attendance</span></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div class="stack-2"><h2 class="t-h3">Top students</h2><p class="t-small muted">All groups · correct answers in September</p></div></div>
+      <div class="list">
+        <div class="list-row"><span class="rank r1">1</span><div class="grow"><b>Dilnoza Karimova</b><span>Helpdesk IT-3</span></div><span class="score-n">142</span></div>
+        <div class="list-row"><span class="rank r2">2</span><div class="grow"><b>Jahongir Yuldashev</b><span>Python Start-2</span></div><span class="score-n">136</span></div>
+        <div class="list-row"><span class="rank r3">3</span><div class="grow"><b>Aziz Rakhimov</b><span>Helpdesk IT-3</span></div><span class="score-n">131</span></div>
+        <div class="list-row"><span class="rank">4</span><div class="grow"><b>Nargiza Ahmedova</b><span>English B1 · Morning</span></div><span class="score-n">127</span></div>
+        <div class="list-row"><span class="rank">5</span><div class="grow"><b>Sanjar Mahmudov</b><span>Networking Basics-1</span></div><span class="score-n">119</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

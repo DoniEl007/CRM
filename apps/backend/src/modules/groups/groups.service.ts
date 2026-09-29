@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role } from '../../common/enums/role.enum.js';
 import { UsersService } from '../identity/users/users.service.js';
-import { Group } from './entities/group.entity.js';
+import { Group, GroupCategory } from './entities/group.entity.js';
 import { GroupMembership } from './entities/group-membership.entity.js';
 import { CreateGroupDto, UpdateGroupDto } from './dto/group.dto.js';
 
@@ -21,7 +21,9 @@ export class GroupsService {
 
   async create(dto: CreateGroupDto): Promise<Group> {
     await this.assertIsTeacher(dto.teacherUserId);
-    return this.groupsRepo.save(this.groupsRepo.create({ name: dto.name, teacherUserId: dto.teacherUserId }));
+    return this.groupsRepo.save(
+      this.groupsRepo.create({ name: dto.name, category: dto.category, teacherUserId: dto.teacherUserId }),
+    );
   }
 
   async update(id: string, dto: UpdateGroupDto): Promise<Group> {
@@ -31,8 +33,12 @@ export class GroupsService {
     return this.groupsRepo.save(group);
   }
 
-  findAll(): Promise<Group[]> {
-    return this.groupsRepo.find({ relations: { teacher: true }, order: { createdAt: 'DESC' } });
+  findAll(category?: GroupCategory): Promise<Group[]> {
+    return this.groupsRepo.find({
+      where: category ? { category } : {},
+      relations: { teacher: true },
+      order: { createdAt: 'DESC' },
+    });
   }
 
   findForTeacher(teacherUserId: string): Promise<Group[]> {

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Helpdesk IT Screens</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: screen index on the left, the selected screen rendered as web (1440) and mobile (390) frames side by side */
+:root {
+  --bg: #F8FAFC; --panel: #FFFFFF; --ink: #0F172A; --muted: #475569; --line: #E2E8F0;
+  --sky: #3B82F6; --sky-deep: #1D4ED8; --sky-soft: #DBEAFE; --frame: #0F172A;
+  --display: "Hubot Sans", "Nunito", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Nunito Sans", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0B1220; --panel: #111A2E; --ink: #E2E8F0; --muted: #A3B1C6; --line: #22304A;
+  --sky: #60A5FA; --sky-deep: #93C5FD; --sky-soft: #1E3A8A; --frame: #020617; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0B1220; --panel: #111A2E; --ink: #E2E8F0; --muted: #A3B1C6; --line: #22304A;
+  --sky: #60A5FA; --sky-deep: #93C5FD; --sky-soft: #1E3A8A; --frame: #020617; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 16px/24px var(--body); letter-spacing: .01em; }
+.wrap { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: 100vh; }
+aside { background: var(--panel); border-right: 1px solid var(--line); padding: 24px 16px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.brand { display: flex; gap: 12px; align-items: center; padding: 0 8px 20px; }
+.mark { width: 44px; height: 44px; border-radius: 14px; background: #3B82F6; color: #fff; display: grid; place-items: center; font: 700 20px/1 var(--display); }
+.brand b { display: block; font: 700 19px/24px var(--display); }
+.brand span { font-size: 14px; color: var(--muted); }
+.grp { margin-top: 16px; }
+.grp h2 { margin: 0 0 4px; padding: 0 12px; font: 700 13px/20px var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.grp a { display: flex; justify-content: space-between; gap: 8px; min-height: 44px; align-items: center; padding: 0 12px; border-radius: 12px; color: var(--ink); text-decoration: none; font-weight: 700; font-size: 15px; }
+.grp a small { font: 400 12px/1 var(--mono); color: var(--muted); }
+.grp a:hover { background: var(--bg); }
+.grp a[aria-current="true"] { background: var(--sky-soft); color: var(--sky-deep); }
+main { min-width: 0; padding: 24px 32px 48px; display: flex; flex-direction: column; gap: 20px; }
+.head { display: flex; gap: 16px; align-items: end; justify-content: space-between; flex-wrap: wrap; }
+.head h1 { margin: 0; font: 700 32px/40px var(--display); text-wrap: balance; }
+.head p { margin: 4px 0 0; color: var(--muted); max-width: 70ch; }
+.btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0 18px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); text-decoration: none; font-weight: 700; cursor: pointer; font-size: 15px; }
+.btn.primary { background: #3B82F6; color: #fff; border-color: #3B82F6; }
+.btn[aria-pressed="true"] { background: var(--sky-soft); color: var(--sky-deep); border-color: var(--sky); }
+.stage { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.dev { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.dev .lbl { font: 400 13px/20px var(--mono); color: var(--muted); }
+.shell { background: var(--frame); border-radius: 16px; padding: 10px; overflow: hidden; }
+.shell.phone { border-radius: 40px; padding: 12px; }
+.clip { overflow: hidden; border-radius: 8px; background: #fff; position: relative; }
+.phone .clip { border-radius: 30px; }
+iframe { border: 0; display: block; transform-origin: 0 0; background: #fff; }
+.note { font-size: 14px; color: var(--muted); max-width: 80ch; }
+.pick { display: none; }
+@media (max-width: 900px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); }
+  aside { display: none; }
+  .pick { display: block; width: 100%; min-height: 48px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); padding: 0 12px; font: 700 16px var(--body); }
+  main { padding: 16px; }
+  .head h1 { font-size: 26px; line-height: 32px; }
+}
+</style>
+
+<div class="wrap">
+  <aside id="nav" aria-label="Screens"></aside>
+  <main>
+    <select class="pick" id="pick" aria-label="Choose a screen"></select>
+    <div class="head">
+      <div><h1 id="h">Dashboard</h1><p id="d"></p></div>
+      <div class="btns">
+        <button class="btn" id="bw" aria-pressed="true" type="button">Web</button>
+        <button class="btn" id="bm" aria-pressed="true" type="button">Mobile</button>
+        <a class="btn primary" id="open" href="screens/admin-dashboard.html" target="_blank" rel="noopener">Open screen</a>
+      </div>
+    </div>
+    <div class="stage" id="stage">
+      <div class="dev" id="devW"><span class="lbl">Web · 1440 × 900</span><div class="shell"><div class="clip" id="clipW"><iframe id="fw" title="Web layout" width="1440" height="900"></iframe></div></div></div>
+      <div class="dev" id="devM"><span class="lbl">Mobile · 390 × 844</span><div class="shell phone"><div class="clip" id="clipM"><iframe id="fm" title="Mobile layout" width="390" height="844"></iframe></div></div></div>
+    </div>
+    <p class="note">Each screen is one responsive HTML file: the web layout shows at 1024px and wider, the mobile layout below that. Both frames are live, so you can scroll, tap the navigation and try the forms. Styles come from the shared Skylearn stylesheet in assets/skylearn.css.</p>
+  </main>
+</div>
+
+<script>
+var S = [
+ ['Public website', [
+  ['site-home','Home & about','Hero, courses, teachers, news and the trial-lesson form. Each form sent becomes a new request in the CRM.'],
+  ['site-courses','Courses & pricing','Course catalog with filters, and pricing per 12-lesson cycle paid in cash.'],
+  ['site-teachers','Teachers','Teacher profiles with subjects and teaching languages.'],
+  ['site-news','News','News and blog posts that staff edit in the Website module.'],
+  ['login','Log in','Email and password. Accounts are created by staff, so there is no sign-up.']]],
+ ['Full Administrator', [
+  ['admin-dashboard','Dashboard','Key numbers, cash collected, enrollment, today’s classes and items that need attention.'],
+  ['admin-groups','Groups','Named groups with one teacher each and 10 students at most.'],
+  ['admin-timetable','Timetable','Weekly class timetable. Attendance is tracked against it.'],
+  ['admin-payments','Payments','Cash payments per 12-lesson cycle, recorded by hand, with overdue flags.'],
+  ['admin-website','Website editor','News and pages in EN, RU, O‘zbekcha and Ўзбекча.'],
+  ['admin-settings','Users, roles & bot','Users, the RBAC access matrix and Telegram bot settings.']]],
+ ['Administrative Staff', [
+  ['admin-crm','CRM','Request → trial lesson → active or declined, with a reason for declining.'],
+  ['admin-student-new','New student & login','Register a student, create their login and add a parent’s Telegram username.'],
+  ['admin-attendance','Attendance','A checkbox per student per day. Parents of absent students get a Telegram message.']]],
+ ['CEO · read only', [
+  ['ceo-dashboard','Overview','Revenue, enrollment, attendance and teacher and student results.'],
+  ['admin-payment-analytics','Payment analytics','Payments over time and outstanding amounts by group.'],
+  ['admin-reports','Reports','Excel exports with daily, weekly or monthly periods.']]],
+ ['Teacher', [
+  ['teacher-home','My groups','The teacher’s groups, next classes and work waiting to be graded.'],
+  ['teacher-task-new','Create task','File upload (up to 5 GB), text answer, multiple-choice quiz or auto-graded test. Tasks have no deadlines.'],
+  ['teacher-grading','Grading','Review a submission and grade it by the number of correct answers.'],
+  ['teacher-rating','Group rating','How students compare within the group.']]],
+ ['Student', [
+  ['student-home','Home','Tasks, next class, streak, badges and payment status.'],
+  ['student-task','Quiz','Answer tiles with the gentle “not quite” state and a hint.'],
+  ['student-score','Score card','The completion screen, with confetti and badges.'],
+  ['student-results','Results & rating','The student’s own results and their place in the group.'],
+  ['student-attendance','Attendance','The student’s own attendance calendar.'],
+  ['student-payments','Payments','The current cycle and payment history.'],
+  ['student-profile','Profile','Avatar, language, and the parent’s Telegram link and QR code.']]],
+ ['Shared', [
+  ['chat','Chat','Personal and group chats in the style of Telegram, with avatars.']]]
+];
+var byId = {}, nav = document.getElementById('nav'), pick = document.getElementById('pick');
+nav.innerHTML = '<div class="brand"><span class="mark">H</span><span><b>Helpdesk IT</b><span>CRM + LMS · 29 screens</span></span></div>';
+S.forEach(function (g) {
+  var d = document.createElement('div'); d.className = 'grp';
+  var og = document.createElement('optgroup'); og.label = g[0];
+  d.innerHTML = '<h2>' + g[0] + '</h2>' + g[1].map(function (s) {
+    byId[s[0]] = s;
+    var o = document.createElement('option'); o.value = s[0]; o.textContent = s[1]; og.appendChild(o);
+    return '<a href="#' + s[0] + '" data-id="' + s[0] + '">' + s[1] + '</a>';
+  }).join('');
+  nav.appendChild(d); pick.appendChild(og);
+});
+var fw = document.getElementById('fw'), fm = document.getElementById('fm');
+var showW = true, showM = true;
+function fit() {
+  var stage = document.getElementById('stage').clientWidth;
+  var mW = showM ? 390 * 0.78 + 24 + 28 : 0;
+  var avail = Math.max(280, stage - mW - 20);
+  var sw = showW ? Math.min(0.75, avail / 1460) : 0;
+  if (!showM && showW) sw = Math.min(1, (stage - 20) / 1460);
+  if (sw < 0.18) sw = Math.min(1, (stage - 20) / 1460);
+  var sm = window.innerWidth < 900 ? Math.min(1, (stage - 24) / 390) : 0.78;
+  fw.style.transform = 'scale(' + sw + ')'; document.getElementById('clipW').style.width = 1440 * sw + 'px'; document.getElementById('clipW').style.height = 900 * sw + 'px';
+  fm.style.transform = 'scale(' + sm + ')'; document.getElementById('clipM').style.width = 390 * sm + 'px'; document.getElementById('clipM').style.height = 844 * sm + 'px';
+}
+function show(id) {
+  var s = byId[id] || byId['admin-dashboard'];
+  var url = 'screens/' + s[0] + '.html';
+  fw.src = url; fm.src = url;
+  document.getElementById('h').textContent = s[1];
+  document.getElementById('d').textContent = s[2];
+  document.getElementById('open').href = url;
+  pick.value = s[0];
+  [].forEach.call(nav.querySelectorAll('a'), function (a) { a.setAttribute('aria-current', a.dataset.id === s[0] ? 'true' : 'false'); });
+}
+function toggle(btn, which) {
+  if (which === 'w') showW = !showW; else showM = !showM;
+  if (!showW && !showM) { if (which === 'w') showW = true; else showM = true; }
+  document.getElementById('bw').setAttribute('aria-pressed', showW); document.getElementById('bm').setAttribute('aria-pressed', showM);
+  document.getElementById('devW').hidden = !showW; document.getElementById('devM').hidden = !showM; fit();
+}
+document.getElementById('bw').onclick = function () { toggle(this, 'w'); };
+document.getElementById('bm').onclick = function () { toggle(this, 'm'); };
+pick.onchange = function () { location.hash = pick.value; };
+window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
+window.addEventListener('resize', fit);
+if (window.innerWidth < 900) { showW = false; document.getElementById('devW').hidden = true; document.getElementById('bw').setAttribute('aria-pressed', 'false'); }
+show(location.hash.slice(1)); fit();
+</script>

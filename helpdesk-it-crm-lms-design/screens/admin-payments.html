@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Payments · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  /* Filter chips + record-payment dialog (screen-level) */
+  .chips { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 48px; padding: 0 18px; border-radius: var(--radius-pill); border: 1px solid var(--outline); background: var(--bg); font: 700 16px/20px var(--font-body); color: var(--ink-muted); cursor: pointer; }
+  .chip .n { font: 700 14px/20px var(--font-mono); color: var(--ink-subtle); }
+  .chip[aria-pressed="true"] { background: var(--sky-soft); border-color: var(--sky); color: var(--sky-deep); }
+  .chip[aria-pressed="true"] .n { color: var(--sky-deep); }
+  .search { width: 300px; max-width: 100%; }
+  .lessons { display: flex; flex-direction: column; gap: 6px; min-width: 120px; }
+  .table tr.selected td { background: var(--sky-soft); }
+  .scrim { position: fixed; inset: 0; z-index: 25; background: rgba(15, 23, 42, .35); }
+  .pay-dialog { position: fixed; z-index: 26; top: 50%; left: calc(50% + 140px); transform: translate(-50%, -50%); width: min(560px, calc(100vw - 340px)); max-height: calc(100vh - 48px); overflow-y: auto; background: var(--bg); border-radius: var(--radius-modal); box-shadow: var(--shadow-modal); padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-6); }
+  .readonly { background: var(--surface-sunken); color: var(--ink-muted); display: flex; align-items: center; gap: var(--space-2); }
+  .grab { display: none; width: 48px; height: 5px; border-radius: 9px; background: var(--ink-faint); margin: 0 auto; }
+  @media (max-width: 1023px) {
+    .scrim { display: none; }
+    .pay-dialog { position: static; transform: none; width: auto; max-height: none; margin: 0 -20px calc(-96px - env(safe-area-inset-bottom, 0px)); padding: 12px 20px 120px; border-radius: var(--radius-modal) var(--radius-modal) 0 0; border-top: 1px solid var(--outline); }
+    .grab { display: block; }
+    .chips { flex-wrap: nowrap; overflow-x: auto; margin: 0 -20px; padding: 0 20px 4px; width: calc(100% + 40px); }
+    .chip { flex: none; }
+    .section-head > .row, .section-head > .row > * { width: 100%; }
+  }
+</style>
+</head>
+<body data-role="admin" data-page="payments" data-title="Payments" data-sub="Cash payments per 12-lesson cycle · 184 paying students">
+<main id="page">
+
+  <section class="section" aria-label="Payment records">
+    <div class="section-head">
+      <div class="chips" role="group" aria-label="Filter by status">
+        <button class="chip" aria-pressed="true">All <span class="n">184</span></button>
+        <button class="chip" aria-pressed="false"><i data-lucide="circle-check" class="ic ic-sm"></i>Paid <span class="n">162</span></button>
+        <button class="chip" aria-pressed="false"><i data-lucide="clock" class="ic ic-sm"></i>Due soon <span class="n">11</span></button>
+        <button class="chip" aria-pressed="false"><i data-lucide="circle-alert" class="ic ic-sm"></i>Overdue <span class="n">11</span></button>
+      </div>
+      <div class="row">
+        <label class="input-icon search"><i data-lucide="search" class="ic"></i><input class="input" type="search" placeholder="Search student or group" aria-label="Search student or group"></label>
+        <button class="btn btn-primary btn-md" type="button"><i data-lucide="banknote" class="ic"></i>Record cash payment</button>
+      </div>
+    </div>
+
+    <!-- Web: table -->
+    <div class="table-wrap hide-mobile">
+      <table class="table">
+        <thead><tr><th>Student</th><th>Group</th><th>Cycle</th><th>Lessons used</th><th class="num">Amount</th><th>Status</th><th>Last payment</th></tr></thead>
+        <tbody>
+          <tr class="selected"><td><div class="person"><span class="avatar xs c">SN</span><b>Sardor Nazarov</b></div></td><td>Networking Basics-1</td><td>Cycle 3</td><td><div class="lessons"><span class="mono">4 / 12</span><div class="progress"><span style="width:33%"></span></div></div></td><td class="num">600 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 11 days</span></td><td class="mono muted">21 Aug 2026</td></tr>
+          <tr><td><div class="person"><span class="avatar xs b">MA</span><b>Madina Azimova</b></div></td><td>English B1 · Morning</td><td>Cycle 2</td><td><div class="lessons"><span class="mono">3 / 12</span><div class="progress"><span style="width:25%"></span></div></div></td><td class="num">540 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 7 days</span></td><td class="mono muted">25 Aug 2026</td></tr>
+          <tr><td><div class="person"><span class="avatar xs">TQ</span><b>Temur Qosimov</b></div></td><td>English A2 · Teens</td><td>Cycle 3</td><td><div class="lessons"><span class="mono">1 / 12</span><div class="progress"><span style="width:8%"></span></div></div></td><td class="num">540 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 2 days</span></td><td class="mono muted">1 Sep 2026</td></tr>
+          <tr><td><div class="person"><span class="avatar xs l">DK</span><b>Dilnoza Karimova</b></div></td><td>Helpdesk IT-3</td><td>Cycle 2</td><td><div class="lessons"><span class="mono">10 / 12</span><div class="progress"><span style="width:83%"></span></div></div></td><td class="num">600 000 so‘m</td><td><span class="pill st-due"><i data-lucide="clock" class="ic"></i>Due in 2 lessons</span></td><td class="mono muted">1 Sep 2026</td></tr>
+          <tr><td><div class="person"><span class="avatar xs">JM</span><b>Javlon Mirzaev</b></div></td><td>Python Start-2</td><td>Cycle 1</td><td><div class="lessons"><span class="mono">11 / 12</span><div class="progress"><span style="width:92%"></span></div></div></td><td class="num">600 000 so‘m</td><td><span class="pill st-due"><i data-lucide="clock" class="ic"></i>Due in 1 lesson</span></td><td class="mono muted">5 Sep 2026</td></tr>
+          <tr><td><div class="person"><span class="avatar xs b">SE</span><b>Shahlo Ergasheva</b></div></td><td>English B1 · Morning</td><td>Cycle 3</td><td><div class="lessons"><span class="mono">10 / 12</span><div class="progress"><span style="width:83%"></span></div></div></td><td class="num">540 000 so‘m</td><td><span class="pill st-due"><i data-lucide="clock" class="ic"></i>Due in 2 lessons</span></td><td class="mono muted">28 Aug 2026</td></tr>
+          <tr><td><div class="person"><span class="avatar xs">AR</span><b>Aziz Rakhimov</b></div></td><td>Helpdesk IT-3</td><td>Cycle 2</td><td><div class="lessons"><span class="mono">8 / 12</span><div class="progress"><span style="width:67%"></span></div></div></td><td class="num">600 000 so‘m</td><td><span class="pill st-paid"><i data-lucide="circle-check" class="ic"></i>Paid</span></td><td class="mono muted">4 Sep 2026</td></tr>
+          <tr><td><div class="person"><span class="avatar xs l">KY</span><b>Kamola Yusupova</b></div></td><td>Helpdesk IT-3</td><td>Cycle 2</td><td><div class="lessons"><span class="mono">8 / 12</span><div class="progress"><span style="width:67%"></span></div></div></td><td class="num">600 000 so‘m</td><td><span class="pill st-paid"><i data-lucide="circle-check" class="ic"></i>Paid</span></td><td class="mono muted">4 Sep 2026</td></tr>
+          <tr><td><div class="person"><span class="avatar xs b">NX</span><b>Nigora Xolmatova</b></div></td><td>English A2 · Teens</td><td>Cycle 4</td><td><div class="lessons"><span class="mono">6 / 12</span><div class="progress"><span style="width:50%"></span></div></div></td><td class="num">540 000 so‘m</td><td><span class="pill st-paid"><i data-lucide="circle-check" class="ic"></i>Paid</span></td><td class="mono muted">15 Sep 2026</td></tr>
+          <tr><td><div class="person"><span class="avatar xs">UR</span><b>Ulugbek Rashidov</b></div></td><td>Office &amp; Windows-1</td><td>Cycle 1</td><td><div class="lessons"><span class="mono">2 / 12</span><div class="progress"><span style="width:17%"></span></div></div></td><td class="num">600 000 so‘m</td><td><span class="pill st-paid"><i data-lucide="circle-check" class="ic"></i>Paid</span></td><td class="mono muted">24 Sep 2026</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mobile: list -->
+    <div class="card hide-desktop" style="padding-top:4px;padding-bottom:4px">
+      <div class="list">
+        <div class="list-row"><span class="avatar sm c">SN</span><div class="grow"><b>Sardor Nazarov</b><span>Networking Basics-1 · Cycle 3 · 4 / 12</span><div class="row" style="margin-top:6px;gap:8px"><span class="mono t-small">600 000 so‘m</span><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 11 days</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm b">MA</span><div class="grow"><b>Madina Azimova</b><span>English B1 · Cycle 2 · 3 / 12</span><div class="row" style="margin-top:6px;gap:8px"><span class="mono t-small">540 000 so‘m</span><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 7 days</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm">TQ</span><div class="grow"><b>Temur Qosimov</b><span>English A2 · Cycle 3 · 1 / 12</span><div class="row" style="margin-top:6px;gap:8px"><span class="mono t-small">540 000 so‘m</span><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 2 days</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm l">DK</span><div class="grow"><b>Dilnoza Karimova</b><span>Helpdesk IT-3 · Cycle 2 · 10 / 12</span><div class="row" style="margin-top:6px;gap:8px"><span class="mono t-small">600 000 so‘m</span><strong class="pill st-due"><i data-lucide="clock" class="ic"></i>Due in 2 lessons</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm">JM</span><div class="grow"><b>Javlon Mirzaev</b><span>Python Start-2 · Cycle 1 · 11 / 12</span><div class="row" style="margin-top:6px;gap:8px"><span class="mono t-small">600 000 so‘m</span><strong class="pill st-due"><i data-lucide="clock" class="ic"></i>Due in 1 lesson</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm b">SE</span><div class="grow"><b>Shahlo Ergasheva</b><span>English B1 · Cycle 3 · 10 / 12</span><div class="row" style="margin-top:6px;gap:8px"><span class="mono t-small">540 000 so‘m</span><strong class="pill st-due"><i data-lucide="clock" class="ic"></i>Due in 2 lessons</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm">AR</span><div class="grow"><b>Aziz Rakhimov</b><span>Helpdesk IT-3 · Cycle 2 · 8 / 12</span><div class="row" style="margin-top:6px;gap:8px"><span class="mono t-small">Paid 4 Sep</span><strong class="pill st-paid"><i data-lucide="circle-check" class="ic"></i>Paid</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm l">KY</span><div class="grow"><b>Kamola Yusupova</b><span>Helpdesk IT-3 · Cycle 2 · 8 / 12</span><div class="row" style="margin-top:6px;gap:8px"><span class="mono t-small">Paid 4 Sep</span><strong class="pill st-paid"><i data-lucide="circle-check" class="ic"></i>Paid</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm b">NX</span><div class="grow"><b>Nigora Xolmatova</b><span>English A2 · Cycle 4 · 6 / 12</span><div class="row" style="margin-top:6px;gap:8px"><span class="mono t-small">Paid 15 Sep</span><strong class="pill st-paid"><i data-lucide="circle-check" class="ic"></i>Paid</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm">UR</span><div class="grow"><b>Ulugbek Rashidov</b><span>Office &amp; Windows-1 · Cycle 1 · 2 / 12</span><div class="row" style="margin-top:6px;gap:8px"><span class="mono t-small">Paid 24 Sep</span><strong class="pill st-paid"><i data-lucide="circle-check" class="ic"></i>Paid</strong></div></div></div>
+      </div>
+    </div>
+    <p class="t-caption muted">Showing 10 of 184 · sorted by status, then days overdue</p>
+  </section>
+
+  <!-- Open dialog: Record cash payment -->
+  <div class="scrim" aria-hidden="true"></div>
+  <section class="pay-dialog" role="dialog" aria-modal="true" aria-labelledby="pay-title">
+    <span class="grab" aria-hidden="true"></span>
+    <div class="row between" style="flex-wrap:nowrap">
+      <div class="stack-2"><h2 class="t-h3" id="pay-title">Record cash payment</h2><p class="t-small muted">Cycle 3 is overdue by 11 days</p></div>
+      <button class="icon-btn" type="button" aria-label="Close"><i data-lucide="x" class="ic"></i></button>
+    </div>
+    <div class="form-grid">
+      <div class="field" style="grid-column:1/-1"><label for="p-student">Student</label>
+        <div class="input readonly" id="p-student"><span class="avatar xs c">SN</span><b style="color:var(--ink)">Sardor Nazarov</b><span class="t-caption hide-mobile">· +998 90 314 22 81</span></div></div>
+      <div class="field"><label>Group</label><div class="input readonly">Networking Basics-1</div></div>
+      <div class="field"><label>Cycle</label><div class="input readonly">Cycle 3 · 12 lessons</div></div>
+      <div class="field" style="grid-column:1/-1"><label>Amount</label>
+        <div class="input readonly"><i data-lucide="lock" class="ic ic-sm"></i><b class="mono" style="color:var(--ink)">600 000 so‘m</b></div>
+        <span class="hint">Fixed price for a full cycle. Partial payments aren’t accepted.</span></div>
+      <div class="field"><label for="p-by">Received by</label>
+        <select class="select" id="p-by"><option>Doniyor Jaloliddinov</option><option>Nilufar Qodirova</option></select></div>
+      <div class="field"><label for="p-date">Date</label>
+        <input class="input" id="p-date" type="text" value="29.09.2026" style="border-color:var(--sky-deep);box-shadow:0 0 0 4px var(--sky-soft);background:var(--bg)"></div>
+    </div>
+    <div class="banner info" style="padding:12px 20px;flex-wrap:nowrap"><i data-lucide="banknote" class="ic"></i><span class="t-small"><b>Cash only · full 12-lesson cycle</b></span></div>
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn btn-secondary btn-md" type="button">Cancel</button>
+      <button class="btn btn-primary btn-md" type="button"><i data-lucide="check" class="ic"></i>Save payment</button>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

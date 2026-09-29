@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Create task · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .step-head { display: flex; align-items: center; gap: var(--space-3); }
+  .step-num { width: 36px; height: 36px; border-radius: 999px; flex: none; display: grid; place-items: center; background: var(--sky); color: var(--on-sky); font: 700 16px/1 var(--font-mono); }
+  .type-grid { gap: var(--space-4); }
+  .type-grid .lesson-card { cursor: pointer; position: relative; }
+  .sel-mark { position: absolute; top: 14px; right: 14px; color: var(--sky); }
+  .type-grid .lesson-card .row { flex-wrap: nowrap; padding-right: 20px; }
+  .q-text { min-height: 84px; }
+  .type-grid .lesson-card .lc-icon { width: 48px; height: 48px; border-radius: 14px; }
+  .type-grid .lesson-card .lc-title { font-size: 19px; line-height: 24px; }
+  .opt { display: flex; align-items: center; gap: var(--space-2); }
+  .opt .radio { width: var(--tap); height: var(--tap); flex: none; display: grid; place-items: center; cursor: pointer; }
+  .opt .radio input { width: 24px; height: 24px; accent-color: var(--leaf-deep); margin: 0; cursor: pointer; }
+  .opt .input { flex: 1; min-width: 0; }
+  .opt.is-correct .input { border-color: var(--leaf); background: var(--leaf-soft); }
+  .q-block { border: 1px solid var(--outline); border-radius: var(--radius-card); padding: var(--space-4); background: var(--surface); display: flex; flex-direction: column; gap: var(--space-3); }
+  .upload-row { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4); border: 1px solid var(--outline); border-radius: var(--radius-btn); }
+  .upload-row .grow { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+  .preview-sticky { position: sticky; top: 104px; }
+  .preview .answer-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+  .preview .answer-tile { min-height: 72px; font-size: 18px; line-height: 24px; }
+  .assign-row { display: flex; align-items: center; gap: var(--space-2); padding-right: var(--space-4); border: 1px solid var(--outline); border-radius: var(--radius-btn); cursor: pointer; }
+  .assign-row.on { border-color: var(--sky); background: var(--sky-soft); }
+  @media (max-width: 1023px) { .preview-sticky { position: static; } }
+</style>
+</head>
+<body data-role="teacher" data-page="tasks" data-title="Create task" data-sub="Build a task and assign it to your groups">
+<main id="page">
+
+  <section class="grid grid-main" style="align-items:start">
+    <form class="stack" style="gap:var(--space-6)" onsubmit="return false">
+
+      <!-- (a) Type -->
+      <fieldset class="card" style="margin:0">
+        <legend class="sr-only" hidden>Task type</legend>
+        <div class="step-head"><span class="step-num">1</span><h2 class="t-h3">Task type</h2></div>
+        <div class="grid grid-2 type-grid" role="radiogroup" aria-label="Task type">
+          <div class="card lesson-card" role="radio" aria-checked="false">
+            <div class="row"><span class="lc-icon berry"><i data-lucide="file-up" class="ic"></i></span><span class="lc-title">File upload</span></div>
+            <p class="t-small muted">Students send a file — up to 5 GB per file.</p>
+          </div>
+          <div class="card lesson-card" role="radio" aria-checked="false">
+            <div class="row"><span class="lc-icon"><i data-lucide="pencil-line" class="ic"></i></span><span class="lc-title">Text answer</span></div>
+            <p class="t-small muted">A written answer you grade by hand.</p>
+          </div>
+          <div class="card lesson-card active" role="radio" aria-checked="true">
+            <i data-lucide="circle-check" class="ic sel-mark" aria-label="Selected"></i><div class="row"><span class="lc-icon"><i data-lucide="list-checks" class="ic"></i></span><span class="lc-title">Multiple-choice quiz</span></div>
+            <p class="t-small muted">One correct option per question, scored for you.</p>
+          </div>
+          <div class="card lesson-card" role="radio" aria-checked="false">
+            <div class="row"><span class="lc-icon leaf"><i data-lucide="circle-check-big" class="ic"></i></span><span class="lc-title">Auto-graded test</span></div>
+            <p class="t-small muted">Fixed answers checked automatically.</p>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- (b) Title + instructions -->
+      <div class="card">
+        <div class="step-head"><span class="step-num">2</span><h2 class="t-h3">Title and instructions</h2></div>
+        <nav class="tabs-inline" aria-label="Language">
+          <a href="#" aria-current="page">EN</a><a href="#">RU</a><a href="#">O‘Z</a><a href="#">ЎЗ</a>
+        </nav>
+        <div class="field">
+          <label for="t-title">Title</label>
+          <input id="t-title" class="input" value="Network devices: hubs, switches, routers">
+        </div>
+        <div class="field">
+          <label for="t-instr">Instructions for students</label>
+          <textarea id="t-instr" class="textarea">Read each question and pick the one best answer. You can look at your notes from Monday’s lesson. There is no time limit — take it when you’re ready.</textarea>
+          <span class="hint">RU and O‘Z filled · ЎЗ empty — students see English if their language is missing.</span>
+        </div>
+      </div>
+
+      <!-- (c) Questions -->
+      <div class="card">
+        <div class="card-head"><div class="step-head"><span class="step-num">3</span><h2 class="t-h3">Questions</h2></div><span class="t-small muted">2 questions · 1 correct answer each</span></div>
+
+        <div class="q-block">
+          <div class="row between"><b class="t-h4">Question 1</b><button type="button" class="icon-btn" aria-label="Delete question 1"><i data-lucide="trash-2" class="ic"></i></button></div>
+          <textarea class="textarea q-text" rows="2" aria-label="Question 1 text">Which device sends data only to the port where the receiving computer is connected?</textarea>
+          <div class="stack-2" role="radiogroup" aria-label="Options for question 1 — select the correct one">
+            <div class="opt"><label class="radio"><input type="radio" name="q1" aria-label="Mark option A correct"></label><input class="input" aria-label="Option A" value="Hub"></div>
+            <div class="opt is-correct"><label class="radio"><input type="radio" name="q1" checked aria-label="Mark option B correct"></label><input class="input" aria-label="Option B" value="Switch"><span class="pill st-active hide-mobile"><i data-lucide="check" class="ic"></i>Correct</span></div>
+            <div class="opt"><label class="radio"><input type="radio" name="q1" aria-label="Mark option C correct"></label><input class="input" aria-label="Option C" value="Repeater"></div>
+            <div class="opt"><label class="radio"><input type="radio" name="q1" aria-label="Mark option D correct"></label><input class="input" aria-label="Option D" value="Network cable"></div>
+          </div>
+        </div>
+
+        <div class="q-block">
+          <div class="row between"><b class="t-h4">Question 2</b><button type="button" class="icon-btn" aria-label="Delete question 2"><i data-lucide="trash-2" class="ic"></i></button></div>
+          <textarea class="textarea q-text" rows="2" aria-label="Question 2 text">What connects your home network to the internet?</textarea>
+          <div class="stack-2" role="radiogroup" aria-label="Options for question 2 — select the correct one">
+            <div class="opt"><label class="radio"><input type="radio" name="q2" aria-label="Mark option A correct"></label><input class="input" aria-label="Option A" value="Switch"></div>
+            <div class="opt"><label class="radio"><input type="radio" name="q2" aria-label="Mark option B correct"></label><input class="input" aria-label="Option B" value="Hub"></div>
+            <div class="opt is-correct"><label class="radio"><input type="radio" name="q2" checked aria-label="Mark option C correct"></label><input class="input" aria-label="Option C" value="Router"><span class="pill st-active hide-mobile"><i data-lucide="check" class="ic"></i>Correct</span></div>
+            <div class="opt"><label class="radio"><input type="radio" name="q2" aria-label="Mark option D correct"></label><input class="input" aria-label="Option D" value="Patch panel"></div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-secondary btn-md" style="align-self:flex-start"><i data-lucide="plus" class="ic"></i>Add question</button>
+        <p class="hint">Mark the correct option with the round button on the left. Grade = number of correct answers.</p>
+      </div>
+
+      <!-- (d) Attachments -->
+      <div class="card">
+        <div class="step-head"><span class="step-num">4</span><h2 class="t-h3">Attachments <span class="t-small muted">· optional</span></h2></div>
+        <div class="dropzone" style="min-height:160px">
+          <i data-lucide="cloud-upload" class="ic ic-48"></i>
+          <b class="t-h4" style="color:var(--ink)">Drop files here · up to 5 GB each</b>
+          <button type="button" class="btn btn-secondary btn-md">Choose files</button>
+        </div>
+        <div class="upload-row">
+          <span class="lc-icon" style="width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--berry-soft);color:var(--berry-ink);flex:none"><i data-lucide="file-chart-column" class="ic"></i></span>
+          <div class="grow">
+            <div class="row between"><b style="font-size:17px;overflow-wrap:break-word">network-diagram.vsdx</b><span class="t-caption muted num">35%</span></div>
+            <div class="progress" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" aria-label="Uploading network-diagram.vsdx"><span style="width:35%"></span></div>
+            <span class="t-caption muted row" style="gap:6px"><i data-lucide="loader" class="ic ic-sm"></i>Uploading · 1.2 GB of 3.4 GB</span>
+          </div>
+          <button type="button" class="icon-btn" aria-label="Cancel upload"><i data-lucide="x" class="ic"></i></button>
+        </div>
+      </div>
+
+      <!-- (e) Assign -->
+      <div class="card">
+        <div class="step-head"><span class="step-num">5</span><h2 class="t-h3">Assign to groups</h2></div>
+        <div class="row">
+          <label class="assign-row on"><span class="check"><input type="checkbox" checked><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span></span><span><b>Helpdesk IT-3</b> <span class="t-caption muted">· 10 students</span></span></label>
+          <label class="assign-row"><span class="check"><input type="checkbox"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span></span><span><b>Office &amp; Windows-1</b> <span class="t-caption muted">· 6 students</span></span></label>
+        </div>
+        <div class="banner info">
+          <i data-lucide="infinity" class="ic"></i>
+          <div class="grow"><b>No deadline — students can submit any time.</b></div>
+        </div>
+        <p class="t-small muted row" style="gap:8px"><i data-lucide="send" class="ic ic-sm"></i>Students get a Telegram message “New assignment” when you assign.</p>
+        <div class="row" style="justify-content:flex-end">
+          <button type="button" class="btn btn-secondary btn-md"><i data-lucide="save" class="ic"></i>Save draft</button>
+          <button type="submit" class="btn btn-primary btn-md"><i data-lucide="send-horizontal" class="ic"></i>Assign to group</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Preview -->
+    <aside class="preview-sticky">
+      <div class="card preview">
+        <div class="card-head"><h2 class="t-h4 row" style="gap:8px"><i data-lucide="eye" class="ic ic-sm"></i>Preview for students</h2><span class="pill st-neutral">1 of 2</span></div>
+        <span class="t-eyebrow">Network devices: hubs, switches, routers</span>
+        <p style="font:600 20px/30px var(--font-body)">Which device sends data only to the port where the receiving computer is connected?</p>
+        <div class="answer-grid">
+          <button type="button" class="answer-tile"><span class="key">A</span>Hub</button>
+          <button type="button" class="answer-tile selected"><span class="key">B</span>Switch</button>
+          <button type="button" class="answer-tile"><span class="key">C</span>Repeater</button>
+          <button type="button" class="answer-tile"><span class="key">D</span>Network cable</button>
+        </div>
+        <p class="t-caption muted">Students don’t see which answer is correct until they submit.</p>
+      </div>
+    </aside>
+  </section>
+
+</main>
+</body>
+</html>

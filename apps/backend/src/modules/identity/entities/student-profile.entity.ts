@@ -25,4 +25,8 @@ export class StudentProfile extends AppBaseEntity {
 
   @Column({ name: 'enrollment_date', type: 'date', nullable: true })
   enrollmentDate?: string;
+
+  // Collected at enrollment per the design's "New student & login" screen.
+  @Column({ name: 'date_of_birth', type: 'date', nullable: true })
+  dateOfBirth?: string;
 }

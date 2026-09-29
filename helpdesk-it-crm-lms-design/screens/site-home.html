@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Helpdesk IT · IT and English courses in Tashkent</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: var(--space-12); align-items: center; }
+  .site-footer .inner { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: var(--space-8); }
+  .site-footer .foot-line { display: flex; align-items: center; gap: var(--space-2); font: 400 16px/24px var(--font-body); color: var(--ink-faint); }
+  .site-footer .copy { grid-column: 1 / -1; border-top: 1px solid var(--ink-muted); padding-top: var(--space-6); font: 400 14px/20px var(--font-body); color: var(--ink-subtle); }
+  .why-ic { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; background: var(--sky-soft); color: var(--sky-deep); }
+  .form-success { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-3); padding: var(--space-8) var(--space-4); }
+  .note { display: flex; align-items: flex-start; gap: var(--space-2); }
+  .note .ic { margin-top: 2px; }
+  .card.pad-lg { padding: var(--space-8); }
+  @media (max-width: 640px) { .why-grid { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 1023px) {
+    .card.pad-lg { padding: 20px; }
+    .hero { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+    .site-footer .inner { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+    .hero .row .btn { flex: 1 1 100%; padding: 0 var(--space-6); }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="site-home.html" style="padding:0"><span class="brand-mark">H</span><span class="brand-name">Helpdesk IT<small class="hide-m">Learning center · Tashkent</small></span></a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="site-home.html" aria-current="page">Home</a>
+      <a href="site-courses.html">Courses &amp; pricing</a>
+      <a href="site-teachers.html">Teachers</a>
+      <a href="site-news.html">News</a>
+    </nav>
+    <button class="lang" type="button" aria-label="Language: English. Also Русский, O‘zbekcha, Ўзбекча"><i data-lucide="languages" class="ic ic-sm"></i>EN<span style="color:var(--ink-muted);font-weight:400">· RU · O‘Z · ЎЗ</span></button>
+    <a class="btn btn-primary btn-md hide-m" href="login.html"><i data-lucide="log-in" class="ic ic-sm"></i>Log in</a>
+    <button class="icon-btn menu-btn" type="button" aria-label="Open menu"><i data-lucide="menu" class="ic"></i></button>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="site-section">
+    <div class="inner hero">
+      <div class="stack" style="gap:var(--space-6)">
+        <span class="t-eyebrow">IT and English courses · Tashkent</span>
+        <h1 class="t-hero">Learn real IT skills and confident English, in small groups.</h1>
+        <p class="t-body-lg muted">Helpdesk support, networking, Python and English for teens and adults. Classes in Russian, Uzbek or English, with no more than 10 students per group.</p>
+        <div class="row" style="gap:var(--space-3)">
+          <a class="btn btn-primary" href="#trial"><i data-lucide="calendar-plus" class="ic"></i>Book a free trial lesson</a>
+          <a class="btn btn-secondary" href="site-courses.html">See courses</a>
+        </div>
+        <p class="t-small muted note"><i data-lucide="gift" class="ic ic-sm" style="color:var(--berry-ink)"></i>Your first lesson is a free trial. Pay only if you stay.</p>
+      </div>
+
+      <div class="card soft pad-lg" style="gap:var(--space-4)">
+        <div class="card-head"><h2 class="t-h3">Groups starting soon</h2><span class="pill st-trial"><i data-lucide="sparkles" class="ic"></i>Trial open</span></div>
+        <div class="list">
+          <div class="list-row"><span class="avatar sm">NB</span><div class="grow"><b>Networking Basics-2</b><span>Starts 6 Oct · Tue/Thu/Sat 14:00</span></div><span class="pill st-due">4 seats</span></div>
+          <div class="list-row"><span class="avatar sm l">PS</span><div class="grow"><b>Python Start-3</b><span>Starts 13 Oct · Mon/Wed/Fri 16:00</span></div><span class="pill st-due">6 seats</span></div>
+          <div class="list-row"><span class="avatar sm b">EN</span><div class="grow"><b>English B1 · Evening</b><span>Starts 12 Oct · Mon/Wed/Fri 18:00</span></div><span class="pill st-due">5 seats</span></div>
+        </div>
+        <a class="btn btn-ghost btn-md" href="site-courses.html" style="align-self:flex-start">Full schedule<i data-lucide="arrow-right" class="ic ic-sm"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we teach -->
+  <section class="site-section tint">
+    <div class="inner stack" style="gap:var(--space-8)">
+      <div class="section-head">
+        <div class="stack-2"><span class="t-eyebrow">What we teach</span><h2 class="t-h1">Two directions, one friendly center</h2></div>
+        <a class="btn btn-ghost btn-md" href="site-courses.html">All courses<i data-lucide="arrow-right" class="ic ic-sm"></i></a>
+      </div>
+      <div class="grid grid-2">
+        <article class="card lesson-card hover">
+          <span class="lc-icon"><i data-lucide="monitor-cog" class="ic ic-32"></i></span>
+          <h3 class="lc-title">IT courses</h3>
+          <p class="t-body muted">Helpdesk IT, Networking Basics, Python Start and Office &amp; Windows. Hands-on practice with real hardware, subnets and support tickets.</p>
+          <div class="row"><span class="pill tag-subject">4 courses</span><span class="pill tag-easy">From beginner</span></div>
+          <p class="t-h4">600 000 so‘m <span class="t-small muted">per 12 lessons</span></p>
+        </article>
+        <article class="card lesson-card hover">
+          <span class="lc-icon berry"><i data-lucide="book-open-text" class="ic ic-32"></i></span>
+          <h3 class="lc-title">English courses</h3>
+          <p class="t-body muted">English A2 for teens and English B1 for adults. Speaking every lesson, grammar that sticks, and vocabulary for IT work.</p>
+          <div class="row"><span class="pill tag-subject">2 courses</span><span class="pill tag-medium">A2 – B1</span></div>
+          <p class="t-h4">540 000 so‘m <span class="t-small muted">per 12 lessons</span></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why us -->
+  <section class="site-section">
+    <div class="inner stack" style="gap:var(--space-8)">
+      <div class="stack-2"><span class="t-eyebrow">Why Helpdesk IT</span><h2 class="t-h1">Built so every student gets attention</h2></div>
+      <div class="grid grid-4 why-grid">
+        <div class="card"><span class="why-ic"><i data-lucide="users-round" class="ic"></i></span><h3 class="t-h4">Max 10 students</h3><p class="t-small muted">Group classes only, small enough that the teacher knows every name.</p></div>
+        <div class="card"><span class="why-ic"><i data-lucide="repeat" class="ic"></i></span><h3 class="t-h4">12-lesson cycles</h3><p class="t-small muted">Pay per cycle of 12 lessons in cash at the front desk. No long contracts.</p></div>
+        <div class="card"><span class="why-ic"><i data-lucide="languages" class="ic"></i></span><h3 class="t-h4">Trilingual classes</h3><p class="t-small muted">Learn in Russian, Uzbek or English, whichever is easiest for you.</p></div>
+        <div class="card"><span class="why-ic"><i data-lucide="send" class="ic"></i></span><h3 class="t-h4">Telegram updates</h3><p class="t-small muted">Parents get attendance and payment reminders from our Telegram bot.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teachers preview -->
+  <section class="site-section tint">
+    <div class="inner stack" style="gap:var(--space-8)">
+      <div class="section-head">
+        <div class="stack-2"><span class="t-eyebrow">Teachers</span><h2 class="t-h1">Meet the people who teach</h2></div>
+        <a class="btn btn-ghost btn-md" href="site-teachers.html">All teachers<i data-lucide="arrow-right" class="ic ic-sm"></i></a>
+      </div>
+      <div class="grid grid-3">
+        <article class="card hover"><div class="row"><span class="avatar">ES</span><div class="stack-2" style="gap:0"><h3 class="t-h4">Elena Sokolova</h3><span class="t-caption muted">Helpdesk IT · Office &amp; Windows</span></div></div><p class="t-small muted">Eight years on a corporate service desk. Teaches troubleshooting the way it happens at work.</p><div class="row"><span class="pill st-due">RU</span><span class="pill st-due">EN</span></div></article>
+        <article class="card hover"><div class="row"><span class="avatar l">AT</span><div class="stack-2" style="gap:0"><h3 class="t-h4">Akmal Tursunov</h3><span class="t-caption muted">Networking Basics</span></div></div><p class="t-small muted">Network engineer at a Tashkent ISP. Brings real routers and switches to every lab.</p><div class="row"><span class="pill st-due">UZ</span><span class="pill st-due">RU</span></div></article>
+        <article class="card hover"><div class="row"><span class="avatar b">SA</span><div class="stack-2" style="gap:0"><h3 class="t-h4">Sevara Aliyeva</h3><span class="t-caption muted">English A2 · English B1</span></div></div><p class="t-small muted">CELTA-trained. Makes shy students talk from the first lesson, without pressure.</p><div class="row"><span class="pill st-due">EN</span><span class="pill st-due">UZ</span><span class="pill st-due">RU</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest news -->
+  <section class="site-section">
+    <div class="inner stack" style="gap:var(--space-8)">
+      <div class="section-head">
+        <div class="stack-2"><span class="t-eyebrow">News</span><h2 class="t-h1">Latest from the center</h2></div>
+        <a class="btn btn-ghost btn-md" href="site-news.html">All news<i data-lucide="arrow-right" class="ic ic-sm"></i></a>
+      </div>
+      <div class="grid grid-3">
+        <a class="card hover" href="site-news.html" style="text-decoration:none;color:inherit"><div class="row"><span class="pill tag-subject">New group</span><span class="t-caption muted mono">28 Sep 2026</span></div><h3 class="t-h4">New Networking group starts 6 October</h3><p class="t-small muted">Tue/Thu/Sat afternoons with Akmal Tursunov. Four seats left.</p></a>
+        <a class="card hover" href="site-news.html" style="text-decoration:none;color:inherit"><div class="row"><span class="pill st-active"><i data-lucide="trophy" class="ic"></i>Results</span><span class="t-caption muted mono">21 Sep 2026</span></div><h3 class="t-h4">Our students passed CompTIA A+ practice</h3><p class="t-small muted">Nine of ten Helpdesk IT-2 students scored above the pass mark.</p></a>
+        <a class="card hover" href="site-news.html" style="text-decoration:none;color:inherit"><div class="row"><span class="pill st-due">Schedule</span><span class="t-caption muted mono">14 Sep 2026</span></div><h3 class="t-h4">Autumn schedule is ready</h3><p class="t-small muted">Morning, afternoon and evening groups for the new season.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inquiry form -->
+  <section class="site-section tint" id="trial">
+    <div class="inner hero" style="align-items:start">
+      <div class="stack" style="gap:var(--space-6)">
+        <span class="t-eyebrow">Free trial lesson</span>
+        <h2 class="t-h1">Book a trial lesson</h2>
+        <p class="t-body-lg muted">Come to one class, meet the teacher and the group. If it’s a fit, you pay for the first 12-lesson cycle at the front desk.</p>
+        <div class="list">
+          <div class="list-row"><span class="why-ic"><i data-lucide="phone-call" class="ic"></i></span><div class="grow"><b>We call you back</b><span>Usually within one working day</span></div></div>
+          <div class="list-row"><span class="why-ic"><i data-lucide="calendar-check" class="ic"></i></span><div class="grow"><b>We pick a time together</b><span>A real class with a real group</span></div></div>
+          <div class="list-row"><span class="why-ic"><i data-lucide="wallet" class="ic"></i></span><div class="grow"><b>Pay only if you stay</b><span>Cash at the front desk, per 12 lessons</span></div></div>
+        </div>
+      </div>
+
+      <div class="card pad-lg">
+        <form id="trial-form" class="stack" style="gap:var(--space-6)" novalidate>
+          <div class="form-grid">
+            <div class="field"><label for="f-name">Your name</label><input class="input" id="f-name" name="name" value="Madina" autocomplete="given-name"></div>
+            <div class="field"><label for="f-phone">Phone</label><input class="input" id="f-phone" name="phone" type="tel" value="+998 90 123 45 67" autocomplete="tel"></div>
+            <div class="field"><label for="f-course">Course</label>
+              <select class="select" id="f-course" name="course">
+                <option>Helpdesk IT</option><option selected>Networking Basics</option><option>Python Start</option><option>Office &amp; Windows</option><option>English A2 · Teens</option><option>English B1</option><option>Not sure yet</option>
+              </select></div>
+            <div class="field"><label for="f-lang">Preferred language</label>
+              <select class="select" id="f-lang" name="lang"><option>Русский</option><option selected>O‘zbekcha</option><option>Ўзбекча</option><option>English</option></select></div>
+          </div>
+          <div class="field"><label for="f-msg">Message <span class="muted" style="font-weight:400">(optional)</span></label><textarea class="textarea" id="f-msg" name="message" placeholder="For example: I'm 15 and I want to learn how to fix computers."></textarea></div>
+          <button class="btn btn-primary btn-block" type="submit"><i data-lucide="send" class="ic"></i>Book a trial lesson</button>
+          <p class="hint note"><i data-lucide="shield-check" class="ic ic-sm"></i>We’ll call you back. Your request goes straight to our team.</p>
+        </form>
+        <div class="form-success" id="trial-success" hidden>
+          <span class="avatar l"><i data-lucide="check" class="ic ic-32"></i></span>
+          <h3 class="t-h3" id="success-title">Thanks, Madina!</h3>
+          <p class="t-body muted">We’ll call you within one working day.</p>
+          <button class="btn btn-secondary btn-md" type="button" id="trial-again">Send another request</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="inner">
+    <div class="stack">
+      <a class="brand" href="site-home.html" style="padding:0;color:var(--on-sky)"><span class="brand-mark">H</span><span class="brand-name">Helpdesk IT<small style="color:var(--ink-faint)">Learning center · Tashkent</small></span></a>
+      <p class="foot-line">IT and English courses in small groups.</p>
+    </div>
+    <div class="stack-2">
+      <span class="t-eyebrow" style="color:var(--ink-faint)">Visit</span>
+      <span class="foot-line"><i data-lucide="map-pin" class="ic ic-sm"></i>Tashkent · Address will be added</span>
+      <span class="foot-line"><i data-lucide="clock" class="ic ic-sm"></i>Mon–Sat 09:00–19:00</span>
+    </div>
+    <div class="stack-2">
+      <span class="t-eyebrow" style="color:var(--ink-faint)">Contact</span>
+      <a class="foot-line" href="tel:+998901234567"><i data-lucide="phone" class="ic ic-sm"></i>+998 90 123 45 67</a>
+      <a class="foot-line" href="#"><i data-lucide="send" class="ic ic-sm"></i>Telegram @helpdesk_it_uz</a>
+    </div>
+    <div class="stack-2">
+      <span class="t-eyebrow" style="color:var(--ink-faint)">Languages</span>
+      <span class="foot-line">English · Русский · O‘zbekcha · Ўзбекча</span>
+    </div>
+    <p class="copy">© 2026 Helpdesk IT learning center. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var form = document.getElementById('trial-form'), ok = document.getElementById('trial-success');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = (document.getElementById('f-name').value || '').trim() || 'there';
+      document.getElementById('success-title').textContent = 'Thanks, ' + name + '!';
+      form.hidden = true; ok.hidden = false;
+    });
+    document.getElementById('trial-again').addEventListener('click', function () { ok.hidden = true; form.hidden = false; });
+  })();
+  lucide.createIcons();
+</script>
+</body>
+</html>

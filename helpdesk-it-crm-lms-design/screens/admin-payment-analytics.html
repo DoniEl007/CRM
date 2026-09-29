@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Payment analytics · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  /* Horizontal bar chart (screen-level): set --v (0–1) on .hb-bar */
+  .hbars { display: flex; flex-direction: column; gap: var(--space-3); }
+  .hb-row { position: relative; display: grid; grid-template-columns: 180px minmax(0, 1fr); align-items: center; gap: var(--space-4); min-height: 40px; }
+  .hb-label { font: 400 15px/20px var(--font-body); color: var(--ink-muted); }
+  .hb-track { display: flex; align-items: center; gap: var(--space-2); border-left: 1px solid var(--outline); min-height: 40px; }
+  .hb-bar { display: block; height: 20px; width: calc(var(--v) * 85%); min-width: 4px; background: var(--sky); border-radius: 0 4px 4px 0; }
+  .hb-val { font: 700 13px/16px var(--font-mono); color: var(--ink-muted); white-space: nowrap; }
+  .hb-row:hover::after { content: attr(data-tip); position: absolute; right: 0; top: -30px; padding: 4px 10px; border-radius: 8px; background: var(--ink); color: var(--bg); font: 700 13px/18px var(--font-body); white-space: nowrap; z-index: 2; }
+  .head-actions { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+  @media (max-width: 1023px) {
+    .hb-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    .hb-track { border-left: 0; min-height: 24px; }
+    .head-actions, .head-actions > * { width: 100%; }
+    .head-actions .segmented button { flex: 1; }
+  }
+</style>
+</head>
+<body data-role="ceo" data-page="analytics" data-title="Payment analytics" data-sub="Cash collected per 12-lesson cycle · September 2026">
+<main id="page">
+
+  <section class="section-head" aria-label="Period and export">
+    <div class="row">
+      <span class="pill st-neutral"><i data-lucide="eye" class="ic"></i>Read only</span>
+      <span class="t-small muted">Amounts in so‘m · figures update when staff record a cash payment.</span>
+    </div>
+    <div class="head-actions">
+      <div class="segmented" role="group" aria-label="Period"><button aria-pressed="false">Daily</button><button aria-pressed="false">Weekly</button><button aria-pressed="true">Monthly</button></div>
+      <a class="btn btn-primary btn-md" href="admin-reports.html"><i data-lucide="file-spreadsheet" class="ic"></i>Export to Excel</a>
+    </div>
+  </section>
+
+  <!-- KPIs -->
+  <section class="grid grid-4" aria-label="Key numbers">
+    <div class="card stat">
+      <span class="stat-label"><i data-lucide="wallet" class="ic ic-sm"></i>Collected · Sep</span>
+      <span class="stat-value">110.4 <small>mln</small></span>
+      <span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+5.7% vs Aug</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label"><i data-lucide="target" class="ic ic-sm"></i>Expected · Sep</span>
+      <span class="stat-value">117.0 <small>mln</small></span>
+      <span class="t-small muted">94% collected so far</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label"><i data-lucide="circle-alert" class="ic ic-sm"></i>Outstanding</span>
+      <span class="stat-value">6.6 <small>mln</small></span>
+      <span class="delta down"><i data-lucide="users" class="ic ic-sm"></i>11 students overdue</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label"><i data-lucide="user-check" class="ic ic-sm"></i>Paying students</span>
+      <span class="stat-value">184 <small>/ 250</small></span>
+      <span class="delta up"><i data-lucide="trending-up" class="ic ic-sm"></i>+24 this month</span>
+    </div>
+  </section>
+
+  <section class="grid grid-2">
+    <div class="card">
+      <div class="card-head">
+        <div class="stack-2"><h2 class="t-h3">Cash collected</h2><p class="t-small muted">mln so‘m per month</p></div>
+      </div>
+      <div class="bars" role="img" aria-label="Cash collected: Apr 86.4, May 92.0, Jun 88.2, Jul 97.8, Aug 104.4, Sep 110.4 mln so‘m">
+        <div class="bar" style="--v:.72" data-tip="Apr · 86.4 mln so‘m"><span class="val">86.4</span></div>
+        <div class="bar" style="--v:.767" data-tip="May · 92.0 mln so‘m"><span class="val">92.0</span></div>
+        <div class="bar" style="--v:.735" data-tip="Jun · 88.2 mln so‘m"><span class="val">88.2</span></div>
+        <div class="bar" style="--v:.815" data-tip="Jul · 97.8 mln so‘m"><span class="val">97.8</span></div>
+        <div class="bar" style="--v:.87" data-tip="Aug · 104.4 mln so‘m"><span class="val">104.4</span></div>
+        <div class="bar hi" style="--v:.92" data-tip="Sep · 110.4 mln so‘m"><span class="val">110.4</span></div>
+      </div>
+      <div class="bar-labels"><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="stack-2"><h2 class="t-h3">Outstanding by group</h2><p class="t-small muted">mln so‘m · 6.6 total across 11 students</p></div>
+      </div>
+      <div class="hbars" role="img" aria-label="Outstanding by group: English B1 3.24 mln (5 students), English A2 2.16 mln (4), Networking Basics-1 0.60 mln (1), Python Start-2 0.60 mln (1). Other groups: none.">
+        <div class="hb-row" data-tip="English B1 · 5 students · 6 cycles"><span class="hb-label">English B1 · Morning</span><span class="hb-track"><span class="hb-bar" style="--v:1"></span><span class="hb-val">3.24 · 5 students</span></span></div>
+        <div class="hb-row" data-tip="English A2 · 4 students · 4 cycles"><span class="hb-label">English A2 · Teens</span><span class="hb-track"><span class="hb-bar" style="--v:.667"></span><span class="hb-val">2.16 · 4</span></span></div>
+        <div class="hb-row" data-tip="Networking Basics-1 · 1 student"><span class="hb-label">Networking Basics-1</span><span class="hb-track"><span class="hb-bar" style="--v:.185"></span><span class="hb-val">0.60 · 1</span></span></div>
+        <div class="hb-row" data-tip="Python Start-2 · 1 student"><span class="hb-label">Python Start-2</span><span class="hb-track"><span class="hb-bar" style="--v:.185"></span><span class="hb-val">0.60 · 1</span></span></div>
+        <div class="hb-row" data-tip="Helpdesk IT-3 · nothing outstanding"><span class="hb-label">Helpdesk IT-3</span><span class="hb-track"><span class="hb-val"><i data-lucide="circle-check" class="ic ic-sm" style="vertical-align:-4px;color:var(--leaf-ink)"></i> 0 · all paid</span></span></div>
+        <div class="hb-row" data-tip="Office &amp; Windows-1 · nothing outstanding"><span class="hb-label">Office &amp; Windows-1</span><span class="hb-track"><span class="hb-val"><i data-lucide="circle-check" class="ic ic-sm" style="vertical-align:-4px;color:var(--leaf-ink)"></i> 0 · all paid</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="overdue-h">
+    <div class="section-head">
+      <div class="stack-2"><h2 class="t-h3" id="overdue-h">Overdue payments</h2><p class="t-small muted">11 students · sorted by days overdue</p></div>
+    </div>
+    <div class="table-wrap hide-mobile">
+      <table class="table">
+        <thead><tr><th>Student</th><th>Group</th><th>Unpaid cycle</th><th class="num">Amount</th><th>Days overdue</th><th>Parent on Telegram</th></tr></thead>
+        <tbody>
+          <tr><td><div class="person"><span class="avatar xs b">SA</span><b>Sherzod Aliev</b></div></td><td>English B1 · Morning</td><td>Cycles 2–3</td><td class="num">1 080 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 34 days</span></td><td><span class="pill st-paid"><i data-lucide="link-2" class="ic"></i>Linked</span></td></tr>
+          <tr><td><div class="person"><span class="avatar xs c">SN</span><b>Sardor Nazarov</b></div></td><td>Networking Basics-1</td><td>Cycle 3</td><td class="num">600 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 11 days</span></td><td><span class="pill st-paid"><i data-lucide="link-2" class="ic"></i>Linked</span></td></tr>
+          <tr><td><div class="person"><span class="avatar xs b">MA</span><b>Madina Azimova</b></div></td><td>English B1 · Morning</td><td>Cycle 2</td><td class="num">540 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 7 days</span></td><td><span class="pill st-paid"><i data-lucide="link-2" class="ic"></i>Linked</span></td></tr>
+          <tr><td><div class="person"><span class="avatar xs">GH</span><b>Gulnoza Hamidova</b></div></td><td>English B1 · Morning</td><td>Cycle 4</td><td class="num">540 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 6 days</span></td><td><span class="pill st-due"><i data-lucide="link-2-off" class="ic"></i>Not linked</span></td></tr>
+          <tr><td><div class="person"><span class="avatar xs l">IS</span><b>Iroda Sobirova</b></div></td><td>English A2 · Teens</td><td>Cycle 2</td><td class="num">540 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 5 days</span></td><td><span class="pill st-paid"><i data-lucide="link-2" class="ic"></i>Linked</span></td></tr>
+          <tr><td><div class="person"><span class="avatar xs">BK</span><b>Behruz Karimov</b></div></td><td>Python Start-2</td><td>Cycle 2</td><td class="num">600 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 4 days</span></td><td><span class="pill st-paid"><i data-lucide="link-2" class="ic"></i>Linked</span></td></tr>
+          <tr><td><div class="person"><span class="avatar xs b">ZQ</span><b>Zarina Qodirova</b></div></td><td>English B1 · Morning</td><td>Cycle 3</td><td class="num">540 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 4 days</span></td><td><span class="pill st-paid"><i data-lucide="link-2" class="ic"></i>Linked</span></td></tr>
+          <tr><td><div class="person"><span class="avatar xs l">MT</span><b>Mohira Tursunova</b></div></td><td>English A2 · Teens</td><td>Cycle 3</td><td class="num">540 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 3 days</span></td><td><span class="pill st-paid"><i data-lucide="link-2" class="ic"></i>Linked</span></td></tr>
+          <tr><td><div class="person"><span class="avatar xs">TQ</span><b>Temur Qosimov</b></div></td><td>English A2 · Teens</td><td>Cycle 3</td><td class="num">540 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 2 days</span></td><td><span class="pill st-paid"><i data-lucide="link-2" class="ic"></i>Linked</span></td></tr>
+          <tr><td><div class="person"><span class="avatar xs">NU</span><b>Nodir Umarov</b></div></td><td>English B1 · Morning</td><td>Cycle 2</td><td class="num">540 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 1 day</span></td><td><span class="pill st-paid"><i data-lucide="link-2" class="ic"></i>Linked</span></td></tr>
+          <tr><td><div class="person"><span class="avatar xs b">SR</span><b>Sevinch Rahimova</b></div></td><td>English A2 · Teens</td><td>Cycle 1</td><td class="num">540 000 so‘m</td><td><span class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 1 day</span></td><td><span class="pill st-paid"><i data-lucide="link-2" class="ic"></i>Linked</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card hide-desktop" style="padding-top:4px;padding-bottom:4px">
+      <div class="list">
+        <div class="list-row"><span class="avatar sm b">SA</span><div class="grow"><b>Sherzod Aliev</b><span>English B1 · Cycles 2–3 · 1 080 000 so‘m</span><div class="row" style="margin-top:6px"><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 34 days</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm c">SN</span><div class="grow"><b>Sardor Nazarov</b><span>Networking Basics-1 · 600 000 so‘m</span><div class="row" style="margin-top:6px"><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 11 days</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm b">MA</span><div class="grow"><b>Madina Azimova</b><span>English B1 · 540 000 so‘m</span><div class="row" style="margin-top:6px"><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 7 days</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm">GH</span><div class="grow"><b>Gulnoza Hamidova</b><span>English B1 · 540 000 so‘m</span><div class="row" style="margin-top:6px"><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 6 days</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm l">IS</span><div class="grow"><b>Iroda Sobirova</b><span>English A2 · 540 000 so‘m</span><div class="row" style="margin-top:6px"><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 5 days</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm">BK</span><div class="grow"><b>Behruz Karimov</b><span>Python Start-2 · 600 000 so‘m</span><div class="row" style="margin-top:6px"><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 4 days</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm b">ZQ</span><div class="grow"><b>Zarina Qodirova</b><span>English B1 · 540 000 so‘m</span><div class="row" style="margin-top:6px"><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 4 days</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm l">MT</span><div class="grow"><b>Mohira Tursunova</b><span>English A2 · 540 000 so‘m</span><div class="row" style="margin-top:6px"><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 3 days</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm">TQ</span><div class="grow"><b>Temur Qosimov</b><span>English A2 · 540 000 so‘m</span><div class="row" style="margin-top:6px"><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 2 days</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm">NU</span><div class="grow"><b>Nodir Umarov</b><span>English B1 · 540 000 so‘m</span><div class="row" style="margin-top:6px"><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 1 day</strong></div></div></div>
+        <div class="list-row"><span class="avatar sm b">SR</span><div class="grow"><b>Sevinch Rahimova</b><span>English A2 · 540 000 so‘m</span><div class="row" style="margin-top:6px"><strong class="pill st-overdue"><i data-lucide="circle-alert" class="ic"></i>Overdue 1 day</strong></div></div></div>
+      </div>
+    </div>
+    <p class="t-caption muted">Parents of linked students get a Telegram “payment due” reminder automatically. Staff record payments; this view is read only.</p>
+  </section>
+
+</main>
+</body>
+</html>

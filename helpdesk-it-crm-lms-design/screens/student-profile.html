@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Profile · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .lang-opts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-2); }
+  .lang-opt { min-height: var(--tap); border-radius: var(--radius-input); border: 1px solid var(--outline); background: var(--surface); display: flex; align-items: center; justify-content: center; gap: 6px; font: 700 16px/20px var(--font-body); color: var(--ink); cursor: pointer; padding: 0 8px; }
+  .lang-opt[aria-checked="true"] { border: 2px solid var(--sky); background: var(--sky-soft); color: var(--sky-deep); }
+  .me-head { display: flex; align-items: center; gap: var(--space-6); flex-wrap: wrap; }
+  .qr-wrap { display: flex; gap: var(--space-6); align-items: center; flex-wrap: wrap; }
+  .link-box { display: flex; align-items: center; gap: var(--space-2); min-height: var(--tap); padding: 4px 4px 4px 16px; border-radius: var(--radius-input); background: var(--surface); border: 1px solid var(--outline); min-width: 0; }
+  .link-box code { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 400 15px/20px var(--font-mono); }
+  .quick a.list-row { text-decoration: none; color: inherit; }
+  @media (max-width: 640px) { .lang-opts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+</head>
+<body data-role="student" data-page="profile" data-title="Profile" data-sub="Your account, language and parent notifications">
+<main id="page">
+
+  <div class="hide-desktop quick">
+    <div class="card" style="padding:4px 20px">
+      <nav class="list" aria-label="My account">
+        <a class="list-row" href="student-attendance.html"><span class="pill st-present" style="width:44px;height:44px;padding:0;justify-content:center"><i data-lucide="calendar-check" class="ic"></i></span><div class="grow"><b>Attendance</b><span>92% this month · 11 of 12 classes</span></div><i data-lucide="chevron-right" class="ic muted"></i></a>
+        <a class="list-row" href="student-payments.html"><span class="pill tag-subject" style="width:44px;height:44px;padding:0;justify-content:center"><i data-lucide="wallet" class="ic"></i></span><div class="grow"><b>Payments</b><span>Cycle 2 · 8 of 12 lessons used · Paid</span></div><i data-lucide="chevron-right" class="ic muted"></i></a>
+      </nav>
+    </div>
+  </div>
+
+  <section class="grid grid-2" style="align-items:start">
+    <div class="card" style="gap:24px">
+      <div class="me-head">
+        <span class="avatar lg">AR</span>
+        <div class="stack-2">
+          <h2 class="t-h3">Aziz Rakhimov</h2>
+          <span class="t-small muted">Student · Helpdesk IT-3</span>
+          <label class="btn btn-secondary btn-md" style="align-self:flex-start"><i data-lucide="camera" class="ic ic-sm"></i>Change photo<input type="file" accept="image/*" hidden></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">Email (your login)</label>
+        <div class="input-icon"><i data-lucide="lock" class="ic ic-sm"></i><input id="email" class="input" type="email" value="aziz.rakhimov@helpdeskit.uz" readonly aria-readonly="true" style="color:var(--ink-muted)"></div>
+        <span class="hint">Only the front desk can change your email.</span>
+      </div>
+
+      <div class="field">
+        <span class="label">Group</span>
+        <div class="row"><span class="pill tag-subject"><i data-lucide="users-round" class="ic"></i>Helpdesk IT-3</span><span class="t-small muted">Elena Sokolova · Mon, Wed, Fri 09:00</span></div>
+      </div>
+
+      <div class="field" role="radiogroup" aria-labelledby="lang-l">
+        <span class="label" id="lang-l">Interface language</span>
+        <div class="lang-opts">
+          <button class="lang-opt" type="button" role="radio" aria-checked="true"><i data-lucide="check" class="ic ic-sm"></i>English</button>
+          <button class="lang-opt" type="button" role="radio" aria-checked="false">Русский</button>
+          <button class="lang-opt" type="button" role="radio" aria-checked="false">O‘zbekcha</button>
+          <button class="lang-opt" type="button" role="radio" aria-checked="false">Ўзбекча</button>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <form class="stack" aria-labelledby="pw-h">
+        <h3 class="t-h4" id="pw-h">Change password</h3>
+        <div class="field"><label for="pw0">Current password</label><input id="pw0" class="input" type="password" value="helpdesk2026"></div>
+        <div class="field"><label for="pw1">New password</label><input id="pw1" class="input" type="password" placeholder="At least 8 characters" style="border-color:var(--sky-deep);box-shadow:0 0 0 4px var(--sky-soft);background:var(--bg)"><span class="hint">Use at least 8 characters. A short sentence works well.</span></div>
+        <div class="field"><label for="pw2">Repeat new password</label><input id="pw2" class="input" type="password"></div>
+        <button class="btn btn-primary btn-md" type="button" style="align-self:flex-start">Save password</button>
+      </form>
+    </div>
+
+    <div class="stack" style="gap:20px">
+      <div class="card">
+        <div class="card-head">
+          <div class="stack-2"><h2 class="t-h3">Parent notifications</h2><p class="t-small muted">Telegram messages from @helpdeskit_bot</p></div>
+          <span class="pill st-active"><i data-lucide="link" class="ic"></i>Linked</span>
+        </div>
+        <div class="field">
+          <label for="tg">Parent’s Telegram username</label>
+          <div class="input-icon"><i data-lucide="send" class="ic ic-sm"></i><input id="tg" class="input" value="@akmal_rakhimov"></div>
+          <span class="hint">Linked on 7 Aug 2026 · Akmal Rakhimov</span>
+        </div>
+        <div class="stack-2">
+          <span class="label">Your parent gets a message when:</span>
+          <ul class="list" style="margin:0;padding:0;list-style:none">
+            <li class="list-row" style="min-height:48px"><i data-lucide="calendar-x" class="ic ic-sm muted"></i><div class="grow"><b style="font-weight:400;white-space:normal">You miss a class</b></div></li>
+            <li class="list-row" style="min-height:48px"><i data-lucide="badge-check" class="ic ic-sm muted"></i><div class="grow"><b style="font-weight:400;white-space:normal">A grade is posted</b></div></li>
+            <li class="list-row" style="min-height:48px"><i data-lucide="wallet" class="ic ic-sm muted"></i><div class="grow"><b style="font-weight:400;white-space:normal">The next payment is due</b></div></li>
+            <li class="list-row" style="min-height:48px"><i data-lucide="bell" class="ic ic-sm muted"></i><div class="grow"><b style="font-weight:400;white-space:normal">A new task or a class reminder comes up</b></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card soft" aria-labelledby="nl-h">
+        <div class="card-head">
+          <h3 class="t-h4" id="nl-h">If a parent isn’t linked yet</h3>
+          <span class="pill st-due"><i data-lucide="link-2-off" class="ic"></i>Not linked</span>
+        </div>
+        <div class="qr-wrap">
+          <svg class="qr" viewBox="-1 -1 27 27" role="img" aria-label="QR code for the one-time Telegram link" shape-rendering="crispEdges"><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM9 0h1v1h-1zM12 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM10 1h1v1h-1zM14 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM13 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM10 3h1v1h-1zM11 3h1v1h-1zM12 3h1v1h-1zM13 3h1v1h-1zM14 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM9 4h1v1h-1zM10 4h1v1h-1zM11 4h1v1h-1zM14 4h1v1h-1zM15 4h1v1h-1zM16 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM9 5h1v1h-1zM11 5h1v1h-1zM12 5h1v1h-1zM14 5h1v1h-1zM15 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM9 7h1v1h-1zM16 7h1v1h-1zM0 8h1v1h-1zM1 8h1v1h-1zM3 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM9 8h1v1h-1zM10 8h1v1h-1zM14 8h1v1h-1zM17 8h1v1h-1zM19 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM2 9h1v1h-1zM14 9h1v1h-1zM15 9h1v1h-1zM17 9h1v1h-1zM18 9h1v1h-1zM20 9h1v1h-1zM21 9h1v1h-1zM0 10h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM16 10h1v1h-1zM17 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM0 11h1v1h-1zM7 11h1v1h-1zM11 11h1v1h-1zM14 11h1v1h-1zM15 11h1v1h-1zM16 11h1v1h-1zM19 11h1v1h-1zM24 11h1v1h-1zM1 12h1v1h-1zM3 12h1v1h-1zM4 12h1v1h-1zM6 12h1v1h-1zM11 12h1v1h-1zM14 12h1v1h-1zM17 12h1v1h-1zM23 12h1v1h-1zM2 13h1v1h-1zM7 13h1v1h-1zM8 13h1v1h-1zM13 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM17 13h1v1h-1zM20 13h1v1h-1zM22 13h1v1h-1zM1 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM12 14h1v1h-1zM13 14h1v1h-1zM15 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM21 14h1v1h-1zM22 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM0 15h1v1h-1zM4 15h1v1h-1zM5 15h1v1h-1zM7 15h1v1h-1zM10 15h1v1h-1zM11 15h1v1h-1zM12 15h1v1h-1zM14 15h1v1h-1zM18 15h1v1h-1zM23 15h1v1h-1zM0 16h1v1h-1zM6 16h1v1h-1zM7 16h1v1h-1zM9 16h1v1h-1zM13 16h1v1h-1zM14 16h1v1h-1zM15 16h1v1h-1zM16 16h1v1h-1zM20 16h1v1h-1zM24 16h1v1h-1zM12 17h1v1h-1zM13 17h1v1h-1zM16 17h1v1h-1zM19 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM24 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM9 18h1v1h-1zM10 18h1v1h-1zM12 18h1v1h-1zM14 18h1v1h-1zM17 18h1v1h-1zM19 18h1v1h-1zM22 18h1v1h-1zM24 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM12 19h1v1h-1zM18 19h1v1h-1zM19 19h1v1h-1zM20 19h1v1h-1zM23 19h1v1h-1zM24 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM8 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM23 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM8 21h1v1h-1zM14 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM19 21h1v1h-1zM20 21h1v1h-1zM23 21h1v1h-1zM24 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM8 22h1v1h-1zM10 22h1v1h-1zM13 22h1v1h-1zM18 22h1v1h-1zM19 22h1v1h-1zM20 22h1v1h-1zM24 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h1v1h-1zM13 23h1v1h-1zM18 23h1v1h-1zM22 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM12 24h1v1h-1zM18 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM22 24h1v1h-1z" fill="var(--ink)"/></svg>
+          <div class="stack" style="flex:1;min-width:220px">
+            <p class="t-body">Ask your parent to open this link and press <b>Start</b>.</p>
+            <div class="link-box"><code>t.me/helpdeskit_bot?start=AR7K2QX9</code><button class="icon-btn" type="button" aria-label="Copy link"><i data-lucide="copy" class="ic"></i></button></div>
+            <span class="hint">This link works once. Or they can scan the QR code with their phone camera.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

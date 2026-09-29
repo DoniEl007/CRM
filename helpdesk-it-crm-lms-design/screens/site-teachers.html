@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Teachers · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .site-footer .inner { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: var(--space-8); }
+  .site-footer .foot-line { display: flex; align-items: center; gap: var(--space-2); font: 400 16px/24px var(--font-body); color: var(--ink-faint); }
+  .site-footer .copy { grid-column: 1 / -1; border-top: 1px solid var(--ink-muted); padding-top: var(--space-6); font: 400 14px/20px var(--font-body); color: var(--ink-subtle); }
+  .note { display: flex; align-items: flex-start; gap: var(--space-2); }
+  .note .ic { margin-top: 2px; }
+  @media (max-width: 1023px) { .site-footer .inner { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); } .site-section .btn { padding-left: var(--space-6); padding-right: var(--space-6); } .cta .btn { flex: 1 1 100%; } }
+  .t-card { gap: var(--space-4); }
+  .t-card .who { display: flex; align-items: center; gap: var(--space-4); }
+  .t-meta { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: var(--space-2) var(--space-3); align-items: start; font: 400 16px/24px var(--font-body); }
+  .t-meta dt { color: var(--ink-muted); font-weight: 700; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; padding-top: 4px; }
+  .t-meta dd { margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .grp { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-radius: var(--radius-btn); background: var(--surface); }
+  .grp .grow { flex: 1; min-width: 0; }
+  .grp b { display: block; font: 700 16px/24px var(--font-body); }
+  .grp span.s { display: block; font: 400 14px/20px var(--font-body); color: var(--ink-muted); }
+  .grid-3.teachers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (max-width: 699px) { .grid-3.teachers { grid-template-columns: minmax(0, 1fr); } .t-meta { grid-template-columns: minmax(0, 1fr); gap: var(--space-1); } .grp { flex-wrap: wrap; row-gap: var(--space-2); } .grp .grow { flex-basis: calc(100% - 40px); } .grp .pill { margin-left: 32px; } .t-card .avatar.lg { width: 80px; height: 80px; font-size: 28px; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="site-home.html" style="padding:0"><span class="brand-mark">H</span><span class="brand-name">Helpdesk IT<small class="hide-m">Learning center · Tashkent</small></span></a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="site-home.html">Home</a>
+      <a href="site-courses.html">Courses &amp; pricing</a>
+      <a href="site-teachers.html" aria-current="page">Teachers</a>
+      <a href="site-news.html">News</a>
+    </nav>
+    <button class="lang" type="button" aria-label="Language: English. Also Русский, O‘zbekcha, Ўзбекча"><i data-lucide="languages" class="ic ic-sm"></i>EN<span style="color:var(--ink-muted);font-weight:400">· RU · O‘Z · ЎЗ</span></button>
+    <a class="btn btn-primary btn-md hide-m" href="login.html"><i data-lucide="log-in" class="ic ic-sm"></i>Log in</a>
+    <button class="icon-btn menu-btn" type="button" aria-label="Open menu"><i data-lucide="menu" class="ic"></i></button>
+  </div>
+</header>
+
+<main>
+  <section class="site-section">
+    <div class="inner stack" style="gap:var(--space-8)">
+      <div class="section-head">
+        <div class="stack-2" style="max-width:760px">
+          <span class="t-eyebrow">Teachers</span>
+          <h1 class="t-h1">Practitioners who like teaching</h1>
+          <p class="t-body-lg muted">Each group has one teacher from the first lesson to the last. Meet them before you join: your trial lesson is with the teacher of your future group.</p>
+        </div>
+        <a class="btn btn-primary btn-md" href="site-home.html#trial"><i data-lucide="calendar-plus" class="ic ic-sm"></i>Book a free trial lesson</a>
+      </div>
+      <div class="grid grid-3 teachers">
+        <article class="card t-card">
+          <div class="who"><span class="avatar lg ">ES</span><div class="stack-2" style="gap:0"><h2 class="t-h3">Elena Sokolova</h2><span class="t-small muted">IT support teacher</span></div></div>
+          <p class="t-body muted">Eight years on a corporate service desk. Teaches troubleshooting the way it happens at work: ticket first, then the fix, then the note for the next person.</p>
+          <dl class="t-meta" style="margin:0"><dt>Subjects</dt><dd><span class="pill tag-subject">Helpdesk IT</span><span class="pill tag-subject">Office &amp; Windows</span></dd><dt>Teaches in</dt><dd><span class="pill st-neutral">Русский</span><span class="pill st-neutral">English</span></dd></dl>
+          <div class="stack-2"><span class="t-eyebrow">Groups</span><div class="grp"><i data-lucide="users-round" class="ic ic-sm" style="color:var(--sky-deep)"></i><div class="grow"><b>Helpdesk IT-3</b><span class="s">Mon/Wed/Fri 09:00 · Room 2 · 10/10</span></div><span class="pill st-due"><i data-lucide="users-round" class="ic"></i>Full</span></div><div class="grp"><i data-lucide="users-round" class="ic ic-sm" style="color:var(--sky-deep)"></i><div class="grow"><b>Office &amp; Windows-1</b><span class="s">Mon/Wed 16:00 · Room 1 · 6/10</span></div><span class="pill st-active"><i data-lucide="check" class="ic"></i>Seats open</span></div></div>
+        </article>
+        <article class="card t-card">
+          <div class="who"><span class="avatar lg l">AT</span><div class="stack-2" style="gap:0"><h2 class="t-h3">Akmal Tursunov</h2><span class="t-small muted">Networking teacher</span></div></div>
+          <p class="t-body muted">Network engineer at a Tashkent internet provider. Brings real routers and switches to every lab, so subnets stop being just numbers on a board.</p>
+          <dl class="t-meta" style="margin:0"><dt>Subjects</dt><dd><span class="pill tag-subject">Networking Basics</span></dd><dt>Teaches in</dt><dd><span class="pill st-neutral">O‘zbekcha</span><span class="pill st-neutral">Русский</span></dd></dl>
+          <div class="stack-2"><span class="t-eyebrow">Groups</span><div class="grp"><i data-lucide="users-round" class="ic ic-sm" style="color:var(--sky-deep)"></i><div class="grow"><b>Networking Basics-1</b><span class="s">Tue/Thu/Sat 14:00 · Room 2 · 9/10</span></div><span class="pill st-active"><i data-lucide="check" class="ic"></i>Seats open</span></div></div>
+        </article>
+        <article class="card t-card">
+          <div class="who"><span class="avatar lg ">BE</span><div class="stack-2" style="gap:0"><h2 class="t-h3">Bobur Ergashev</h2><span class="t-small muted">Programming teacher</span></div></div>
+          <p class="t-body muted">Backend developer who started coding at 15. Keeps lessons practical: every topic ends with a small script students can actually use.</p>
+          <dl class="t-meta" style="margin:0"><dt>Subjects</dt><dd><span class="pill tag-subject">Python Start</span></dd><dt>Teaches in</dt><dd><span class="pill st-neutral">O‘zbekcha</span><span class="pill st-neutral">English</span></dd></dl>
+          <div class="stack-2"><span class="t-eyebrow">Groups</span><div class="grp"><i data-lucide="users-round" class="ic ic-sm" style="color:var(--sky-deep)"></i><div class="grow"><b>Python Start-2</b><span class="s">Tue/Thu/Sat 11:00 · Room 1 · 7/10</span></div><span class="pill st-active"><i data-lucide="check" class="ic"></i>Seats open</span></div></div>
+        </article>
+        <article class="card t-card">
+          <div class="who"><span class="avatar lg b">SA</span><div class="stack-2" style="gap:0"><h2 class="t-h3">Sevara Aliyeva</h2><span class="t-small muted">English teacher</span></div></div>
+          <p class="t-body muted">CELTA-trained, six years teaching teens and adults. Gets shy students talking from the first lesson, without pressure and without silly games.</p>
+          <dl class="t-meta" style="margin:0"><dt>Subjects</dt><dd><span class="pill tag-subject">English A2</span><span class="pill tag-subject">English B1</span></dd><dt>Teaches in</dt><dd><span class="pill st-neutral">English</span><span class="pill st-neutral">O‘zbekcha</span><span class="pill st-neutral">Русский</span></dd></dl>
+          <div class="stack-2"><span class="t-eyebrow">Groups</span><div class="grp"><i data-lucide="users-round" class="ic ic-sm" style="color:var(--sky-deep)"></i><div class="grow"><b>English B1 · Morning</b><span class="s">Mon/Wed/Fri 11:00 · Room 4 · 8/10</span></div><span class="pill st-active"><i data-lucide="check" class="ic"></i>Seats open</span></div><div class="grp"><i data-lucide="users-round" class="ic ic-sm" style="color:var(--sky-deep)"></i><div class="grow"><b>English A2 · Teens</b><span class="s">Tue/Thu 16:00 · Room 3 · 10/10</span></div><span class="pill st-due"><i data-lucide="users-round" class="ic"></i>Full</span></div></div>
+        </article>
+        <article class="card t-card">
+          <div class="who"><span class="avatar lg b">GR</span><div class="stack-2" style="gap:0"><h2 class="t-h3">Gulnora Rashidova</h2><span class="t-small muted">English teacher</span></div></div>
+          <p class="t-body muted">Former interpreter for IT conferences. Helps adults write clear work emails and speak confidently in meetings.</p>
+          <dl class="t-meta" style="margin:0"><dt>Subjects</dt><dd><span class="pill tag-subject">English B1</span></dd><dt>Teaches in</dt><dd><span class="pill st-neutral">English</span><span class="pill st-neutral">Русский</span></dd></dl>
+          <div class="stack-2"><span class="t-eyebrow">Groups</span><div class="grp"><i data-lucide="users-round" class="ic ic-sm" style="color:var(--sky-deep)"></i><div class="grow"><b>English B1 · Evening</b><span class="s">Starts 12 Oct · Mon/Wed/Fri 18:00</span></div><span class="pill st-trial"><i data-lucide="sparkles" class="ic"></i>New group</span></div></div>
+        </article>
+        <article class="card t-card">
+          <div class="who"><span class="avatar lg l">JO</span><div class="stack-2" style="gap:0"><h2 class="t-h3">Jamshid Olimov</h2><span class="t-small muted">Programming teacher</span></div></div>
+          <p class="t-body muted">Data analyst and a former Helpdesk IT student. Explains code slowly and clearly, and remembers what it feels like to be new.</p>
+          <dl class="t-meta" style="margin:0"><dt>Subjects</dt><dd><span class="pill tag-subject">Python Start</span></dd><dt>Teaches in</dt><dd><span class="pill st-neutral">O‘zbekcha</span><span class="pill st-neutral">Ўзбекча</span><span class="pill st-neutral">Русский</span></dd></dl>
+          <div class="stack-2"><span class="t-eyebrow">Groups</span><div class="grp"><i data-lucide="users-round" class="ic ic-sm" style="color:var(--sky-deep)"></i><div class="grow"><b>Python Start-3</b><span class="s">Starts 13 Oct · Mon/Wed/Fri 16:00</span></div><span class="pill st-trial"><i data-lucide="sparkles" class="ic"></i>New group</span></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="inner">
+    <div class="stack">
+      <a class="brand" href="site-home.html" style="padding:0;color:var(--on-sky)"><span class="brand-mark">H</span><span class="brand-name">Helpdesk IT<small style="color:var(--ink-faint)">Learning center · Tashkent</small></span></a>
+      <p class="foot-line">IT and English courses in small groups.</p>
+    </div>
+    <div class="stack-2">
+      <span class="t-eyebrow" style="color:var(--ink-faint)">Visit</span>
+      <span class="foot-line"><i data-lucide="map-pin" class="ic ic-sm"></i>Tashkent · Address will be added</span>
+      <span class="foot-line"><i data-lucide="clock" class="ic ic-sm"></i>Mon–Sat 09:00–19:00</span>
+    </div>
+    <div class="stack-2">
+      <span class="t-eyebrow" style="color:var(--ink-faint)">Contact</span>
+      <a class="foot-line" href="tel:+998901234567"><i data-lucide="phone" class="ic ic-sm"></i>+998 90 123 45 67</a>
+      <a class="foot-line" href="#"><i data-lucide="send" class="ic ic-sm"></i>Telegram @helpdesk_it_uz</a>
+    </div>
+    <div class="stack-2">
+      <span class="t-eyebrow" style="color:var(--ink-faint)">Languages</span>
+      <span class="foot-line">English · Русский · O‘zbekcha · Ўзбекча</span>
+    </div>
+    <p class="copy">© 2026 Helpdesk IT learning center. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+</script>
+</body>
+</html>

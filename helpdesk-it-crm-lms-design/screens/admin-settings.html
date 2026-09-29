@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Users, roles &amp; bot · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .matrix td:first-child { font-weight: 700; }
+  .matrix td:first-child, .matrix th:first-child { position: sticky; left: 0; z-index: 1; background: var(--bg); }
+  .matrix th:first-child { background: var(--surface); }
+  @media (max-width: 1023px) { .matrix td:first-child { white-space: normal; min-width: 150px; padding-right: 12px; box-shadow: 1px 0 0 var(--outline); } .matrix td, .matrix th { padding-left: 14px; padding-right: 14px; } }
+  .matrix td:not(:first-child), .matrix th:not(:first-child) { text-align: center; }
+  .mx { font: 400 15px/20px var(--font-body); color: var(--ink); }
+  .mx.full { font-weight: 700; color: var(--leaf-ink); }
+  .mx.none { color: var(--ink-subtle); }
+  .toggle-row { display: flex; align-items: center; gap: var(--space-4); min-height: 72px; padding: var(--space-3) 0; border-bottom: 1px solid var(--outline); }
+  .toggle-row:last-child { border-bottom: 0; }
+  .toggle-row .grow { flex: 1; min-width: 0; }
+  .toggle-row .grow b { display: block; font: 700 17px/24px var(--font-body); }
+  .toggle-row .grow span { display: block; font: 400 15px/20px var(--font-body); color: var(--ink-muted); }
+  .tap-switch { display: grid; place-items: center; width: var(--tap); height: var(--tap); border: 0; background: none; padding: 0; cursor: pointer; flex: none; }
+  .token { display: flex; gap: var(--space-2); align-items: center; }
+  .token .input { font-family: var(--font-mono); letter-spacing: 0; }
+</style>
+</head>
+<body data-role="admin" data-page="settings" data-title="Users, roles &amp; bot" data-sub="Staff accounts, access rules and Telegram notifications">
+<main id="page">
+
+  <nav class="tabs-inline" aria-label="Settings sections">
+    <a href="#users" aria-current="page">Users</a>
+    <a href="#roles">Roles &amp; access</a>
+    <a href="#bot">Telegram bot</a>
+  </nav>
+
+  <!-- Users -->
+  <section class="section" id="users" aria-labelledby="users-h">
+    <div class="section-head">
+      <div class="stack-2"><h2 class="t-h3" id="users-h">Staff &amp; teacher accounts</h2><p class="t-small muted">Accounts are created by staff · login with email and password</p></div>
+      <div class="row">
+        <select class="select" aria-label="Filter by role" style="width:200px"><option>All roles</option><option>Full Administrator</option><option>CEO</option><option>Administrative Staff</option><option>Teacher</option></select>
+        <button class="btn btn-primary btn-md" type="button"><i data-lucide="user-plus" class="ic"></i>Add user</button>
+      </div>
+    </div>
+    <div class="table-wrap hide-mobile">
+      <table class="table">
+        <thead><tr><th>Name</th><th>Role</th><th>Status</th><th>Last login</th><th><span class="sr-only" style="position:absolute;left:-9999px">Edit</span></th></tr></thead>
+        <tbody>
+          <tr><td><div class="person"><span class="avatar xs">DJ</span><span><b>Doniyor Jaloliddinov</b><small>d.jaloliddinov@helpdeskit.uz</small></span></div></td><td><span class="pill tag-subject"><i data-lucide="shield-check" class="ic"></i>Full Administrator</span></td><td><span class="pill st-active"><i data-lucide="circle-check" class="ic"></i>Active</span></td><td class="mono muted">Today 08:02</td><td><button class="icon-btn" type="button" aria-label="Edit Doniyor Jaloliddinov"><i data-lucide="pencil" class="ic ic-sm"></i></button></td></tr>
+          <tr><td><div class="person"><span class="avatar xs b">BU</span><span><b>Bekzod Usmonov</b><small>b.usmonov@helpdeskit.uz</small></span></div></td><td><span class="pill st-trial"><i data-lucide="eye" class="ic"></i>CEO</span></td><td><span class="pill st-active"><i data-lucide="circle-check" class="ic"></i>Active</span></td><td class="mono muted">Today 08:10</td><td><button class="icon-btn" type="button" aria-label="Edit Bekzod Usmonov"><i data-lucide="pencil" class="ic ic-sm"></i></button></td></tr>
+          <tr><td><div class="person"><span class="avatar xs l">NQ</span><span><b>Nilufar Qodirova</b><small>n.qodirova@helpdeskit.uz</small></span></div></td><td><span class="pill st-neutral"><i data-lucide="clipboard-list" class="ic"></i>Administrative Staff</span></td><td><span class="pill st-active"><i data-lucide="circle-check" class="ic"></i>Active</span></td><td class="mono muted">Today 08:45</td><td><button class="icon-btn" type="button" aria-label="Edit Nilufar Qodirova"><i data-lucide="pencil" class="ic ic-sm"></i></button></td></tr>
+          <tr><td><div class="person"><span class="avatar xs">ES</span><span><b>Elena Sokolova</b><small>e.sokolova@helpdeskit.uz</small></span></div></td><td><span class="pill st-neutral"><i data-lucide="graduation-cap" class="ic"></i>Teacher</span></td><td><span class="pill st-active"><i data-lucide="circle-check" class="ic"></i>Active</span></td><td class="mono muted">Today 08:51</td><td><button class="icon-btn" type="button" aria-label="Edit Elena Sokolova"><i data-lucide="pencil" class="ic ic-sm"></i></button></td></tr>
+          <tr><td><div class="person"><span class="avatar xs">AT</span><span><b>Akmal Tursunov</b><small>a.tursunov@helpdeskit.uz</small></span></div></td><td><span class="pill st-neutral"><i data-lucide="graduation-cap" class="ic"></i>Teacher</span></td><td><span class="pill st-active"><i data-lucide="circle-check" class="ic"></i>Active</span></td><td class="mono muted">28 Sep 17:34</td><td><button class="icon-btn" type="button" aria-label="Edit Akmal Tursunov"><i data-lucide="pencil" class="ic ic-sm"></i></button></td></tr>
+          <tr><td><div class="person"><span class="avatar xs">BE</span><span><b>Bobur Ergashev</b><small>b.ergashev@helpdeskit.uz</small></span></div></td><td><span class="pill st-neutral"><i data-lucide="graduation-cap" class="ic"></i>Teacher</span></td><td><span class="pill st-active"><i data-lucide="circle-check" class="ic"></i>Active</span></td><td class="mono muted">Today 07:58</td><td><button class="icon-btn" type="button" aria-label="Edit Bobur Ergashev"><i data-lucide="pencil" class="ic ic-sm"></i></button></td></tr>
+          <tr><td><div class="person"><span class="avatar xs b">SA</span><span><b>Sevara Aliyeva</b><small>s.aliyeva@helpdeskit.uz</small></span></div></td><td><span class="pill st-neutral"><i data-lucide="graduation-cap" class="ic"></i>Teacher</span></td><td><span class="pill st-active"><i data-lucide="circle-check" class="ic"></i>Active</span></td><td class="mono muted">Today 10:47</td><td><button class="icon-btn" type="button" aria-label="Edit Sevara Aliyeva"><i data-lucide="pencil" class="ic ic-sm"></i></button></td></tr>
+          <tr><td><div class="person"><span class="avatar xs">KM</span><span><b>Kamron Musayev</b><small>k.musayev@helpdeskit.uz</small></span></div></td><td><span class="pill st-neutral"><i data-lucide="clipboard-list" class="ic"></i>Administrative Staff</span></td><td><span class="pill st-due"><i data-lucide="circle-pause" class="ic"></i>Disabled</span></td><td class="mono muted">14 Jul 18:02</td><td><button class="icon-btn" type="button" aria-label="Edit Kamron Musayev"><i data-lucide="pencil" class="ic ic-sm"></i></button></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card hide-desktop" style="padding-top:4px;padding-bottom:4px">
+      <div class="list">
+        <div class="list-row"><span class="avatar sm">DJ</span><div class="grow"><b>Doniyor Jaloliddinov</b><span>Full Administrator · today 08:02</span></div><button class="icon-btn" type="button" aria-label="Edit Doniyor Jaloliddinov"><i data-lucide="pencil" class="ic ic-sm"></i></button></div>
+        <div class="list-row"><span class="avatar sm b">BU</span><div class="grow"><b>Bekzod Usmonov</b><span>CEO · today 08:10</span></div><button class="icon-btn" type="button" aria-label="Edit Bekzod Usmonov"><i data-lucide="pencil" class="ic ic-sm"></i></button></div>
+        <div class="list-row"><span class="avatar sm l">NQ</span><div class="grow"><b>Nilufar Qodirova</b><span>Administrative Staff · today 08:45</span></div><button class="icon-btn" type="button" aria-label="Edit Nilufar Qodirova"><i data-lucide="pencil" class="ic ic-sm"></i></button></div>
+        <div class="list-row"><span class="avatar sm">ES</span><div class="grow"><b>Elena Sokolova</b><span>Teacher · today 08:51</span></div><button class="icon-btn" type="button" aria-label="Edit Elena Sokolova"><i data-lucide="pencil" class="ic ic-sm"></i></button></div>
+        <div class="list-row"><span class="avatar sm">AT</span><div class="grow"><b>Akmal Tursunov</b><span>Teacher · 28 Sep 17:34</span></div><button class="icon-btn" type="button" aria-label="Edit Akmal Tursunov"><i data-lucide="pencil" class="ic ic-sm"></i></button></div>
+        <div class="list-row"><span class="avatar sm">BE</span><div class="grow"><b>Bobur Ergashev</b><span>Teacher · today 07:58</span></div><button class="icon-btn" type="button" aria-label="Edit Bobur Ergashev"><i data-lucide="pencil" class="ic ic-sm"></i></button></div>
+        <div class="list-row"><span class="avatar sm b">SA</span><div class="grow"><b>Sevara Aliyeva</b><span>Teacher · today 10:47</span></div><button class="icon-btn" type="button" aria-label="Edit Sevara Aliyeva"><i data-lucide="pencil" class="ic ic-sm"></i></button></div>
+        <div class="list-row"><span class="avatar sm">KM</span><div class="grow"><b>Kamron Musayev</b><span>Administrative Staff · disabled</span></div><button class="icon-btn" type="button" aria-label="Edit Kamron Musayev"><i data-lucide="pencil" class="ic ic-sm"></i></button></div>
+      </div>
+    </div>
+    <p class="t-caption muted">184 student accounts are managed in <a href="admin-student-new.html">Students &amp; logins</a>.</p>
+  </section>
+
+  <!-- Roles & access -->
+  <section class="card" id="roles" aria-labelledby="roles-h">
+    <div class="card-head">
+      <div class="stack-2"><h2 class="t-h3" id="roles-h">Roles &amp; access</h2><p class="t-small muted">Fixed by the Technical Task · 5 roles</p></div>
+      <span class="pill st-neutral"><i data-lucide="lock" class="ic"></i>Not editable</span>
+    </div>
+    <p class="t-caption muted hide-desktop">Swipe the table sideways to see all 5 roles.</p>
+    <div class="table-wrap">
+      <table class="table matrix">
+        <thead><tr><th>Area</th><th>Full Admin</th><th>CEO</th><th>Admin Staff</th><th>Teacher</th><th>Student</th></tr></thead>
+        <tbody>
+          <tr><td>Public website edit</td><td><span class="mx full">Full</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td></tr>
+          <tr><td>CRM / student info</td><td><span class="mx full">Full</span></td><td><span class="mx">Read</span></td><td><span class="mx">Create/edit</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td></tr>
+          <tr><td>Credentials</td><td><span class="mx full">Full</span></td><td><span class="mx none">—</span></td><td><span class="mx">Create</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td></tr>
+          <tr><td>Groups &amp; scheduling</td><td><span class="mx full">Full</span></td><td><span class="mx">Read</span></td><td><span class="mx none">—</span></td><td><span class="mx">View own</span></td><td><span class="mx">View own</span></td></tr>
+          <tr><td>Payments &amp; analytics</td><td><span class="mx full">Full</span></td><td><span class="mx">Read</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td><td><span class="mx">View own</span></td></tr>
+          <tr><td>Attendance</td><td><span class="mx full">Full</span></td><td><span class="mx">Read</span></td><td><span class="mx">Record</span></td><td><span class="mx">Own group</span></td><td><span class="mx">View own</span></td></tr>
+          <tr><td>Teacher panel / tasks</td><td><span class="mx full">Full</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td><td><span class="mx">Assign &amp; grade</span></td><td><span class="mx">Complete own</span></td></tr>
+          <tr><td>Results &amp; ratings</td><td><span class="mx full">Full</span></td><td><span class="mx">Read</span></td><td><span class="mx none">—</span></td><td><span class="mx">Own group</span></td><td><span class="mx">Own</span></td></tr>
+          <tr><td>Chat</td><td><span class="mx full">Full</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td><td><span class="mx">Own group</span></td><td><span class="mx">Group</span></td></tr>
+          <tr><td>Reports (Excel)</td><td><span class="mx full">Full</span></td><td><span class="mx">Financial</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td></tr>
+          <tr><td>System config</td><td><span class="mx full">Full</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td><td><span class="mx none">—</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="t-caption muted">— means no access. Parents have no accounts; they only receive Telegram messages.</p>
+  </section>
+
+  <!-- Telegram bot -->
+  <section class="card" id="bot" aria-labelledby="bot-h">
+    <div class="card-head">
+      <div class="row"><span class="lc-icon" style="width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--sky-soft);color:var(--sky-deep)"><i data-lucide="bot" class="ic"></i></span>
+        <div class="stack-2" style="gap:0"><h2 class="t-h3" id="bot-h">Telegram bot</h2><span class="mono muted t-small">@helpdeskit_bot</span></div></div>
+      <span class="pill st-paid"><i data-lucide="circle-check" class="ic"></i>Connected</span>
+    </div>
+    <div class="grid grid-2" style="gap:var(--space-8)">
+      <div class="stack" style="gap:var(--space-6)">
+        <div class="field"><label for="b-token">Bot token</label>
+          <div class="token">
+            <input class="input" id="b-token" type="text" value="7481••••••••••••••••••••••Qk2" readonly>
+            <button class="icon-btn" type="button" aria-label="Reveal token"><i data-lucide="eye" class="ic"></i></button>
+            <button class="icon-btn" type="button" aria-label="Rotate token"><i data-lucide="refresh-cw" class="ic"></i></button>
+          </div>
+          <span class="hint">From @BotFather. Rotating stops the old token immediately.</span></div>
+        <div class="stack-2">
+          <div class="row between"><span class="label">Parents linked</span><span class="mono t-small"><b>171</b> of 184</span></div>
+          <div class="progress lg"><span style="width:93%"></span></div>
+          <span class="hint">Parents link once with a /start link or QR code. 13 are not linked yet.</span>
+        </div>
+        <div class="row"><button class="btn btn-secondary btn-md" type="button"><i data-lucide="send" class="ic"></i>Send test message</button><a class="btn btn-ghost btn-md" href="admin-crm.html">See unlinked parents</a></div>
+      </div>
+      <div class="stack-2">
+        <span class="label">Notifications</span>
+        <div class="toggle-row"><div class="grow"><b>Payment due</b><span>To parent · 2 lessons before the cycle ends</span></div><button class="tap-switch" role="switch" aria-checked="true" aria-label="Payment due"><span class="switch on"></span></button></div>
+        <div class="toggle-row"><div class="grow"><b>New assignment</b><span>To student when a teacher adds a task</span></div><button class="tap-switch" role="switch" aria-checked="true" aria-label="New assignment"><span class="switch on"></span></button></div>
+        <div class="toggle-row"><div class="grow"><b>Grade posted</b><span>To student with the number of correct answers</span></div><button class="tap-switch" role="switch" aria-checked="true" aria-label="Grade posted"><span class="switch on"></span></button></div>
+        <div class="toggle-row"><div class="grow"><b>Class reminder</b><span>To student · 1 hour before class</span></div><button class="tap-switch" role="switch" aria-checked="false" aria-label="Class reminder"><span class="switch"></span></button></div>
+        <div class="toggle-row"><div class="grow"><b>Student absence</b><span>To parent when attendance is marked absent</span></div><button class="tap-switch" role="switch" aria-checked="true" aria-label="Student absence"><span class="switch on"></span></button></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

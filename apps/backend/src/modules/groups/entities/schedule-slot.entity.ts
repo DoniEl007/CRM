@@ -30,4 +30,8 @@ export class ScheduleSlot extends AppBaseEntity {
 
   @Column({ name: 'end_time', type: 'time' })
   endTime!: string;
+
+  // e.g. "Room 2" — shown throughout the timetable/CRM design screens.
+  @Column({ nullable: true })
+  room?: string;
 }

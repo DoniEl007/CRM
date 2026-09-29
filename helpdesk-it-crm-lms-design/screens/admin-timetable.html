@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Timetable · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .tt-toolbar { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+  .week { display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--outline); border-radius: var(--radius-btn); padding: 0 4px; }
+  .week b { font: 700 17px/24px var(--font-body); padding: 0 8px; white-space: nowrap; }
+  .tt-toolbar .select { width: 220px; }
+  .tt-scroll { overflow-x: auto; }
+  .tt { grid-auto-rows: 36px; }
+  .tt > .cell, .tt > .tt-time { min-height: 0; padding: 0; }
+  .tt > .tt-time { padding: 6px 8px 0 0; }
+  .tt > .cell.today { background: var(--surface); }
+  .tt > .tt-h.today { background: var(--sky-soft); color: var(--sky-deep); }
+  .tt > .slot { min-height: 0; margin: 3px 4px; border: 0; padding: 8px 10px; overflow: hidden; }
+  .m-block.hide-desktop { display: none; }
+  .m-slot { display: flex; gap: var(--space-3); align-items: stretch; }
+  .m-time { width: 56px; display: flex; flex-direction: column; padding-top: 10px; font-size: 15px; line-height: 20px; }
+  .m-time span { color: var(--ink-muted); }
+  .m-slot .slot { padding: 14px 16px; font-size: 16px; line-height: 22px; }
+  .m-name { display: block; font: 700 17px/24px var(--font-body) !important; color: inherit !important; }
+  .segmented.days { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); width: 100%; }
+  .segmented.days button { padding: 0; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 18px; }
+  .segmented.days button span { font: 400 14px/18px var(--font-mono); }
+  @media (max-width: 1023px) {
+    .m-block.hide-desktop { display: flex; flex-direction: column; gap: var(--space-4); }
+    .tt-toolbar .select { width: 100%; }
+    .tt-toolbar > * { flex: 1 1 100%; }
+    .tt-toolbar > .select { flex: 1 1 40%; min-width: 0; }
+    .week { justify-content: space-between; }
+  }
+</style>
+</head>
+<body data-role="admin" data-page="timetable" data-title="Timetable" data-sub="6 groups · 16 classes this week · 4 rooms">
+<main id="page">
+
+  <section class="tt-toolbar" aria-label="Week and filters">
+    <div class="week">
+      <button class="icon-btn" type="button" aria-label="Previous week"><i data-lucide="chevron-left" class="ic"></i></button>
+      <b>28 Sep – 3 Oct</b>
+      <button class="icon-btn" type="button" aria-label="Next week"><i data-lucide="chevron-right" class="ic"></i></button>
+    </div>
+    <button class="btn btn-ghost btn-md hide-mobile" type="button">This week</button>
+    <select class="select" aria-label="Filter by teacher"><option>All teachers</option><option>Elena Sokolova</option><option>Akmal Tursunov</option><option>Bobur Ergashev</option><option>Sevara Aliyeva</option></select>
+    <select class="select" aria-label="Filter by room"><option>All rooms</option><option>Room 1</option><option>Room 2</option><option>Room 3</option><option>Room 4</option></select>
+    <div class="legend hide-mobile" style="margin-left:auto"><span><i style="background:var(--sky);height:14px;border-radius:4px"></i>IT courses</span><span><i style="background:var(--berry);height:14px;border-radius:4px"></i>English courses</span></div>
+  </section>
+
+  <!-- Web: weekly grid -->
+  <section class="tt-scroll hide-mobile" aria-label="Weekly timetable, 28 September to 3 October">
+    <div class="tt">
+        <div class="tt-h" style="grid-column:1;grid-row:1"></div>
+        <div class="tt-h" style="grid-column:2;grid-row:1">Mon · 28 Sep</div>
+        <div class="tt-h today" style="grid-column:3;grid-row:1" aria-current="date">Tue · 29 Sep</div>
+        <div class="tt-h" style="grid-column:4;grid-row:1">Wed · 30 Sep</div>
+        <div class="tt-h" style="grid-column:5;grid-row:1">Thu · 1 Oct</div>
+        <div class="tt-h" style="grid-column:6;grid-row:1">Fri · 2 Oct</div>
+        <div class="tt-h" style="grid-column:7;grid-row:1">Sat · 3 Oct</div>
+        <div class="tt-time" style="grid-column:1;grid-row:2 / span 2">09:00</div>
+        <div class="cell" style="grid-column:2;grid-row:2 / span 2"></div>
+        <div class="cell today" style="grid-column:3;grid-row:2 / span 2"></div>
+        <div class="cell" style="grid-column:4;grid-row:2 / span 2"></div>
+        <div class="cell" style="grid-column:5;grid-row:2 / span 2"></div>
+        <div class="cell" style="grid-column:6;grid-row:2 / span 2"></div>
+        <div class="cell" style="grid-column:7;grid-row:2 / span 2"></div>
+        <div class="tt-time" style="grid-column:1;grid-row:4 / span 2">10:00</div>
+        <div class="cell" style="grid-column:2;grid-row:4 / span 2"></div>
+        <div class="cell today" style="grid-column:3;grid-row:4 / span 2"></div>
+        <div class="cell" style="grid-column:4;grid-row:4 / span 2"></div>
+        <div class="cell" style="grid-column:5;grid-row:4 / span 2"></div>
+        <div class="cell" style="grid-column:6;grid-row:4 / span 2"></div>
+        <div class="cell" style="grid-column:7;grid-row:4 / span 2"></div>
+        <div class="tt-time" style="grid-column:1;grid-row:6 / span 2">11:00</div>
+        <div class="cell" style="grid-column:2;grid-row:6 / span 2"></div>
+        <div class="cell today" style="grid-column:3;grid-row:6 / span 2"></div>
+        <div class="cell" style="grid-column:4;grid-row:6 / span 2"></div>
+        <div class="cell" style="grid-column:5;grid-row:6 / span 2"></div>
+        <div class="cell" style="grid-column:6;grid-row:6 / span 2"></div>
+        <div class="cell" style="grid-column:7;grid-row:6 / span 2"></div>
+        <div class="tt-time" style="grid-column:1;grid-row:8 / span 2">12:00</div>
+        <div class="cell" style="grid-column:2;grid-row:8 / span 2"></div>
+        <div class="cell today" style="grid-column:3;grid-row:8 / span 2"></div>
+        <div class="cell" style="grid-column:4;grid-row:8 / span 2"></div>
+        <div class="cell" style="grid-column:5;grid-row:8 / span 2"></div>
+        <div class="cell" style="grid-column:6;grid-row:8 / span 2"></div>
+        <div class="cell" style="grid-column:7;grid-row:8 / span 2"></div>
+        <div class="tt-time" style="grid-column:1;grid-row:10 / span 2">13:00</div>
+        <div class="cell" style="grid-column:2;grid-row:10 / span 2"></div>
+        <div class="cell today" style="grid-column:3;grid-row:10 / span 2"></div>
+        <div class="cell" style="grid-column:4;grid-row:10 / span 2"></div>
+        <div class="cell" style="grid-column:5;grid-row:10 / span 2"></div>
+        <div class="cell" style="grid-column:6;grid-row:10 / span 2"></div>
+        <div class="cell" style="grid-column:7;grid-row:10 / span 2"></div>
+        <div class="tt-time" style="grid-column:1;grid-row:12 / span 2">14:00</div>
+        <div class="cell" style="grid-column:2;grid-row:12 / span 2"></div>
+        <div class="cell today" style="grid-column:3;grid-row:12 / span 2"></div>
+        <div class="cell" style="grid-column:4;grid-row:12 / span 2"></div>
+        <div class="cell" style="grid-column:5;grid-row:12 / span 2"></div>
+        <div class="cell" style="grid-column:6;grid-row:12 / span 2"></div>
+        <div class="cell" style="grid-column:7;grid-row:12 / span 2"></div>
+        <div class="tt-time" style="grid-column:1;grid-row:14 / span 2">15:00</div>
+        <div class="cell" style="grid-column:2;grid-row:14 / span 2"></div>
+        <div class="cell today" style="grid-column:3;grid-row:14 / span 2"></div>
+        <div class="cell" style="grid-column:4;grid-row:14 / span 2"></div>
+        <div class="cell" style="grid-column:5;grid-row:14 / span 2"></div>
+        <div class="cell" style="grid-column:6;grid-row:14 / span 2"></div>
+        <div class="cell" style="grid-column:7;grid-row:14 / span 2"></div>
+        <div class="tt-time" style="grid-column:1;grid-row:16 / span 2">16:00</div>
+        <div class="cell" style="grid-column:2;grid-row:16 / span 2"></div>
+        <div class="cell today" style="grid-column:3;grid-row:16 / span 2"></div>
+        <div class="cell" style="grid-column:4;grid-row:16 / span 2"></div>
+        <div class="cell" style="grid-column:5;grid-row:16 / span 2"></div>
+        <div class="cell" style="grid-column:6;grid-row:16 / span 2"></div>
+        <div class="cell" style="grid-column:7;grid-row:16 / span 2"></div>
+        <div class="tt-time" style="grid-column:1;grid-row:18 / span 2">17:00</div>
+        <div class="cell" style="grid-column:2;grid-row:18 / span 2"></div>
+        <div class="cell today" style="grid-column:3;grid-row:18 / span 2"></div>
+        <div class="cell" style="grid-column:4;grid-row:18 / span 2"></div>
+        <div class="cell" style="grid-column:5;grid-row:18 / span 2"></div>
+        <div class="cell" style="grid-column:6;grid-row:18 / span 2"></div>
+        <div class="cell" style="grid-column:7;grid-row:18 / span 2"></div>
+        <div class="slot " style="grid-column:2;grid-row:2 / span 3">Helpdesk IT-3<span>09:00–10:30</span><span>Room 2 · E. Sokolova</span></div>
+        <div class="slot " style="grid-column:4;grid-row:2 / span 3">Helpdesk IT-3<span>09:00–10:30</span><span>Room 2 · E. Sokolova</span></div>
+        <div class="slot " style="grid-column:6;grid-row:2 / span 3">Helpdesk IT-3<span>09:00–10:30</span><span>Room 2 · E. Sokolova</span></div>
+        <div class="slot " style="grid-column:3;grid-row:12 / span 3">Networking Basics-1<span>14:00–15:30</span><span>Room 2 · A. Tursunov</span></div>
+        <div class="slot " style="grid-column:5;grid-row:12 / span 3">Networking Basics-1<span>14:00–15:30</span><span>Room 2 · A. Tursunov</span></div>
+        <div class="slot " style="grid-column:7;grid-row:12 / span 3">Networking Basics-1<span>14:00–15:30</span><span>Room 2 · A. Tursunov</span></div>
+        <div class="slot " style="grid-column:3;grid-row:6 / span 3">Python Start-2<span>11:00–12:30</span><span>Room 1 · B. Ergashev</span></div>
+        <div class="slot " style="grid-column:5;grid-row:6 / span 3">Python Start-2<span>11:00–12:30</span><span>Room 1 · B. Ergashev</span></div>
+        <div class="slot " style="grid-column:7;grid-row:6 / span 3">Python Start-2<span>11:00–12:30</span><span>Room 1 · B. Ergashev</span></div>
+        <div class="slot " style="grid-column:2;grid-row:16 / span 3">Office &amp; Windows-1<span>16:00–17:30</span><span>Room 1 · E. Sokolova</span></div>
+        <div class="slot " style="grid-column:4;grid-row:16 / span 3">Office &amp; Windows-1<span>16:00–17:30</span><span>Room 1 · E. Sokolova</span></div>
+        <div class="slot b" style="grid-column:2;grid-row:6 / span 3">English B1 · Morning<span>11:00–12:30</span><span>Room 4 · S. Aliyeva</span></div>
+        <div class="slot b" style="grid-column:4;grid-row:6 / span 3">English B1 · Morning<span>11:00–12:30</span><span>Room 4 · S. Aliyeva</span></div>
+        <div class="slot b" style="grid-column:6;grid-row:6 / span 3">English B1 · Morning<span>11:00–12:30</span><span>Room 4 · S. Aliyeva</span></div>
+        <div class="slot b" style="grid-column:3;grid-row:16 / span 3">English A2 · Teens<span>16:00–17:30</span><span>Room 3 · S. Aliyeva</span></div>
+        <div class="slot b" style="grid-column:5;grid-row:16 / span 3">English A2 · Teens<span>16:00–17:30</span><span>Room 3 · S. Aliyeva</span></div>
+    </div>
+  </section>
+
+  <!-- Mobile: day selector + list -->
+  <section class="m-block hide-desktop" aria-label="Classes by day">
+    <div class="segmented days" role="group" aria-label="Day">
+      <button aria-pressed="false">Mon<span>28</span></button>
+      <button aria-pressed="true">Tue<span>29</span></button>
+      <button aria-pressed="false">Wed<span>30</span></button>
+      <button aria-pressed="false">Thu<span>1</span></button>
+      <button aria-pressed="false">Fri<span>2</span></button>
+      <button aria-pressed="false">Sat<span>3</span></button>
+    </div>
+    <div class="row between"><h2 class="t-h4">Today · Tuesday 29 Sep</h2><span class="t-caption muted">3 classes</span></div>
+    <div class="stack" style="gap:var(--space-3)">
+        <div class="m-slot "><div class="m-time"><b class="mono">11:00</b><span class="mono">12:30</span></div><div class="slot " style="flex:1"><span class="m-name">Python Start-2</span><span>B. Ergashev · Room 1 · 7/10</span></div></div>
+        <div class="m-slot "><div class="m-time"><b class="mono">14:00</b><span class="mono">15:30</span></div><div class="slot " style="flex:1"><span class="m-name">Networking Basics-1</span><span>A. Tursunov · Room 2 · 9/10</span></div></div>
+        <div class="m-slot b"><div class="m-time"><b class="mono">16:00</b><span class="mono">17:30</span></div><div class="slot b" style="flex:1"><span class="m-name">English A2 · Teens</span><span>S. Aliyeva · Room 3 · 10/10</span></div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--sky);height:14px;border-radius:4px"></i>IT courses</span><span><i style="background:var(--berry);height:14px;border-radius:4px"></i>English courses</span></div>
+  </section>
+
+</main>
+</body>
+</html>

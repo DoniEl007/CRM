@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quiz · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .quiz-layout { grid-template-columns: minmax(0, 1fr) 340px; align-items: start; }
+  .q-head { display: flex; align-items: flex-start; gap: var(--space-4); }
+  .speak { flex: none; width: 56px; height: 56px; border-radius: var(--radius-btn); border: 0; display: grid; place-items: center; background: var(--sky); color: var(--on-sky); cursor: pointer; }
+  .speak:hover { background: var(--sky-deep); }
+  .qdots { display: grid; grid-template-columns: repeat(5, 48px); gap: var(--space-2) 10px; }
+  .qdot { width: 48px; height: 48px; border-radius: 999px; display: grid; place-items: center; font: 700 16px/1 var(--font-mono); border: 2px solid var(--outline-strong); color: var(--ink-muted); background: var(--bg); text-decoration: none; }
+  .qdot.done { background: var(--leaf-deep); border-color: var(--leaf-deep); color: #fff; }
+  .qdot.current { background: var(--sky); border-color: var(--sky); color: var(--on-sky); box-shadow: 0 0 0 4px var(--sky-soft); }
+  .dot-key { display: flex; flex-direction: column; gap: var(--space-2); }
+  .dot-key span { display: flex; align-items: center; gap: var(--space-2); font: 400 14px/20px var(--font-body); color: var(--ink-muted); }
+  .dot-key i.sw { width: 16px; height: 16px; border-radius: 999px; display: inline-block; }
+  .feedback a { color: var(--coral-ink); font-weight: 700; }
+  @media (max-width: 1023px) {
+    .quiz-layout { grid-template-columns: minmax(0, 1fr); }
+    .qdots { grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
+    .qdot { width: 100%; height: 32px; font-size: 14px; border-width: 2px; }
+    .qdot.current { box-shadow: none; }
+    .q-actions { flex-direction: column-reverse; align-items: stretch; }
+  }
+</style>
+</head>
+<body data-role="student" data-page="tasks" data-title="Quiz 4" data-sub="Network basics · multiple choice · 10 questions · Elena Sokolova">
+<main id="page">
+
+  <section class="grid quiz-layout">
+    <div class="card" style="gap:24px">
+      <div class="stack-2">
+        <div class="row between">
+          <span class="t-h4">Question 3 of 10</span>
+          <span class="t-small muted">2 answered</span>
+        </div>
+        <div class="progress lg" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="10" aria-label="2 of 10 questions answered"><span style="width:20%"></span></div>
+      </div>
+
+      <div class="q-head">
+        <p class="t-body-lg" style="flex:1;font-weight:600">A hub and a switch both connect computers in one office. What does a switch do that a hub doesn’t?</p>
+        <button class="speak" type="button" aria-label="Read the question to me"><i data-lucide="volume-2" class="ic"></i></button>
+      </div>
+
+      <div class="answer-grid" role="radiogroup" aria-label="Answer options">
+        <button class="answer-tile incorrect" type="button" role="radio" aria-checked="true">
+          <span class="key">A</span>Sends every packet to all ports at once
+          <span class="corner" aria-hidden="true"><i data-lucide="x" class="ic ic-sm"></i></span>
+        </button>
+        <button class="answer-tile" type="button" role="radio" aria-checked="false">
+          <span class="key">B</span>Sends data only to the port it’s meant for
+        </button>
+        <button class="answer-tile" type="button" role="radio" aria-checked="false">
+          <span class="key">C</span>Connects the office to the internet
+        </button>
+        <button class="answer-tile" type="button" role="radio" aria-checked="false">
+          <span class="key">D</span>Gives each computer an IP address
+        </button>
+      </div>
+
+      <div class="feedback retry" role="status">
+        <i data-lucide="rotate-ccw" class="ic" style="margin-top:2px"></i>
+        <div class="stack-2">
+          <span><b>Not quite</b> — a switch sends data only to the port it’s meant for. Try again.</span>
+          <a href="#why" class="t-small">Show me why</a>
+        </div>
+      </div>
+
+      <div class="row between q-actions">
+        <a class="btn btn-ghost btn-md" href="student-home.html"><i data-lucide="pause" class="ic ic-sm"></i>Save and exit</a>
+        <button class="btn btn-primary" type="button"><i data-lucide="rotate-ccw" class="ic"></i>Try again</button>
+      </div>
+    </div>
+
+    <aside class="stack" style="gap:20px">
+      <div class="card">
+        <h2 class="t-h4">Questions</h2>
+        <nav class="qdots" aria-label="Question list">
+          <a class="qdot done" href="#q1" aria-label="Question 1, answered">1</a>
+          <a class="qdot done" href="#q2" aria-label="Question 2, answered">2</a>
+          <a class="qdot current" href="#q3" aria-current="step" aria-label="Question 3, current">3</a>
+          <a class="qdot" href="#q4" aria-label="Question 4, not answered">4</a>
+          <a class="qdot" href="#q5" aria-label="Question 5, not answered">5</a>
+          <a class="qdot" href="#q6" aria-label="Question 6, not answered">6</a>
+          <a class="qdot" href="#q7" aria-label="Question 7, not answered">7</a>
+          <a class="qdot" href="#q8" aria-label="Question 8, not answered">8</a>
+          <a class="qdot" href="#q9" aria-label="Question 9, not answered">9</a>
+          <a class="qdot" href="#q10" aria-label="Question 10, not answered">10</a>
+        </nav>
+        <div class="dot-key hide-mobile">
+          <span><i class="sw" style="background:var(--leaf-deep)"></i>Answered</span>
+          <span><i class="sw" style="background:var(--sky)"></i>You are here</span>
+          <span><i class="sw" style="border:2px solid var(--outline-strong)"></i>Still to do</span>
+        </div>
+      </div>
+
+      <div class="stack-2" style="gap:16px">
+        <div class="help-bubble">
+          <div class="row" style="gap:8px;margin-bottom:4px"><i data-lucide="lightbulb" class="ic"></i><b>Hint</b></div>
+          Think about who gets the message. Does every computer receive it, or only the one it’s addressed to?
+        </div>
+        <p class="t-caption muted" style="padding-left:24px">No time limit. You can leave and come back to this quiz.</p>
+      </div>
+    </aside>
+  </section>
+
+</main>
+</body>
+</html>

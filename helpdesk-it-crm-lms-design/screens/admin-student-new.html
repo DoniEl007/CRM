@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>New student &amp; login · Helpdesk IT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=Lexend+Deca:wght@400&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/skylearn.css">
+<script src="../assets/lucide.min.js"></script>
+<script src="../assets/shell.js" defer></script>
+<style>
+  .sec-head { display: flex; align-items: center; gap: var(--space-3); }
+  .sec-num { width: 36px; height: 36px; border-radius: 999px; display: grid; place-items: center; background: var(--sky-soft); color: var(--sky-deep); font: 700 16px/1 var(--font-mono); flex: none; }
+  .span-2 { grid-column: 1 / -1; }
+  .listbox { list-style: none; margin: 0; padding: 6px; border: 1px solid var(--outline); border-radius: var(--radius-input); background: var(--bg); box-shadow: var(--shadow-modal); display: flex; flex-direction: column; gap: 2px; }
+  .listbox li { display: flex; align-items: center; gap: var(--space-3); min-height: var(--tap); padding: 0 14px; border-radius: 10px; font: 400 17px/24px var(--font-body); }
+  .listbox li .seats { margin-left: auto; font: 400 15px/20px var(--font-mono); color: var(--ink-muted); }
+  .listbox li[aria-selected="true"] { background: var(--sky-soft); color: var(--sky-deep); font-weight: 700; }
+  .listbox li[aria-disabled="true"] { color: var(--ink-subtle); cursor: not-allowed; }
+  .pw { display: flex; gap: var(--space-2); align-items: center; }
+  .pw .input { font-family: var(--font-mono); letter-spacing: .04em; background: var(--surface-sunken); }
+  .prefix { position: relative; }
+  .prefix > span { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--ink-muted); font: 400 18px/1 var(--font-body); }
+  .prefix .input { padding-left: 44px; }
+  .note { display: flex; gap: var(--space-3); align-items: flex-start; padding: var(--space-3) var(--space-4); border-radius: var(--radius-btn); background: var(--surface); border: 1px solid var(--outline); font: 400 15px/22px var(--font-body); color: var(--ink-muted); }
+  .note .ic { color: var(--sky-deep); margin-top: 1px; }
+  .summary { position: sticky; top: 104px; }
+  .sum-row { display: flex; justify-content: space-between; gap: var(--space-4); font: 400 16px/24px var(--font-body); }
+  .sum-row span:first-child { color: var(--ink-muted); }
+  .sum-row b { text-align: right; min-width: 0; overflow-wrap: anywhere; }
+  .summary .row { flex-wrap: nowrap; align-items: flex-start; }
+  .summary .row .ic { margin-top: 2px; }
+  .actions { display: flex; justify-content: flex-end; gap: var(--space-3); flex-wrap: wrap; }
+  @media (max-width: 1023px) {
+    .summary { position: static; }
+    .actions .btn { flex: 1 1 100%; }
+    .actions { flex-direction: column-reverse; }
+  }
+</style>
+</head>
+<body data-role="staff" data-page="student-new" data-title="New student &amp; login" data-sub="Register a student and create their login">
+<main id="page">
+
+  <div class="banner info">
+    <i data-lucide="kanban-square" class="ic"></i>
+    <div class="grow"><b>From CRM:</b> Anvar Qodirov · trial lesson today · 600 000 so‘m paid in cash for cycle 1</div>
+    <a class="btn btn-ghost btn-md" href="admin-crm.html">Open record</a>
+  </div>
+
+  <section class="grid grid-main" style="align-items:start">
+    <form class="stack" style="gap:var(--space-8)" aria-label="New student">
+
+      <!-- 1 Personal info -->
+      <fieldset class="card" style="margin:0">
+        <div class="sec-head"><span class="sec-num">1</span><h2 class="t-h3">Personal info</h2></div>
+        <div class="form-grid">
+          <div class="field span-2">
+            <label for="name">Full name</label>
+            <input class="input" id="name" value="Anvar Qodirov" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="dob">Date of birth</label>
+            <input class="input" id="dob" type="date" value="2011-03-14">
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input class="input mono" id="phone" type="tel" value="+998 93 456 78 21">
+          </div>
+          <div class="field span-2">
+            <label for="email">Email <span class="muted" style="font-weight:400">— this is the login</span></label>
+            <input class="input error" id="email" type="email" value="qodirov.family@gmail.com" aria-invalid="true" aria-describedby="email-err">
+            <span class="err-msg" id="email-err"><i data-lucide="circle-alert" class="ic ic-sm"></i>This email is already used by another student (Laylo Qodirova, English A2). Each student needs their own email.</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 2 Course & group -->
+      <fieldset class="card" style="margin:0">
+        <div class="sec-head"><span class="sec-num">2</span><h2 class="t-h3">Course &amp; group</h2></div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="course">Course</label>
+            <select class="select" id="course">
+              <option>Helpdesk IT</option>
+              <option selected>Networking Basics</option>
+              <option>Python Start</option>
+              <option>Office &amp; Windows</option>
+              <option>English B1</option>
+              <option>English A2</option>
+            </select>
+            <span class="hint">600 000 so‘m per 12 lessons, paid in cash</span>
+          </div>
+          <div class="field">
+            <label id="group-label">Group</label>
+            <button class="select" type="button" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="group-label" style="display:flex;align-items:center;justify-content:space-between;text-align:left;border-color:var(--sky-deep);box-shadow:0 0 0 4px var(--sky-soft);background:var(--bg);cursor:pointer">Networking Basics-1 · 9/10<i data-lucide="chevron-up" class="ic ic-sm"></i></button>
+            <ul class="listbox" role="listbox" aria-labelledby="group-label">
+              <li role="option" aria-disabled="true"><i data-lucide="lock" class="ic ic-sm"></i>Helpdesk IT-3<span class="seats">full 10/10</span></li>
+              <li role="option" aria-selected="true"><i data-lucide="check" class="ic ic-sm"></i>Networking Basics-1<span class="seats">9/10</span></li>
+              <li role="option"><i data-lucide="users-round" class="ic ic-sm muted"></i>Python Start-2<span class="seats">7/10</span></li>
+              <li role="option"><i data-lucide="users-round" class="ic ic-sm muted"></i>Office &amp; Windows-1<span class="seats">6/10</span></li>
+            </ul>
+            <span class="hint">Groups hold up to 10 students. Full groups can’t be picked.</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 3 Login -->
+      <fieldset class="card" style="margin:0">
+        <div class="sec-head"><span class="sec-num">3</span><h2 class="t-h3">Login</h2></div>
+        <div class="form-grid">
+          <div class="field">
+            <span class="label">Email (login)</span>
+            <input class="input" value="qodirov.family@gmail.com" readonly aria-label="Email login" style="background:var(--surface-sunken);color:var(--ink-muted)">
+          </div>
+          <div class="field">
+            <label for="pw">Temporary password</label>
+            <div class="pw">
+              <input class="input" id="pw" value="Sky-7429-Nord" readonly>
+              <button class="icon-btn" type="button" aria-label="Copy password" style="border:1px solid var(--outline)"><i data-lucide="copy" class="ic"></i></button>
+              <button class="icon-btn" type="button" aria-label="Generate a new password" style="border:1px solid var(--outline)"><i data-lucide="refresh-cw" class="ic"></i></button>
+            </div>
+          </div>
+          <div class="note span-2"><i data-lucide="hand-helping" class="ic ic-sm"></i><span>Share this in person. The student changes it after first login.</span></div>
+        </div>
+      </fieldset>
+
+      <!-- 4 Parent Telegram -->
+      <fieldset class="card" style="margin:0">
+        <div class="sec-head"><span class="sec-num">4</span><h2 class="t-h3">Parent Telegram <span class="t-small muted">(optional)</span></h2></div>
+        <div class="field">
+          <label for="tg">Parent’s Telegram username</label>
+          <div class="prefix"><span>@</span><input class="input" id="tg" value="bahodir_qodirov" placeholder="username"></div>
+        </div>
+        <div class="note"><i data-lucide="send" class="ic ic-sm"></i><span>The parent gets a one-time link to press <b>Start</b> in the Helpdesk IT bot. After that they receive absence, payment and grade messages. Parents don’t get an account.</span></div>
+      </fieldset>
+
+      <!-- 5 Language -->
+      <fieldset class="card" style="margin:0">
+        <div class="sec-head"><span class="sec-num">5</span><h2 class="t-h3">Interface language</h2></div>
+        <div class="field" style="max-width:420px">
+          <label for="lang">Student sees the app in</label>
+          <select class="select" id="lang">
+            <option>English</option>
+            <option>Русский</option>
+            <option selected>O‘zbekcha</option>
+            <option>Ўзбекча</option>
+          </select>
+          <span class="hint">The student can change it later in their profile.</span>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <a class="btn btn-secondary btn-md" href="admin-crm.html">Cancel</a>
+        <button class="btn btn-primary btn-md" type="submit"><i data-lucide="user-plus" class="ic"></i>Create student &amp; login</button>
+      </div>
+    </form>
+
+    <!-- Summary -->
+    <aside class="card soft summary" aria-label="Summary">
+      <h2 class="t-h3">Summary</h2>
+      <div class="person"><span class="avatar b">AQ</span><div><b>Anvar Qodirov</b><small>15 years · +998 93 456 78 21</small></div></div>
+      <hr class="divider">
+      <div class="stack-2">
+        <div class="sum-row"><span>Course</span><b>Networking Basics</b></div>
+        <div class="sum-row"><span>Group</span><b>Networking Basics-1</b></div>
+        <div class="sum-row"><span>Schedule</span><b>Tue/Thu/Sat 14:00</b></div>
+        <div class="sum-row"><span>Seats after</span><b>10/10 · full</b></div>
+        <div class="sum-row"><span>Price</span><b>600 000 so‘m / 12 lessons</b></div>
+        <div class="sum-row"><span>Language</span><b>O‘zbekcha</b></div>
+      </div>
+      <hr class="divider">
+      <div class="stack-2">
+        <div class="row"><i data-lucide="circle-alert" class="ic ic-sm" style="color:var(--coral-ink)"></i><span class="t-small" style="color:var(--coral-ink)">Login email — fix before creating</span></div>
+        <div class="row"><i data-lucide="key-round" class="ic ic-sm" style="color:var(--leaf-ink)"></i><span class="t-small">Temporary password ready</span></div>
+        <div class="row"><i data-lucide="send" class="ic ic-sm" style="color:var(--leaf-ink)"></i><span class="t-small">Start link goes to @bahodir_qodirov</span></div>
+      </div>
+      <span class="pill st-overdue" style="align-self:flex-start"><i data-lucide="circle-alert" class="ic"></i>1 field to fix</span>
+    </aside>
+  </section>
+
+</main>
+</body>
+</html>
