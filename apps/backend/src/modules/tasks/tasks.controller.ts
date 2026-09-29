@@ -1,9 +1,10 @@
-import { Body, Controller, ForbiddenException, Get, Param, Patch, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, ForbiddenException, Get, Param, Patch, Post } from '@nestjs/common';
 import { RequirePermission } from '../../common/decorators/require-permission.decorator.js';
 import { CurrentUser, type AuthenticatedUser } from '../../common/decorators/current-user.decorator.js';
 import { Role } from '../../common/enums/role.enum.js';
 import { RbacService } from '../identity/rbac/rbac.service.js';
 import { GroupsService } from '../groups/groups.service.js';
+import { FilesService } from '../files/files.service.js';
 import { TasksService } from './tasks.service.js';
 import { CreateTaskDto } from './dto/create-task.dto.js';
 import { SubmitTaskDto } from './dto/submit-task.dto.js';
@@ -15,6 +16,7 @@ export class TasksController {
     private readonly tasksService: TasksService,
     private readonly groupsService: GroupsService,
     private readonly rbacService: RbacService,
+    private readonly filesService: FilesService,
   ) {}
 
   @Post()
@@ -108,5 +110,29 @@ export class TasksController {
     @CurrentUser() user: AuthenticatedUser,
   ) {
     return this.tasksService.gradeSubmission(submissionId, dto, user.userId, user.role);
+  }
+
+  // Task attachments live in the private task-attachments bucket (TT §2.4);
+  // access is scoped to whoever can already see the task itself.
+  @Get(':id/attachment-url')
+  async getAttachmentUrl(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser) {
+    const task = await this.tasksService.findByIdOrFail(id);
+    await this.tasksService.assertCanAccessTask(task, user.userId, user.role);
+    if (!task.attachmentFileKey) throw new BadRequestException('This task has no attachment');
+    return { url: await this.filesService.presignTaskFileDownload(task.attachmentFileKey) };
+  }
+
+  @Get('submissions/:submissionId/file-url')
+  async getSubmissionFileUrl(@Param('submissionId') submissionId: string, @CurrentUser() user: AuthenticatedUser) {
+    const submission = await this.tasksService.findSubmissionByIdOrFail(submissionId);
+    const task = await this.tasksService.findByIdOrFail(submission.taskId);
+
+    const isOwnSubmission = submission.studentUserId === user.userId;
+    const isOwningTeacher = user.role === Role.FULL_ADMIN || task.teacherUserId === user.userId;
+    if (!isOwnSubmission && !isOwningTeacher) {
+      throw new ForbiddenException('You cannot access this submission\'s file');
+    }
+    if (!submission.fileKey) throw new BadRequestException('This submission has no file');
+    return { url: await this.filesService.presignTaskFileDownload(submission.fileKey) };
   }
 }

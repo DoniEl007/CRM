@@ -222,7 +222,41 @@ rejected on WS join, and both blocked roles correctly getting 403.
   actual Telegram delivery couldn't be verified against the real API — only
   everything short of that final call).
 
-### files
-- MinIO buckets: `avatars`, `task-attachments` — DB stores only object keys/URLs,
-  never binary content
+### files ✅
+- MinIO buckets: `avatars` (public-read), `content` (public-read — news
+  covers, about-page images), `task-attachments` (private) — DB stores only
+  object keys/URLs, never binary content.
+- Uploads and downloads go directly between the client and MinIO via
+  presigned URLs; the Nest server never buffers file bytes. This is the only
+  way "up to 5 GB per file" (TT §2.4) is workable without the API becoming
+  the bottleneck. A single presigned PUT covers the full range — S3's own
+  single-PUT limit is exactly 5GB, so no custom chunking protocol was
+  needed to satisfy that constraint.
+- `POST /files/presign-upload` takes a fixed `purpose` (`avatar` |
+  `task-attachment` | `content`), not an arbitrary bucket name, so a client
+  can never direct an upload at storage it shouldn't touch; each purpose is
+  permission-checked (task-attachment requires `tasks.manage` or
+  `tasks.complete_own`; content requires `website.edit`).
+- Task attachment/submission downloads are scoped, not generic: separate
+  presigned-download endpoints (`GET /tasks/:id/attachment-url`,
+  `GET /tasks/submissions/:submissionId/file-url`) reuse the existing
+  task-access/ownership checks rather than exposing a "presign any key"
+  endpoint, which would let anyone download any private file if they
+  guessed or learned its key.
+- **Sandbox note:** real MinIO's server binary is no longer freely
+  downloadable (GitHub releases are source-only now; `dl.min.io` returns
+  410 Gone) — this dev sandbox runs `s3rver` (a Node-based S3-compatible
+  mock, devDependency only) to verify the code end-to-end instead. All
+  application code is written against the standard MinIO/S3 SDK and API
+  (presigned PUT/GET, `setBucketPolicy`) and will run against real MinIO
+  in production per the TT's recommended stack. One thing could NOT be
+  verified here: `setBucketPolicy`'s actual enforcement, since the mock
+  doesn't implement that call (logged as a non-fatal warning at boot,
+  bucket creation still succeeds) — the call itself is MinIO's standard,
+  documented mechanism for a public-read bucket policy.
+- Verified live end-to-end: presigned upload → direct client PUT → public
+  read-back (avatars), presigned upload → task creation with the resulting
+  key → scoped presigned download reachable by a group member and by the
+  owning teacher, an outsider correctly getting 403, and a student
+  correctly blocked from the `content` purpose (no `website.edit`).
 

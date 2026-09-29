@@ -15,6 +15,7 @@ import { PaymentsModule } from './modules/payments/payments.module.js';
 import { TasksModule } from './modules/tasks/tasks.module.js';
 import { ChatModule } from './modules/chat/chat.module.js';
 import { NotificationsModule } from './modules/notifications/notifications.module.js';
+import { FilesModule } from './modules/files/files.module.js';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard.js';
 import { PermissionsGuard } from './common/guards/permissions.guard.js';
 import { AppController } from './app.controller.js';
@@ -57,6 +58,7 @@ import { AppController } from './app.controller.js';
     TasksModule,
     ChatModule,
     NotificationsModule,
+    FilesModule,
   ],
   controllers: [AppController],
   providers: [

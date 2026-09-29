@@ -43,3 +43,23 @@ endpoint requires a JWT and passes through the configurable RBAC guard.
 **Note:** `TypeOrmModule` currently uses `synchronize: true` outside of
 `production` for fast iteration. Before any production deployment this must
 be replaced with proper TypeORM migrations.
+
+### Object storage
+
+Production uses real MinIO (per the TT's recommended stack). Real MinIO
+server binaries aren't freely downloadable in this sandbox (GitHub releases
+are source-only; `dl.min.io` returns 410 Gone), so local development here
+uses [`s3rver`](https://github.com/jamhall/s3rver) (a devDependency, Node-
+based S3-compatible mock) instead — the application code is written against
+the standard MinIO/S3 SDK and needs no changes to run against real MinIO.
+To run it locally:
+
+```bash
+AWS_ACCESS_KEY_ID=S3RVER AWS_SECRET_ACCESS_KEY=S3RVER \
+  node -e "new (require('s3rver'))({port: 9000, directory: '/tmp/s3rver-data'}).run()"
+```
+
+Then set `MINIO_ACCESS_KEY=S3RVER` / `MINIO_SECRET_KEY=S3RVER` in `.env`
+(s3rver hardcodes these, ignoring the env vars above for its own internal
+credential check — they're only read by the AWS SDK machinery s3rver is
+built on). Against real MinIO, use real generated credentials instead.

@@ -8,6 +8,7 @@ import { TasksController } from './tasks.controller.js';
 import { GroupsModule } from '../groups/groups.module.js';
 import { RbacModule } from '../identity/rbac/rbac.module.js';
 import { NotificationsModule } from '../notifications/notifications.module.js';
+import { FilesModule } from '../files/files.module.js';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { NotificationsModule } from '../notifications/notifications.module.js';
     GroupsModule,
     RbacModule,
     NotificationsModule,
+    FilesModule,
   ],
   providers: [TasksService],
   controllers: [TasksController],

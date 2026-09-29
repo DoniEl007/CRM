@@ -96,6 +96,10 @@ export class UsersService {
     await this.usersRepo.update({ id: userId }, { preferredLocale: locale });
   }
 
+  async updateAvatarUrl(userId: string, avatarUrl: string): Promise<void> {
+    await this.usersRepo.update({ id: userId }, { avatarUrl });
+  }
+
   // Used at student activation (parent Telegram username + date of birth are
   // collected in the same "New student & login" step, per the design) and
   // later from the student's own profile.

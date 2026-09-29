@@ -25,6 +25,7 @@ export const envValidationSchema = Joi.object({
   MINIO_SECRET_KEY: Joi.string().required(),
   MINIO_BUCKET_AVATARS: Joi.string().default('avatars'),
   MINIO_BUCKET_TASK_FILES: Joi.string().default('task-attachments'),
+  MINIO_BUCKET_CONTENT: Joi.string().default('content'),
 
   TELEGRAM_BOT_TOKEN: Joi.string().allow('').default(''),
   TELEGRAM_BOT_USERNAME: Joi.string().allow('').default(''),

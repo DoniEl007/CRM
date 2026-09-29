@@ -217,6 +217,12 @@ export class TasksService {
     return this.submissionsRepo.find({ where: { taskId }, relations: { student: true } });
   }
 
+  async findSubmissionByIdOrFail(id: string): Promise<Submission> {
+    const submission = await this.submissionsRepo.findOne({ where: { id } });
+    if (!submission) throw new NotFoundException('Submission not found');
+    return submission;
+  }
+
   // Per-group rating dashboard (TT §3.5): ranked by total correct answers
   // across all of the group's graded submissions.
   async getGroupRating(groupId: string): Promise<RatingEntry[]> {
