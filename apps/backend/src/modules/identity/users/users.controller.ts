@@ -49,7 +49,8 @@ function toPublicUser(user: {
   phone?: string;
   avatarUrl?: string;
   isActive: boolean;
+  lastLoginAt?: Date;
 }) {
-  const { id, email, role, firstName, lastName, phone, avatarUrl, isActive } = user;
-  return { id, email, role, firstName, lastName, phone, avatarUrl, isActive };
+  const { id, email, role, firstName, lastName, phone, avatarUrl, isActive, lastLoginAt } = user;
+  return { id, email, role, firstName, lastName, phone, avatarUrl, isActive, lastLoginAt };
 }

@@ -59,21 +59,24 @@ list below for what's already implemented (marked ✅) vs still planned:
   "Sky-7429-Nord") instead of an opaque random string, and staff can
   regenerate a user's temporary password (`POST /users/:id/reset-password`,
   same Admin-Staff-can-only-target-Students restriction as creation). ✅
-- `TeacherProfile` needs a public tagline (`titleEn/Ru/UzLatn/UzCyrl`, e.g.
-  "Networking teacher") distinct from the bio, and `teachingLanguages`
-  (planned).
-- `NewsPost` entity + public/staff endpoints — TT §3.1 requires a news/blog
-  section; only the course catalog was built so far (planned).
-- Some minimal "About page" content model — TT §3.1 requires an editable
-  About page; not yet built (planned).
+- `TeacherProfile` gained a public tagline (`titleEn/Ru/UzLatn/UzCyrl`, e.g.
+  "Networking teacher") distinct from the bio, `teachingLanguages`, and
+  `isPublished` (matching `Course`'s pattern) — plus public/staff endpoints
+  under `/teacher-profiles`. ✅
+- `NewsPost` entity + public/staff endpoints under `/news` (draft/published
+  status, category enum). ✅
+- Minimal "About page" content model — single-row `AboutPage` entity,
+  `GET /about/public` + `PATCH /about` (`website.edit`). ✅
 - `Submission.comment` — free-text teacher feedback shown to the student
-  alongside their grade (planned).
-- `TaskQuestion.hint` — optional hint text per question (planned).
-- Task creation targeting multiple groups in one call (fan out into one
-  `Task` row per group) — API convenience, not a behavior change (planned).
-- `POST /auth/change-password` — self-service password change was missing
-  entirely (planned).
-- `User.lastLoginAt` — shown in the staff user list (planned).
+  alongside their grade. ✅
+- `TaskQuestion.hint` — optional hint text per question, included in the
+  student-facing (sanitized) question view. ✅
+- Task creation now targets multiple groups in one call (`groupIds[]`, fans
+  out into one `Task` row per group; ownership validated against every
+  target group before any row is created). ✅
+- `POST /auth/change-password` — self-service password change. ✅
+- `User.lastLoginAt` — set on every successful login, shown in the staff user
+  list. ✅
 
 Declined as out of TT scope (design-only, not built unless requested later):
 full-group waitlist state, weekly rank-trend snapshots on the teacher rating

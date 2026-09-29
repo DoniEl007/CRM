@@ -26,4 +26,8 @@ export class TaskQuestion extends AppBaseEntity {
 
   @Column({ name: 'correct_option_index' })
   correctOptionIndex!: number;
+
+  // Optional help text shown to the student before they answer.
+  @Column({ type: 'text', nullable: true })
+  hint?: string;
 }

@@ -74,7 +74,13 @@ export class TasksController {
 
     // Students must never see the correct answer ahead of grading.
     if (user.role === Role.STUDENT) {
-      return questions.map(({ id, sortOrder, questionText, options }) => ({ id, sortOrder, questionText, options }));
+      return questions.map(({ id, sortOrder, questionText, options, hint }) => ({
+        id,
+        sortOrder,
+        questionText,
+        options,
+        hint,
+      }));
     }
     return questions;
   }

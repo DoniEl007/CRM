@@ -27,11 +27,20 @@ class CreateTaskQuestionDto {
   @IsInt()
   @Min(0)
   correctOptionIndex!: number;
+
+  @IsOptional()
+  @IsString()
+  hint?: string;
 }
 
 export class CreateTaskDto {
-  @IsUUID()
-  groupId!: string;
+  // Array so one teacher action can assign the same task to several groups
+  // at once (design's "Assign to groups" step) — fans out into one Task row
+  // per group, each independently gradable.
+  @IsArray()
+  @ArrayMinSize(1)
+  @IsUUID(undefined, { each: true })
+  groupIds!: string[];
 
   @IsString()
   @MinLength(1)

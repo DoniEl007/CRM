@@ -42,6 +42,9 @@ export class User extends AppBaseEntity {
   @Column({ name: 'is_active', default: true })
   isActive!: boolean;
 
+  @Column({ name: 'last_login_at', type: 'timestamptz', nullable: true })
+  lastLoginAt?: Date;
+
   @OneToOne(() => StudentProfile, (profile) => profile.user)
   studentProfile?: Relation<StudentProfile>;
 

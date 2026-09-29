@@ -21,6 +21,7 @@ interface RefreshPayload {
 }
 
 const REFRESH_BLACKLIST_PREFIX = 'auth:refresh-blacklist:';
+const BCRYPT_ROUNDS = 12;
 
 @Injectable()
 export class AuthService {
@@ -43,8 +44,21 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<TokenPair & { user: User }> {
     const user = await this.validateCredentials(email, password);
+    user.lastLoginAt = new Date();
+    await this.usersRepo.save(user);
     const tokens = await this.issueTokens(user);
     return { ...tokens, user };
+  }
+
+  async changePassword(userId: string, currentPassword: string, newPassword: string): Promise<void> {
+    const user = await this.usersRepo.findOne({ where: { id: userId } });
+    if (!user) throw new UnauthorizedException('User not found');
+
+    const matches = await bcrypt.compare(currentPassword, user.passwordHash);
+    if (!matches) throw new UnauthorizedException('Current password is incorrect');
+
+    user.passwordHash = await bcrypt.hash(newPassword, BCRYPT_ROUNDS);
+    await this.usersRepo.save(user);
   }
 
   async refresh(refreshToken: string): Promise<TokenPair> {

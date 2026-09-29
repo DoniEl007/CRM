@@ -62,6 +62,10 @@ export class Submission extends AppBaseEntity {
   @Column({ name: 'graded_at', type: 'timestamptz', nullable: true })
   gradedAt?: Date;
 
+  // Free-text feedback shown to the student alongside their grade.
+  @Column({ type: 'text', nullable: true })
+  comment?: string;
+
   @Column({ name: 'submitted_at', type: 'timestamptz' })
   submittedAt!: Date;
 }

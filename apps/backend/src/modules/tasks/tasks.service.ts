@@ -29,46 +29,56 @@ export class TasksService {
     private readonly groupsService: GroupsService,
   ) {}
 
-  async create(dto: CreateTaskDto, teacherUserId: string, requesterRole: Role): Promise<Task> {
-    const group = await this.groupsService.findByIdOrFail(dto.groupId);
-    this.assertOwnsGroup(group.teacherUserId, teacherUserId, requesterRole);
-
+  // Fans out into one independently gradable Task row per group (design's
+  // "Assign to groups" step lets a teacher check several groups at once).
+  async create(dto: CreateTaskDto, teacherUserId: string, requesterRole: Role): Promise<Task[]> {
     if (AUTO_GRADED_TYPES.has(dto.type) && (!dto.questions || dto.questions.length === 0)) {
       throw new BadRequestException('MCQ and AUTO_TEST tasks require at least one question');
     }
 
-    const task = await this.tasksRepo.save(
-      this.tasksRepo.create({
-        groupId: dto.groupId,
-        teacherUserId,
-        titleEn: dto.titleEn,
-        titleRu: dto.titleRu,
-        titleUzLatn: dto.titleUzLatn,
-        titleUzCyrl: dto.titleUzCyrl,
-        descriptionEn: dto.descriptionEn,
-        descriptionRu: dto.descriptionRu,
-        descriptionUzLatn: dto.descriptionUzLatn,
-        descriptionUzCyrl: dto.descriptionUzCyrl,
-        type: dto.type,
-        attachmentFileKey: dto.attachmentFileKey,
-      }),
-    );
-
-    if (dto.questions?.length) {
-      await this.questionsRepo.save(
-        dto.questions.map((q, index) =>
-          this.questionsRepo.create({
-            taskId: task.id,
-            sortOrder: index,
-            questionText: q.questionText,
-            options: q.options,
-            correctOptionIndex: q.correctOptionIndex,
-          }),
-        ),
-      );
+    const groups = await Promise.all(dto.groupIds.map((id) => this.groupsService.findByIdOrFail(id)));
+    for (const group of groups) {
+      this.assertOwnsGroup(group.teacherUserId, teacherUserId, requesterRole);
     }
 
-    return task;
+    const tasks: Task[] = [];
+    for (const groupId of dto.groupIds) {
+      const task = await this.tasksRepo.save(
+        this.tasksRepo.create({
+          groupId,
+          teacherUserId,
+          titleEn: dto.titleEn,
+          titleRu: dto.titleRu,
+          titleUzLatn: dto.titleUzLatn,
+          titleUzCyrl: dto.titleUzCyrl,
+          descriptionEn: dto.descriptionEn,
+          descriptionRu: dto.descriptionRu,
+          descriptionUzLatn: dto.descriptionUzLatn,
+          descriptionUzCyrl: dto.descriptionUzCyrl,
+          type: dto.type,
+          attachmentFileKey: dto.attachmentFileKey,
+        }),
+      );
+
+      if (dto.questions?.length) {
+        await this.questionsRepo.save(
+          dto.questions.map((q, index) =>
+            this.questionsRepo.create({
+              taskId: task.id,
+              sortOrder: index,
+              questionText: q.questionText,
+              options: q.options,
+              correctOptionIndex: q.correctOptionIndex,
+              hint: q.hint,
+            }),
+          ),
+        );
+      }
+
+      tasks.push(task);
+    }
+
+    return tasks;
   }
 
   findForGroup(groupId: string): Promise<Task[]> {
@@ -167,6 +177,7 @@ export class TasksService {
 
     submission.correctCount = dto.correctCount;
     submission.totalCount = dto.totalCount;
+    submission.comment = dto.comment;
     submission.status = SubmissionStatus.GRADED;
     submission.gradedByUserId = graderUserId;
     submission.gradedAt = new Date();
