@@ -11,6 +11,7 @@ import { CrmModule } from './modules/crm/crm.module.js';
 import { GroupsModule } from './modules/groups/groups.module.js';
 import { AttendanceModule } from './modules/attendance/attendance.module.js';
 import { PaymentsModule } from './modules/payments/payments.module.js';
+import { TasksModule } from './modules/tasks/tasks.module.js';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard.js';
 import { PermissionsGuard } from './common/guards/permissions.guard.js';
 import { AppController } from './app.controller.js';
@@ -41,6 +42,7 @@ import { AppController } from './app.controller.js';
     GroupsModule,
     AttendanceModule,
     PaymentsModule,
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [

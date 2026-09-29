@@ -50,6 +50,18 @@ export class GroupsService {
     return this.membershipsRepo.find({ where: { groupId }, relations: { student: true } });
   }
 
+  async isMember(groupId: string, studentUserId: string): Promise<boolean> {
+    const count = await this.membershipsRepo.count({ where: { groupId, studentUserId } });
+    return count > 0;
+  }
+
+  // Every group a student belongs to, across subjects (many-to-many —
+  // confirmed decision). Used by the tasks module's "my tasks" view.
+  async findGroupIdsForStudent(studentUserId: string): Promise<string[]> {
+    const memberships = await this.membershipsRepo.find({ where: { studentUserId } });
+    return memberships.map((m) => m.groupId);
+  }
+
   async addMember(groupId: string, studentUserId: string): Promise<GroupMembership> {
     await this.findByIdOrFail(groupId);
     await this.assertIsStudent(studentUserId);
