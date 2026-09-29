@@ -23,6 +23,7 @@ export const PERMISSION_KEYS = [
   'reports.export_all',
   'reports.export_financial',
   'system.rbac_manage',
+  'system.telegram_manage',
 ] as const;
 
 export type PermissionKey = (typeof PERMISSION_KEYS)[number];

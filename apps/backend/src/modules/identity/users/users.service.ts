@@ -1,7 +1,7 @@
 import { ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { randomInt } from 'node:crypto';
+import { randomBytes, randomInt } from 'node:crypto';
 import { Repository } from 'typeorm';
 import { Role } from '../../../common/enums/role.enum.js';
 import { User, type Locale } from '../entities/user.entity.js';
@@ -110,6 +110,61 @@ export class UsersService {
       profile.dateOfBirth = input.dateOfBirth;
     }
     return this.studentProfilesRepo.save(profile);
+  }
+
+  async getStudentProfile(userId: string): Promise<StudentProfile | null> {
+    return this.studentProfilesRepo.findOne({ where: { userId } });
+  }
+
+  // Generates the one-time token embedded in the t.me/<bot>?start=<token>
+  // deep link (TT §6.1). Regenerating invalidates any previous token for
+  // this student, so only the latest link/QR code works.
+  async generateParentLinkToken(userId: string): Promise<string> {
+    let profile = await this.studentProfilesRepo.findOne({ where: { userId } });
+    if (!profile) profile = this.studentProfilesRepo.create({ userId, parentLinked: false });
+
+    profile.parentLinkToken = randomBytes(12).toString('base64url');
+    await this.studentProfilesRepo.save(profile);
+    return profile.parentLinkToken;
+  }
+
+  findStudentProfileByLinkToken(token: string): Promise<StudentProfile | null> {
+    return this.studentProfilesRepo.findOne({ where: { parentLinkToken: token } });
+  }
+
+  // Completes the /start linking flow: the token is single-use, so it's
+  // cleared once consumed. A raw `() => 'NULL'` SET fragment is used for the
+  // token column since `Repository.update()` would otherwise drop an
+  // `undefined` property from the SET clause entirely rather than clearing
+  // it to NULL.
+  async linkParentChat(userId: string, chatId: string): Promise<void> {
+    await this.studentProfilesRepo
+      .createQueryBuilder()
+      .update(StudentProfile)
+      .set({ parentChatId: chatId, parentLinked: true, parentLinkToken: () => 'NULL' })
+      .where('user_id = :userId', { userId })
+      .execute();
+  }
+
+  // Same one-time /start pattern, for a user linking their own Telegram
+  // (rather than a parent's) — see the User entity's telegramChatId comment.
+  async generateOwnTelegramLinkToken(userId: string): Promise<string> {
+    const token = randomBytes(12).toString('base64url');
+    await this.usersRepo.update({ id: userId }, { telegramLinkToken: token });
+    return token;
+  }
+
+  findUserByTelegramLinkToken(token: string): Promise<User | null> {
+    return this.usersRepo.findOne({ where: { telegramLinkToken: token } });
+  }
+
+  async linkOwnTelegramChat(userId: string, chatId: string): Promise<void> {
+    await this.usersRepo
+      .createQueryBuilder()
+      .update(User)
+      .set({ telegramChatId: chatId, telegramLinkToken: () => 'NULL' })
+      .where('id = :userId', { userId })
+      .execute();
   }
 }
 

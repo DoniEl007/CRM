@@ -45,6 +45,17 @@ export class User extends AppBaseEntity {
   @Column({ name: 'last_login_at', type: 'timestamptz', nullable: true })
   lastLoginAt?: Date;
 
+  // Self-linked Telegram chat, via the same one-time /start deep-link
+  // mechanism TT §6.1 specifies for parents — extended to any user's own
+  // account, since TT §3.11 says all 5 notification types (not just
+  // absence-to-parent) are delivered through the bot, and the other 4 target
+  // "the relevant platform user" rather than a parent.
+  @Column({ name: 'telegram_chat_id', nullable: true })
+  telegramChatId?: string;
+
+  @Column({ name: 'telegram_link_token', nullable: true })
+  telegramLinkToken?: string;
+
   @OneToOne(() => StudentProfile, (profile) => profile.user)
   studentProfile?: Relation<StudentProfile>;
 

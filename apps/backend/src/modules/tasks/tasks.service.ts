@@ -9,6 +9,7 @@ import { Submission, SubmissionStatus, type McqAnswer } from './entities/submiss
 import { CreateTaskDto } from './dto/create-task.dto.js';
 import { SubmitTaskDto } from './dto/submit-task.dto.js';
 import { GradeSubmissionDto } from './dto/grade-submission.dto.js';
+import { NotificationsService } from '../notifications/notifications.service.js';
 
 const AUTO_GRADED_TYPES = new Set([TaskType.MCQ, TaskType.AUTO_TEST]);
 
@@ -27,6 +28,7 @@ export class TasksService {
     @InjectRepository(TaskQuestion) private readonly questionsRepo: Repository<TaskQuestion>,
     @InjectRepository(Submission) private readonly submissionsRepo: Repository<Submission>,
     private readonly groupsService: GroupsService,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   // Fans out into one independently gradable Task row per group (design's
@@ -76,6 +78,12 @@ export class TasksService {
       }
 
       tasks.push(task);
+
+      // TT §3.11 "new assignment" trigger — every student in the group.
+      const members = await this.groupsService.getMembers(groupId);
+      for (const member of members) {
+        await this.notificationsService.notifyNewAssignment(member.studentUserId, dto.titleEn);
+      }
     }
 
     return tasks;
@@ -153,7 +161,16 @@ export class TasksService {
       submission.gradedAt = new Date();
     }
 
-    return this.submissionsRepo.save(submission);
+    const saved = await this.submissionsRepo.save(submission);
+    if (saved.status === SubmissionStatus.GRADED) {
+      await this.notificationsService.notifyGradePosted(
+        studentUserId,
+        this.taskTitleFor(task),
+        saved.correctCount ?? 0,
+        saved.totalCount ?? 0,
+      );
+    }
+    return saved;
   }
 
   async gradeSubmission(
@@ -181,7 +198,19 @@ export class TasksService {
     submission.status = SubmissionStatus.GRADED;
     submission.gradedByUserId = graderUserId;
     submission.gradedAt = new Date();
-    return this.submissionsRepo.save(submission);
+    const saved = await this.submissionsRepo.save(submission);
+
+    await this.notificationsService.notifyGradePosted(
+      submission.studentUserId,
+      this.taskTitleFor(task),
+      dto.correctCount,
+      dto.totalCount,
+    );
+    return saved;
+  }
+
+  private taskTitleFor(task: Task): string {
+    return task.titleEn;
   }
 
   listSubmissionsForTask(taskId: string): Promise<Submission[]> {

@@ -23,6 +23,11 @@ export class StudentProfile extends AppBaseEntity {
   @Column({ name: 'parent_linked', default: false })
   parentLinked!: boolean;
 
+  // One-time token embedded in the t.me/<bot>?start=<token> deep link (TT
+  // §6.1). Cleared once the parent completes /start and parentLinked is set.
+  @Column({ name: 'parent_link_token', nullable: true })
+  parentLinkToken?: string;
+
   @Column({ name: 'enrollment_date', type: 'date', nullable: true })
   enrollmentDate?: string;
 

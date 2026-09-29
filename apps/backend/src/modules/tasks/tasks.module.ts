@@ -7,9 +7,15 @@ import { TasksService } from './tasks.service.js';
 import { TasksController } from './tasks.controller.js';
 import { GroupsModule } from '../groups/groups.module.js';
 import { RbacModule } from '../identity/rbac/rbac.module.js';
+import { NotificationsModule } from '../notifications/notifications.module.js';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Task, TaskQuestion, Submission]), GroupsModule, RbacModule],
+  imports: [
+    TypeOrmModule.forFeature([Task, TaskQuestion, Submission]),
+    GroupsModule,
+    RbacModule,
+    NotificationsModule,
+  ],
   providers: [TasksService],
   controllers: [TasksController],
   exports: [TasksService],

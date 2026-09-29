@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { PaymentCycle } from './entities/payment-cycle.entity.js';
 import { PaymentStatus, StudentPaymentStatus } from './entities/student-payment-status.entity.js';
 import { RecordPaymentDto, SetPaymentStatusDto } from './dto/payment.dto.js';
+import { NotificationsService } from '../notifications/notifications.service.js';
 
 export interface PaymentAnalytics {
   totalRevenue: string;
@@ -18,6 +19,7 @@ export class PaymentsService {
     @InjectRepository(PaymentCycle) private readonly cyclesRepo: Repository<PaymentCycle>,
     @InjectRepository(StudentPaymentStatus)
     private readonly statusRepo: Repository<StudentPaymentStatus>,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   async recordPayment(dto: RecordPaymentDto, recordedByUserId: string): Promise<PaymentCycle> {
@@ -61,7 +63,20 @@ export class PaymentsService {
     record.note = dto.note;
     record.setByUserId = setByUserId;
     record.setAt = new Date();
-    return this.statusRepo.save(record);
+    const saved = await this.statusRepo.save(record);
+
+    // TT §3.11 "payment due" trigger — fires when staff flags a student as
+    // outstanding/overdue (status itself stays manual per the confirmed
+    // decision; only the notification is automatic).
+    if (dto.status === PaymentStatus.OUTSTANDING || dto.status === PaymentStatus.OVERDUE) {
+      const label = dto.status === PaymentStatus.OVERDUE ? 'overdue' : 'outstanding';
+      await this.notificationsService.notifyPaymentDue(
+        studentUserId,
+        `Your payment is ${label}${dto.note ? `: ${dto.note}` : '.'}`,
+      );
+    }
+
+    return saved;
   }
 
   async getAnalytics(): Promise<PaymentAnalytics> {

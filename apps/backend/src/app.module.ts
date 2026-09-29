@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
-import { ConfigModule } from '@nestjs/config';
+import { BullModule } from '@nestjs/bullmq';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import configuration from './config/configuration.js';
 import { envValidationSchema } from './config/env.validation.js';
@@ -13,6 +14,7 @@ import { AttendanceModule } from './modules/attendance/attendance.module.js';
 import { PaymentsModule } from './modules/payments/payments.module.js';
 import { TasksModule } from './modules/tasks/tasks.module.js';
 import { ChatModule } from './modules/chat/chat.module.js';
+import { NotificationsModule } from './modules/notifications/notifications.module.js';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard.js';
 import { PermissionsGuard } from './common/guards/permissions.guard.js';
 import { AppController } from './app.controller.js';
@@ -36,6 +38,15 @@ import { AppController } from './app.controller.js';
         synchronize: process.env.NODE_ENV !== 'production',
       }),
     }),
+    BullModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        connection: {
+          host: config.get<string>('redis.host'),
+          port: config.get<number>('redis.port'),
+        },
+      }),
+    }),
     RedisModule,
     IdentityModule,
     CatalogModule,
@@ -45,6 +56,7 @@ import { AppController } from './app.controller.js';
     PaymentsModule,
     TasksModule,
     ChatModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [

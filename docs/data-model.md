@@ -181,13 +181,46 @@ Administrative Staff and CEO have none. Verified live: auto-sync on
 membership changes, real-time delivery via a WS client, non-participants
 rejected on WS join, and both blocked roles correctly getting 403.
 
-### notifications
-- `TelegramLink`: studentUserId, telegramUsername, chatId (nullable),
-  linkToken, linkedAt (nullable) — implements the one-time /start linking flow
-  from TT §6.1
-- `NotificationLog`: id, recipientType (USER | PARENT), recipientId/chatId,
-  type (PAYMENT_DUE | NEW_ASSIGNMENT | GRADE_POSTED | CLASS_REMINDER |
-  ABSENCE), payload, status (QUEUED | SENT | FAILED), sentAt
+### notifications ✅
+- `TelegramBotConfig` (single row): botToken, botUsername, isConnected,
+  lastCheckedAt — seeded from `TELEGRAM_BOT_TOKEN`/`_USERNAME` env vars on
+  first boot only; the DB row is the source of truth after that. Full
+  Administrator views a masked token and can rotate/test it.
+- `NotificationSetting`: type (PAYMENT_DUE | NEW_ASSIGNMENT | GRADE_POSTED |
+  CLASS_REMINDER | ABSENCE), enabled — one row per type, independently
+  toggleable by Full Administrator.
+- `NotificationLog`: recipientType (USER | PARENT), recipientUserId
+  (nullable), recipientChatId, type, message, status (QUEUED | SENT |
+  FAILED), sentAt, errorMessage.
+- Parent linking (TT §6.1): `StudentProfile.parentLinkToken` implements the
+  one-time `/start` deep link exactly as specified. `POST /telegram/webhook`
+  (public) handles the incoming Telegram update, checks the entered
+  Telegram username against `parentTelegramUsername` (rejects on mismatch,
+  case-insensitive, ignoring a leading `@`), and on match sets
+  `parentChatId`/`parentLinked` via `UsersService.linkParentChat`.
+- Self-linking (not in the TT, but a natural extension of the same
+  mechanism): TT §3.11 says all 5 notification types deliver via the bot,
+  but only the parent-absence flow has linking mechanics specified. The
+  other 4 types target "the relevant platform user" directly, so `User`
+  gained its own `telegramChatId`/`telegramLinkToken` pair and
+  `POST /telegram/link/me`, reusing the identical `/start` pattern. Flagged
+  here in case this assumption is wrong.
+- Outbound sends run through a BullMQ queue (TT §2.5), not inline —
+  `NotificationsService` creates a `QUEUED` log row and enqueues a job;
+  `NotificationsProcessor` sends via `TelegramApiService` (plain HTTP calls
+  to the Bot API, no bot framework) and updates the log to `SENT`/`FAILED`.
+- Wired at all 5 trigger points: attendance (absence), payments (status set
+  to OUTSTANDING/OVERDUE), tasks (assignment created, submission graded —
+  both auto- and manually-graded paths). Class reminder has the
+  `notifyClassReminder` method but no automatic 1-hour-before-class
+  scheduler yet (would need a BullMQ repeatable job against `ScheduleSlot`
+  day/time) — not built this pass.
+- Verified live: full webhook simulation (parent linking, self-linking,
+  username-mismatch rejection), all 5 trigger points firing with the
+  correct recipient chat_id, the BullMQ queue processing end-to-end down to
+  a graceful `FAILED` log (no real bot token exists in this dev sandbox, so
+  actual Telegram delivery couldn't be verified against the real API — only
+  everything short of that final call).
 
 ### files
 - MinIO buckets: `avatars`, `task-attachments` — DB stores only object keys/URLs,
