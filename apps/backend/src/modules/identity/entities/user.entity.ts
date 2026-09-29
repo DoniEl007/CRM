@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Column, Entity, Index, OneToOne, type Relation } from 'typeorm';
 import { AppBaseEntity } from '../../../common/entities/app-base.entity.js';
 import { Role } from '../../../common/enums/role.enum.js';
@@ -12,6 +13,11 @@ export class User extends AppBaseEntity {
   @Column()
   email!: string;
 
+  // Never serialized in API responses — see main.ts's global
+  // ClassSerializerInterceptor. A prior bug let this leak through relations
+  // (e.g. payment analytics' nested `student`, CRM activation's `user`)
+  // because those endpoints returned raw entities with no sanitization.
+  @Exclude()
   @Column({ name: 'password_hash' })
   passwordHash!: string;
 
