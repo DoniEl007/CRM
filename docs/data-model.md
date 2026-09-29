@@ -260,3 +260,40 @@ rejected on WS join, and both blocked roles correctly getting 403.
   owning teacher, an outsider correctly getting 403, and a student
   correctly blocked from the `content` purpose (no `website.edit`).
 
+### reports ✅
+- `ReportExport`: type (REVENUE | OUTSTANDING_PAYMENTS | ENROLLMENT |
+  ATTENDANCE_RATES | TEACHER_STUDENT_PERFORMANCE), params (period
+  DAILY/WEEKLY/MONTHLY + date range + optional groupId, jsonb),
+  requestedByUserId, status (PENDING | READY | FAILED), generatedAt,
+  fileKey, filename, sizeBytes, errorMessage.
+- Excel generation runs through a BullMQ worker (`reports` queue, TT §2.5),
+  not inline — `POST /reports/generate` creates a `PENDING` row and enqueues
+  a job; `ReportsProcessor` builds the workbook (`ReportExcelBuilderService`,
+  via `exceljs`) and uploads it to a new private `reports` MinIO bucket,
+  updating the row to `READY`/`FAILED`. Downloads go through
+  `GET /reports/:id/download-url`, a permission-checked presigned URL —
+  never a public link.
+- Access matches the design's role lock: Revenue and Outstanding payments
+  are reachable by CEO (`reports.export_financial`) as well as Full Admin;
+  Enrollment, Attendance rates and Teacher/student performance are Full
+  Administrator only (`reports.export_all`). `GET /reports` filters the
+  list itself rather than 403ing, so CEO sees only the financial exports
+  that exist.
+- `GET /reports/analytics/overview` serves the CEO/admin dashboard (TT
+  §3.10) as JSON: active students, revenue (all-time + 6-month trend),
+  outstanding count, enrollment trend (CRM requests reaching ACTIVE/DECLINED
+  per month — `updated_at` is used as a proxy transition timestamp, since
+  both are terminal statuses a request only reaches once), attendance rate
+  per group, per-teacher performance (avg correct % across their groups'
+  graded submissions + attendance %), and a **global** top-students
+  leaderboard (unlike the per-group rating already in the tasks module —
+  this ranks across every group a student belongs to).
+- Verified live end-to-end with real data accumulated over the session: the
+  overview endpoint's numbers were cross-checked against known state (e.g.
+  the one real payment recorded earlier showed up correctly in both revenue
+  figures); a generated Revenue report's three sheets (Summary, By period,
+  Payments) were downloaded and parsed directly from the `.xlsx` XML,
+  matching that same payment exactly; CEO correctly allowed for Revenue but
+  blocked (403) from Enrollment; a Student correctly blocked from the
+  overview entirely.
+

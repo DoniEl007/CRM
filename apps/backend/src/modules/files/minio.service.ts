@@ -20,6 +20,7 @@ export class MinioService implements OnModuleInit {
   public readonly bucketAvatars: string;
   public readonly bucketTaskFiles: string;
   public readonly bucketContent: string;
+  public readonly bucketReports: string;
 
   constructor(private readonly config: ConfigService) {
     this.client = new Client({
@@ -32,15 +33,17 @@ export class MinioService implements OnModuleInit {
     this.bucketAvatars = this.config.get<string>('minio.bucketAvatars')!;
     this.bucketTaskFiles = this.config.get<string>('minio.bucketTaskFiles')!;
     this.bucketContent = this.config.get<string>('minio.bucketContent')!;
+    this.bucketReports = this.config.get<string>('minio.bucketReports')!;
   }
 
   async onModuleInit(): Promise<void> {
     // Avatars and content (news covers, etc.) are publicly viewable by
-    // design; task attachments stay private, accessed only via
-    // permission-checked presigned GET URLs scoped to the owning resource.
+    // design; task attachments and generated reports stay private, accessed
+    // only via permission-checked presigned GET URLs.
     await this.ensureBucket(this.bucketAvatars, true);
     await this.ensureBucket(this.bucketContent, true);
     await this.ensureBucket(this.bucketTaskFiles, false);
+    await this.ensureBucket(this.bucketReports, false);
   }
 
   generateObjectKey(originalFilename: string): string {
@@ -65,6 +68,12 @@ export class MinioService implements OnModuleInit {
 
   async removeObject(bucket: string, objectKey: string): Promise<void> {
     await this.client.removeObject(bucket, objectKey);
+  }
+
+  // Server-generated files (Excel reports) are written directly, unlike
+  // user uploads which always go through a presigned PUT from the client.
+  async uploadBuffer(bucket: string, objectKey: string, buffer: Buffer, contentType: string): Promise<void> {
+    await this.client.putObject(bucket, objectKey, buffer, buffer.length, { 'Content-Type': contentType });
   }
 
   private async ensureBucket(bucket: string, publicRead: boolean): Promise<void> {

@@ -31,6 +31,7 @@ export default () => ({
     bucketAvatars: process.env.MINIO_BUCKET_AVATARS,
     bucketTaskFiles: process.env.MINIO_BUCKET_TASK_FILES,
     bucketContent: process.env.MINIO_BUCKET_CONTENT,
+    bucketReports: process.env.MINIO_BUCKET_REPORTS,
   },
 
   telegram: {

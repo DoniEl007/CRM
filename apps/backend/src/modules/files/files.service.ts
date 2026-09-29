@@ -29,6 +29,19 @@ export class FilesService {
     return this.minio.presignedDownloadUrl(this.minio.bucketTaskFiles, objectKey);
   }
 
+  async presignReportDownload(objectKey: string): Promise<string> {
+    return this.minio.presignedDownloadUrl(this.minio.bucketReports, objectKey);
+  }
+
+  async uploadReportFile(objectKey: string, buffer: Buffer): Promise<void> {
+    await this.minio.uploadBuffer(
+      this.minio.bucketReports,
+      objectKey,
+      buffer,
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+  }
+
   private async resolveBucketAndCheckAccess(purpose: UploadPurpose, user: AuthenticatedUser): Promise<string> {
     switch (purpose) {
       case 'avatar':
