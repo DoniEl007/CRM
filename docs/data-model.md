@@ -297,3 +297,26 @@ rejected on WS join, and both blocked roles correctly getting 403.
   blocked (403) from Enrollment; a Student correctly blocked from the
   overview entirely.
 
+## Deployment ✅
+
+- `docker-compose.yml` (TT §2.5): Nginx + Let's Encrypt, Postgres, Redis,
+  MinIO, and the backend, all on one server. `nginx/conf.d/app.conf` proxies
+  REST normally and the `/socket.io/` path with WebSocket upgrade headers
+  for chat; `nginx/README.md` covers first-time certificate issuance.
+- Production replaces `synchronize` with real TypeORM migrations —
+  `src/migrations/Init` was generated from and verified against a genuine
+  empty Postgres database (every table/enum/FK applied with zero errors,
+  schema diffed identical to a `synchronize`-built one), via both the dev
+  path (`ts-node`) and the exact compiled-JS command
+  (`migration:run:prod`) the production Docker image's entrypoint runs
+  before starting the server.
+- **Sandbox note:** this environment's container runtime blocks nested
+  containers outright (`runc` fails on `pivot_root`, even with
+  `--privileged`) — confirmed a hard host-level restriction, not something
+  fixable from inside the sandbox. `docker`, `docker compose`, and the
+  Compose file were all installed and validated here (`docker compose
+  config` fully resolves the stack — env var substitution, healthchecks,
+  volumes — with no errors), but an actual `docker compose up` could not be
+  run end-to-end; that should happen for real on the target Ubuntu server
+  before considering deployment finished.
+
