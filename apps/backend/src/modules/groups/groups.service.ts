@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role } from '../../common/enums/role.enum.js';
 import { UsersService } from '../identity/users/users.service.js';
+import { ChatService } from '../chat/chat.service.js';
 import { Group, GroupCategory } from './entities/group.entity.js';
 import { GroupMembership } from './entities/group-membership.entity.js';
 import { CreateGroupDto, UpdateGroupDto } from './dto/group.dto.js';
@@ -17,20 +18,33 @@ export class GroupsService {
     @InjectRepository(Group) private readonly groupsRepo: Repository<Group>,
     @InjectRepository(GroupMembership) private readonly membershipsRepo: Repository<GroupMembership>,
     private readonly usersService: UsersService,
+    private readonly chatService: ChatService,
   ) {}
 
   async create(dto: CreateGroupDto): Promise<Group> {
     await this.assertIsTeacher(dto.teacherUserId);
-    return this.groupsRepo.save(
+    const group = await this.groupsRepo.save(
       this.groupsRepo.create({ name: dto.name, category: dto.category, teacherUserId: dto.teacherUserId }),
     );
+    // TT §3.8 group chat mirrors group membership — created here so it
+    // exists from day one, kept in sync by addMember/removeMember below.
+    await this.chatService.createGroupConversation(group.id, [dto.teacherUserId]);
+    return group;
   }
 
   async update(id: string, dto: UpdateGroupDto): Promise<Group> {
     const group = await this.findByIdOrFail(id);
     if (dto.teacherUserId) await this.assertIsTeacher(dto.teacherUserId);
+
+    const previousTeacherUserId = group.teacherUserId;
     Object.assign(group, dto);
-    return this.groupsRepo.save(group);
+    const saved = await this.groupsRepo.save(group);
+
+    if (dto.teacherUserId && dto.teacherUserId !== previousTeacherUserId) {
+      await this.chatService.removeParticipantFromGroupChat(id, previousTeacherUserId);
+      await this.chatService.addParticipantToGroupChat(id, dto.teacherUserId);
+    }
+    return saved;
   }
 
   findAll(category?: GroupCategory): Promise<Group[]> {
@@ -80,12 +94,17 @@ export class GroupsService {
       throw new BadRequestException(`Group already has the maximum of ${MAX_GROUP_SIZE} students`);
     }
 
-    return this.membershipsRepo.save(this.membershipsRepo.create({ groupId, studentUserId }));
+    const membership = await this.membershipsRepo.save(
+      this.membershipsRepo.create({ groupId, studentUserId }),
+    );
+    await this.chatService.addParticipantToGroupChat(groupId, studentUserId);
+    return membership;
   }
 
   async removeMember(groupId: string, studentUserId: string): Promise<void> {
     const result = await this.membershipsRepo.delete({ groupId, studentUserId });
     if (result.affected === 0) throw new NotFoundException('Membership not found');
+    await this.chatService.removeParticipantFromGroupChat(groupId, studentUserId);
   }
 
   private async assertIsTeacher(userId: string): Promise<void> {

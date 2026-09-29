@@ -159,10 +159,27 @@ dashboard.
   gradedAt, submittedAt
 - Rating = per-group ranking by aggregate correctCount
 
-### chat
-- `Conversation`: id, type (DIRECT | GROUP), linkedGroupId (nullable)
-- `ConversationParticipant`: conversationId, userId
+### chat ✅
+- `Conversation`: id, type (DIRECT | GROUP), linkedGroupId (nullable, FK →
+  Group for GROUP conversations)
+- `ConversationParticipant`: conversationId, userId, lastReadAt (nullable —
+  drives unread counts; no per-message read receipts)
 - `Message`: id, conversationId, senderId, text, attachmentFileKey, sentAt
+
+GROUP conversations are created automatically alongside their Group
+(GroupsService calls ChatService on create/addMember/removeMember/teacher
+change) so chat membership always mirrors group membership. DIRECT
+conversations are get-or-created on demand between any two chat-enabled
+users. Real-time delivery uses a Socket.IO gateway (`/chat` namespace,
+TT §2.5): REST persists messages, the gateway broadcasts them to the
+conversation's room. The gateway authenticates the socket handshake directly
+(JWT from `auth.token`) and is marked `@Public()` to exempt it from the
+global HTTP-oriented JwtAuthGuard, which otherwise crashes against a
+WebSocket execution context. Access matches TT §4.1 exactly: chat.access is
+granted to Teacher and Student only (Full Admin bypasses as always);
+Administrative Staff and CEO have none. Verified live: auto-sync on
+membership changes, real-time delivery via a WS client, non-participants
+rejected on WS join, and both blocked roles correctly getting 403.
 
 ### notifications
 - `TelegramLink`: studentUserId, telegramUsername, chatId (nullable),

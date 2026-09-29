@@ -12,6 +12,7 @@ import { GroupsModule } from './modules/groups/groups.module.js';
 import { AttendanceModule } from './modules/attendance/attendance.module.js';
 import { PaymentsModule } from './modules/payments/payments.module.js';
 import { TasksModule } from './modules/tasks/tasks.module.js';
+import { ChatModule } from './modules/chat/chat.module.js';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard.js';
 import { PermissionsGuard } from './common/guards/permissions.guard.js';
 import { AppController } from './app.controller.js';
@@ -43,6 +44,7 @@ import { AppController } from './app.controller.js';
     AttendanceModule,
     PaymentsModule,
     TasksModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [
