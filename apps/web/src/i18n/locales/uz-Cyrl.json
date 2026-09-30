@@ -1,0 +1,56 @@
+{
+  "common": {
+    "loading": "Юкланмоқда…",
+    "cancel": "Бекор қилиш",
+    "save": "Ўзгаришларни сақлаш",
+    "close": "Ёпиш",
+    "logIn": "Кириш",
+    "logOut": "Чиқиш"
+  },
+  "auth": {
+    "title": "Кириш",
+    "subtitle": "Қабул бўлимидан олган email ва паролингиздан фойдаланинг.",
+    "email": "Email",
+    "password": "Парол",
+    "forgotPassword": "Паролни унутдингизми?",
+    "forgotPasswordHint": "Уни тиклаш учун қабул бўлимига мурожаат қилинг.",
+    "accountsNote": "Ҳисоблар марказ ходимлари томонидан яратилади.",
+    "invalidCredentials": "Email ёки парол нотўғри.",
+    "website": "Веб-сайт"
+  },
+  "nav": {
+    "dashboard": "Бошқарув панели",
+    "crm": "CRM",
+    "studentsAndLogins": "Ўқувчилар ва логинлар",
+    "newStudent": "Янги ўқувчи",
+    "groups": "Гуруҳлар",
+    "timetable": "Дарс жадвали",
+    "attendance": "Давомат",
+    "payments": "Тўловлар",
+    "chat": "Чат",
+    "paymentAnalytics": "Тўловлар таҳлили",
+    "results": "Натижалар ва рейтинг",
+    "reports": "Ҳисоботлар",
+    "website": "Веб-сайт",
+    "settings": "Фойдаланувчилар, роллар ва бот",
+    "myGroups": "Менинг гуруҳларим",
+    "tasks": "Топшириқлар",
+    "grading": "Баҳолаш",
+    "groupRating": "Гуруҳ рейтинги",
+    "home": "Бош саҳифа",
+    "myResults": "Натижалар ва рейтинг",
+    "groupChat": "Гуруҳ чати",
+    "profile": "Профил",
+    "me": "Мен",
+    "overview": "Умумий кўриниш",
+    "financialReports": "Молиявий ҳисоботлар",
+    "more": "Кўпроқ"
+  },
+  "roles": {
+    "FULL_ADMIN": "Бош администратор",
+    "CEO": "Директор",
+    "ADMIN_STAFF": "Маъмурий ходим",
+    "TEACHER": "Ўқитувчи",
+    "STUDENT": "Ўқувчи"
+  }
+}

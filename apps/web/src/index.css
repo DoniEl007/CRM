@@ -1,0 +1,5 @@
+@import './styles/skylearn.css';
+
+#root {
+  min-height: 100vh;
+}

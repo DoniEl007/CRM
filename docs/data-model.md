@@ -359,3 +359,74 @@ field had the same latent gap (every other non-primitive-typed column
 already declares its `type` explicitly), and reconfirmed both suites green
 together afterward.
 
+## Web frontend 🚧 (in progress)
+
+`apps/web/` — React 19 + Vite + TypeScript, i18next (en/ru/uz-Latn/uz-Cyrl),
+react-router-dom, the Skylearn design pack's CSS ported as-is (plain custom
+properties + component classes, no Tailwind).
+
+Built so far:
+- Plumbing: `lib/token-storage.ts`, `lib/api-client.ts` (fetch wrapper,
+  refresh-on-401 with request coalescing), `lib/auth-context.tsx`
+  (`AuthProvider`/`useAuth`, calls the new `GET /users/me` on mount).
+- `components/AppShell/` — role-aware sidebar/topbar/bottom-tab-bar, ported
+  from the design pack's `assets/shell.js` nav config
+  (`components/AppShell/nav-config.tsx`) with static HTML hrefs replaced by
+  React Router paths. Includes the mobile "More" bottom-sheet for roles with
+  more nav items than tab slots.
+- `pages/Login.tsx` — real login form (not a design mock), wired to
+  `AuthContext.login()`, with the 4-language segmented switcher.
+- `pages/student/StudentHome.tsx` and `pages/admin/AdminDashboard.tsx` —
+  fully wired to real backend data (not stubs): tasks/payment
+  status/attendance for Student, org-wide KPIs + revenue chart + top
+  students for Full Admin.
+- All other nav destinations (29 design-mock screens total) route to a
+  `ComingSoon` placeholder for now, so navigation/RBAC-by-role is fully
+  wired even before every screen is built out.
+
+**Found and fixed one real backend gap in the process:** no self-profile
+endpoint existed for a client to restore "who am I" from a stored token.
+Added `GET /users/me` to `UsersController` (open to any authenticated user,
+unlike the role-gated `GET /users/:id`), and extended `toPublicUser()` to
+include `preferredLocale`.
+
+**tsconfig gotcha:** the Vite template's `tsconfig.app.json` has
+`erasableSyntaxOnly: true`, which rejects real TypeScript `enum` (it
+compiles to a runtime object, so it isn't erasable) and constructor
+parameter properties. `types/api.ts`'s enums (`Role`, `TaskType`,
+`SubmissionStatus`, `PaymentStatus`) use the `export const X = {...} as
+const; export type X = (typeof X)[keyof typeof X]` pattern instead — same
+`Role.FULL_ADMIN` call-site syntax, fully erasable. `ApiError`'s
+constructor was changed from a `public status: number` parameter property to
+an explicit field assignment for the same reason.
+
+**Verified live**, end-to-end, against the real backend (not just typecheck):
+started Postgres/Redis/backend for real, set a known bcrypt password on
+existing seeded test accounts (`student1@example.com`,
+`jasur.rakhimov@example.com` — a student actually enrolled in a group with
+real tasks —, and `admin@learningcenter.local`; password
+`DevTest123!` for all three, dev-only), then curled the exact endpoints the
+new pages call and diffed the real response shape against the frontend's
+TypeScript types. This caught two real mismatches before they became bugs:
+`GET /reports/analytics/overview`'s `revenueByMonth`/`enrollmentTrend`/
+`teacherPerformance`/`topStudents` fields don't match what a first-glance
+naming guess would produce (e.g. `amount` not `total`, `firstName`/
+`lastName` not a combined `*Name`, `ratePercent` not `rate`) — fixed in
+`types/api.ts` and `AdminDashboard.tsx` to match the real shape. Also
+confirmed: production build (`tsc -b && vite build`) succeeds, the Vite dev
+server correctly serves the SPA shell for every client route (`/login`,
+`/student`, etc. all 200 with the right `<title>`), and CORS is open from
+the dev server's origin to the API.
+
+Not yet possible to verify in this sandbox: actually clicking through the
+UI in a real browser (no GUI/browser available here) — the check above
+confirms the data layer and routing are correct, but a visual/interaction
+pass on the real rendered pages still needs to happen, ideally by the user
+opening `http://localhost:5173` once both dev servers are running.
+
+Not yet built: CRM, groups, timetable, attendance, payments, payment
+analytics, results/ratings, reports, website admin, settings screens (Full
+Admin + Admin Staff + CEO); teacher tasks/grading/rating screens; student
+tasks/results/attendance/payments/profile screens; the chat screen (backend
+WebSocket gateway already exists); the public marketing site.
+

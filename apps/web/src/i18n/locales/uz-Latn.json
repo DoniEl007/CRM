@@ -1,0 +1,56 @@
+{
+  "common": {
+    "loading": "Yuklanmoqda…",
+    "cancel": "Bekor qilish",
+    "save": "O'zgarishlarni saqlash",
+    "close": "Yopish",
+    "logIn": "Kirish",
+    "logOut": "Chiqish"
+  },
+  "auth": {
+    "title": "Kirish",
+    "subtitle": "Qabul bo'limidan olgan email va parolingizdan foydalaning.",
+    "email": "Email",
+    "password": "Parol",
+    "forgotPassword": "Parolni unutdingizmi?",
+    "forgotPasswordHint": "Uni tiklash uchun qabul bo'limiga murojaat qiling.",
+    "accountsNote": "Hisoblar markaz xodimlari tomonidan yaratiladi.",
+    "invalidCredentials": "Email yoki parol noto'g'ri.",
+    "website": "Veb-sayt"
+  },
+  "nav": {
+    "dashboard": "Boshqaruv paneli",
+    "crm": "CRM",
+    "studentsAndLogins": "O'quvchilar va loginlar",
+    "newStudent": "Yangi o'quvchi",
+    "groups": "Guruhlar",
+    "timetable": "Dars jadvali",
+    "attendance": "Davomat",
+    "payments": "To'lovlar",
+    "chat": "Chat",
+    "paymentAnalytics": "To'lovlar tahlili",
+    "results": "Natijalar va reyting",
+    "reports": "Hisobotlar",
+    "website": "Veb-sayt",
+    "settings": "Foydalanuvchilar, rollar va bot",
+    "myGroups": "Mening guruhlarim",
+    "tasks": "Topshiriqlar",
+    "grading": "Baholash",
+    "groupRating": "Guruh reytingi",
+    "home": "Bosh sahifa",
+    "myResults": "Natijalar va reyting",
+    "groupChat": "Guruh chati",
+    "profile": "Profil",
+    "me": "Men",
+    "overview": "Umumiy ko'rinish",
+    "financialReports": "Moliyaviy hisobotlar",
+    "more": "Ko'proq"
+  },
+  "roles": {
+    "FULL_ADMIN": "Bosh administrator",
+    "CEO": "Direktor",
+    "ADMIN_STAFF": "Ma'muriy xodim",
+    "TEACHER": "O'qituvchi",
+    "STUDENT": "O'quvchi"
+  }
+}

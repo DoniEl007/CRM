@@ -1,0 +1,56 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "cancel": "Cancel",
+    "save": "Save changes",
+    "close": "Close",
+    "logIn": "Log in",
+    "logOut": "Log out"
+  },
+  "auth": {
+    "title": "Log in",
+    "subtitle": "Use the email and password you got from the front desk.",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "forgotPasswordHint": "Ask the front desk to reset it.",
+    "accountsNote": "Accounts are created by the center's staff.",
+    "invalidCredentials": "Incorrect email or password.",
+    "website": "Website"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "crm": "CRM",
+    "studentsAndLogins": "Students & logins",
+    "newStudent": "New student",
+    "groups": "Groups",
+    "timetable": "Timetable",
+    "attendance": "Attendance",
+    "payments": "Payments",
+    "chat": "Chat",
+    "paymentAnalytics": "Payment analytics",
+    "results": "Results & ratings",
+    "reports": "Reports",
+    "website": "Website",
+    "settings": "Users, roles & bot",
+    "myGroups": "My groups",
+    "tasks": "Tasks",
+    "grading": "Grading",
+    "groupRating": "Group rating",
+    "home": "Home",
+    "myResults": "Results & rating",
+    "groupChat": "Group chat",
+    "profile": "Profile",
+    "me": "Me",
+    "overview": "Overview",
+    "financialReports": "Financial reports",
+    "more": "More"
+  },
+  "roles": {
+    "FULL_ADMIN": "Full Administrator",
+    "CEO": "CEO",
+    "ADMIN_STAFF": "Administrative Staff",
+    "TEACHER": "Teacher",
+    "STUDENT": "Student"
+  }
+}

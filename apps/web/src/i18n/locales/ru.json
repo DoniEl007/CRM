@@ -1,0 +1,56 @@
+{
+  "common": {
+    "loading": "Загрузка…",
+    "cancel": "Отмена",
+    "save": "Сохранить изменения",
+    "close": "Закрыть",
+    "logIn": "Войти",
+    "logOut": "Выйти"
+  },
+  "auth": {
+    "title": "Вход",
+    "subtitle": "Используйте email и пароль, которые вы получили на ресепшене.",
+    "email": "Email",
+    "password": "Пароль",
+    "forgotPassword": "Забыли пароль?",
+    "forgotPasswordHint": "Обратитесь на ресепшен для сброса.",
+    "accountsNote": "Аккаунты создаются сотрудниками центра.",
+    "invalidCredentials": "Неверный email или пароль.",
+    "website": "Сайт"
+  },
+  "nav": {
+    "dashboard": "Панель управления",
+    "crm": "CRM",
+    "studentsAndLogins": "Студенты и логины",
+    "newStudent": "Новый студент",
+    "groups": "Группы",
+    "timetable": "Расписание",
+    "attendance": "Посещаемость",
+    "payments": "Платежи",
+    "chat": "Чат",
+    "paymentAnalytics": "Аналитика платежей",
+    "results": "Результаты и рейтинги",
+    "reports": "Отчёты",
+    "website": "Сайт",
+    "settings": "Пользователи, роли и бот",
+    "myGroups": "Мои группы",
+    "tasks": "Задания",
+    "grading": "Оценивание",
+    "groupRating": "Рейтинг группы",
+    "home": "Главная",
+    "myResults": "Результаты и рейтинг",
+    "groupChat": "Групповой чат",
+    "profile": "Профиль",
+    "me": "Я",
+    "overview": "Обзор",
+    "financialReports": "Финансовые отчёты",
+    "more": "Ещё"
+  },
+  "roles": {
+    "FULL_ADMIN": "Главный администратор",
+    "CEO": "Директор",
+    "ADMIN_STAFF": "Административный персонал",
+    "TEACHER": "Преподаватель",
+    "STUDENT": "Студент"
+  }
+}

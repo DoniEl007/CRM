@@ -25,6 +25,15 @@ export class UsersController {
     return { user: toPublicUser(user), temporaryPassword };
   }
 
+  // Any authenticated user, regardless of role/permissions — every client
+  // (this web app, both mobile apps) needs to restore who's logged in after
+  // a reload from just the stored tokens, without a role-gated lookup.
+  @Get('me')
+  async findMe(@CurrentUser() currentUser: AuthenticatedUser) {
+    const user = await this.usersService.findById(currentUser.userId);
+    return user ? toPublicUser(user) : null;
+  }
+
   @Get()
   @RequirePermission('crm.manage')
   async findAll(@Query('role') role?: Role) {
@@ -48,9 +57,10 @@ function toPublicUser(user: {
   lastName: string;
   phone?: string;
   avatarUrl?: string;
+  preferredLocale?: string;
   isActive: boolean;
   lastLoginAt?: Date;
 }) {
-  const { id, email, role, firstName, lastName, phone, avatarUrl, isActive, lastLoginAt } = user;
-  return { id, email, role, firstName, lastName, phone, avatarUrl, isActive, lastLoginAt };
+  const { id, email, role, firstName, lastName, phone, avatarUrl, preferredLocale, isActive, lastLoginAt } = user;
+  return { id, email, role, firstName, lastName, phone, avatarUrl, preferredLocale, isActive, lastLoginAt };
 }
