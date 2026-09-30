@@ -209,18 +209,31 @@ rejected on WS join, and both blocked roles correctly getting 403.
   `NotificationsService` creates a `QUEUED` log row and enqueues a job;
   `NotificationsProcessor` sends via `TelegramApiService` (plain HTTP calls
   to the Bot API, no bot framework) and updates the log to `SENT`/`FAILED`.
-- Wired at all 5 trigger points: attendance (absence), payments (status set
-  to OUTSTANDING/OVERDUE), tasks (assignment created, submission graded —
-  both auto- and manually-graded paths). Class reminder has the
-  `notifyClassReminder` method but no automatic 1-hour-before-class
-  scheduler yet (would need a BullMQ repeatable job against `ScheduleSlot`
-  day/time) — not built this pass.
+- Wired at all 5 trigger points, including class reminder: attendance
+  (absence), payments (status set to OUTSTANDING/OVERDUE), tasks (assignment
+  created, submission graded — both auto- and manually-graded paths), and a
+  `ClassReminderScannerService` running on a BullMQ repeatable job (every 5
+  minutes, `class-reminder-scan` queue) that checks every `ScheduleSlot`
+  against the current day-of-week and time, notifying the group's teacher
+  and every enrolled student when a slot starts in 55–65 minutes.
+  `ScheduleSlot` only stores a recurring weekly pattern, not concrete
+  calendar occurrences, so "already reminded for this occurrence" is a
+  short-lived Redis key (`class-reminder-sent:{slotId}:{date}`, set with
+  `NX` so concurrent scans can't double-send) rather than a new DB table —
+  a transient scheduling concern, not data the platform needs to keep.
 - Verified live: full webhook simulation (parent linking, self-linking,
   username-mismatch rejection), all 5 trigger points firing with the
   correct recipient chat_id, the BullMQ queue processing end-to-end down to
   a graceful `FAILED` log (no real bot token exists in this dev sandbox, so
   actual Telegram delivery couldn't be verified against the real API — only
-  everything short of that final call).
+  everything short of that final call). The class-reminder scanner was
+  verified with its `now` parameter fixed to specific simulated moments
+  (rather than waiting on the real clock): a real schedule slot 60 minutes
+  out correctly produced exactly one notification each for the teacher and
+  student (matching the real linked chat_ids from the webhook tests above,
+  correct message content), a repeat scan at the same simulated moment sent
+  nothing further (Redis dedupe key confirmed present with the expected
+  ~6h TTL), and a moment 2 hours out correctly produced nothing at all.
 
 ### files ✅
 - MinIO buckets: `avatars` (public-read), `content` (public-read — news
