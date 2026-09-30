@@ -333,3 +333,29 @@ rejected on WS join, and both blocked roles correctly getting 403.
   run end-to-end; that should happen for real on the target Ubuntu server
   before considering deployment finished.
 
+## Automated tests ✅
+
+Unit tests (`npm run test`, plain Vitest + mocked repositories — no DB) for
+the highest-risk logic actually exercised manually this session: RBAC
+grant/bypass/cache behavior, user provisioning role restrictions and the
+temporary-password format, group capacity/role validation, MCQ auto-grading
+correctness and resubmission protection, the CRM activation flow (including
+a dedicated regression test for the TypeORM relation/FK-column bug fixed
+earlier), and the class-reminder scanner's time-window and dedupe logic.
+One test is a direct regression test for the `PermissionsGuard` class-level-
+metadata bug also fixed earlier — it uses the real `@RequirePermission()`
+decorator and a real `Reflector`, not mocks, specifically so it would have
+caught that exact bug.
+
+Running the pre-existing e2e suite (`npm run test:e2e`, boots the real
+`AppModule` against genuine Postgres/Redis) surfaced one more real,
+previously-latent bug: `Permission.key`'s bare `@Column()` relied on
+TypeScript's inferred `design:type` metadata, which real `tsc`/`ts-node`
+(used everywhere else all session — dev server, migrations, build) resolve
+correctly for a string-literal-union type, but Vitest's esbuild-based
+transform does not, producing a column type Postgres rejects outright. Fixed
+by declaring `type: 'varchar'` explicitly, checked that no other entity
+field had the same latent gap (every other non-primitive-typed column
+already declares its `type` explicitly), and reconfirmed both suites green
+together afterward.
+
